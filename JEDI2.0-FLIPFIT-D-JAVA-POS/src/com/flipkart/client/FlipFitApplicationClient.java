@@ -49,7 +49,7 @@ public class FlipFitApplicationClient {
         String username = scanner.next();
         System.out.println("Enter Password: ");
         String password = scanner.next();
-        System.out.println("Enter Role: ");
+        System.out.println("Enter Role (Admin, Gym_Owner, Customer): ");
         String role = scanner.next();
         role = role.toUpperCase();
         switch (role){
@@ -59,7 +59,7 @@ public class FlipFitApplicationClient {
             case "GYM_OWNER":
                 gymOwnerFitFlipMenu.login(username, password);
                 break;
-            case "GYM_CUSTOMER":
+            case "CUSTOMER":
                 customerFlipFitMenu.login(username, password);
                 break;
             default:
