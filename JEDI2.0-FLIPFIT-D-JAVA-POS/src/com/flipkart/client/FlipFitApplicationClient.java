@@ -2,12 +2,12 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
-public class FlipFitApplication {
+public class FlipFitApplicationClient {
 
     static Scanner scanner = new Scanner(System.in);
-    static AdminClient adminClient = new AdminClient();
-    static GymOwnerClient gymOwnerClient = new GymOwnerClient();
-    static CustomerClient customerClient = new CustomerClient();
+    static AdminFlipFitMenu adminFlipFitMenu = new AdminFlipFitMenu();
+    static GymOwnerFitFlipMenu gymOwnerFitFlipMenu = new GymOwnerFitFlipMenu();
+    static CustomerFlipFitMenu customerFlipFitMenu = new CustomerFlipFitMenu();
 
     private static void displayMainMenu() {
         System.out.println("Welcome to the Flipfit Application:");
@@ -54,13 +54,13 @@ public class FlipFitApplication {
         role = role.toUpperCase();
         switch (role){
             case "ADMIN":
-                adminClient.login(username, password);
+                adminFlipFitMenu.login(username, password);
                 break;
             case "GYM_OWNER":
-                gymOwnerClient.login(username, password);
+                gymOwnerFitFlipMenu.login(username, password);
                 break;
             case "GYM_CUSTOMER":
-                customerClient.login(username, password);
+                customerFlipFitMenu.login(username, password);
                 break;
             default:
                 System.out.println("INVALID CHOICE");
@@ -76,7 +76,7 @@ public class FlipFitApplication {
         String email = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
-        gymOwnerClient.register(name, email, password);
+        gymOwnerFitFlipMenu.register(name, email, password);
     }
 
     private static void registerGymCustomer(){
@@ -86,7 +86,7 @@ public class FlipFitApplication {
         String email = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
-        customerClient.register(name, email, password);
+        customerFlipFitMenu.register(name, email, password);
     }
 
 
