@@ -21,8 +21,12 @@ public class FlipFitApplication {
 
     private static void changePassword(){
         System.out.println("Enter your role");
-        String role = scanner.nextLine();
+        String role = scanner.next();
+        Scanner scan = new Scanner(System.in);
+        String pass = "";
         role = role.toUpperCase();
+        System.out.println("Please enter new password");
+        pass = scan.nextLine();
         switch (role){
             case "ADMIN":
                 System.out.println("Your password has been changed successfully");
@@ -55,7 +59,7 @@ public class FlipFitApplication {
             case "GYM_OWNER":
                 gymOwnerClient.login(username, password);
                 break;
-            case "CUSTOMER":
+            case "GYM_CUSTOMER":
                 customerClient.login(username, password);
                 break;
             default:
