@@ -10,9 +10,10 @@ public class CustomerService {
         System.out.println("You have been logged in successfully");
     }
     public List<String> viewGymCenter(){
-        List<String> gymCenter;
-        System.out.println("List of available centers are: "+ gymCenter);
-        return gymCenter;
+//        List<String> gymCenter;
+//        System.out.println("List of available centers are: "+ gymCenter);
+//        return gymCenter;
+        return null;
     }
     public boolean bookSlot(){
         System.out.println("Slot has been booked successfully");
