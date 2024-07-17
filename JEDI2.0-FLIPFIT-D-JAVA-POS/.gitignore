@@ -29,3 +29,6 @@ bin/
 .DS_Store
 .idea/uiDesigner.xml
 .idea/vcs.xml
+.project
+.classpath
+FlipFIT-JEDI-REPO.iml
