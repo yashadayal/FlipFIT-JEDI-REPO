@@ -3,12 +3,14 @@ package com.flipkart.business;
 import java.util.List;
 
 public class GymOwnerService {
-    public void registerGymOwner(){
-        System.out.println("You have been registered successfully");
+    public void registerGymOwner(String name, String email, String password ){
+        System.out.println("Gym owner with email " + email + " registered successfully");
     }
-    public void loginGymOwner(){
-        System.out.println("You have been logged in successfully");
+
+    public void loginGymOwner(String username, String password){
+        System.out.println("GymOwner " + username  + " logged in Successfully\n");
     }
+
     public List<String> viewGymCenter(){
 //        List<String> gymCenter;
 //        System.out.println("List of available centers are: " + gymCenter.toString());

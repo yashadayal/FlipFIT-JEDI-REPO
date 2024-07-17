@@ -2,12 +2,18 @@ package com.flipkart.client;
 
 import java.util.Scanner;
 
-public class FlipFitApplication {
+public class FlipFitApplicationClient {
 
     static Scanner scanner = new Scanner(System.in);
+<<<<<<< HEAD:JEDI2.0-FLIPFIT-D-JAVA-POS/src/com/flipkart/client/FlipFitApplication.java
     static AdminFlipFitMenu adminClient = new AdminFlipFitMenu();
     static GymOwnerFlipFitMenu gymOwnerClient = new GymOwnerFlipFitMenu();
     static CustomerFlipFitMenu customerClient = new CustomerFlipFitMenu();
+=======
+    static AdminFlipFitMenu adminFlipFitMenu = new AdminFlipFitMenu();
+    static GymOwnerFitFlipMenu gymOwnerFitFlipMenu = new GymOwnerFitFlipMenu();
+    static CustomerFlipFitMenu customerFlipFitMenu = new CustomerFlipFitMenu();
+>>>>>>> d1230ecb2e3a5f30040bb7765ba23bde44c23aa2:JEDI2.0-FLIPFIT-D-JAVA-POS/src/com/flipkart/client/FlipFitApplicationClient.java
 
     private static void displayMainMenu() {
         System.out.println("Welcome to the Flipfit Application:");
@@ -49,18 +55,18 @@ public class FlipFitApplication {
         String username = scanner.next();
         System.out.println("Enter Password: ");
         String password = scanner.next();
-        System.out.println("Enter Role: ");
+        System.out.println("Enter Role (Admin, Gym_Owner, Customer): ");
         String role = scanner.next();
         role = role.toUpperCase();
         switch (role){
             case "ADMIN":
-                adminClient.login(username, password);
+                adminFlipFitMenu.login(username, password);
                 break;
             case "GYM_OWNER":
-                gymOwnerClient.login(username, password);
+                gymOwnerFitFlipMenu.login(username, password);
                 break;
-            case "GYM_CUSTOMER":
-                customerClient.login(username, password);
+            case "CUSTOMER":
+                customerFlipFitMenu.login(username, password);
                 break;
             default:
                 System.out.println("INVALID CHOICE");
@@ -76,7 +82,7 @@ public class FlipFitApplication {
         String email = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
-        gymOwnerClient.register(name, email, password);
+        gymOwnerFitFlipMenu.register(name, email, password);
     }
 
     private static void registerGymCustomer(){
@@ -86,7 +92,7 @@ public class FlipFitApplication {
         String email = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
-        customerClient.register(name, email, password);
+        customerFlipFitMenu.register(name, email, password);
     }
 
 
