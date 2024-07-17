@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="com.flipkart.bean/" kind="src" path="JEDI2.0-FLIPFIT-D-JAVA-POS/src"/>
-	<classpathentry kind="src" path="JEDI2.0-FLIPFIT-D-JAVA-POS/src/com.flipkart.bean"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>
