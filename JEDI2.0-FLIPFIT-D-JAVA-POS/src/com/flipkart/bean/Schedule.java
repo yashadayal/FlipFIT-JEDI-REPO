@@ -6,7 +6,6 @@ public class Schedule {
     public String getScheduleID() {
         return scheduleID;
     }
-
     public void setScheduleID(String scheduleID) {
         this.scheduleID = scheduleID;
     }
