@@ -1,6 +1,6 @@
 package com.flipkart.client;
 
-public class CustomerClient {
+public class CustomerFlipFitMenu {
     void login(String username, String password){
         System.out.println("Customer login attempt successfully");
     }

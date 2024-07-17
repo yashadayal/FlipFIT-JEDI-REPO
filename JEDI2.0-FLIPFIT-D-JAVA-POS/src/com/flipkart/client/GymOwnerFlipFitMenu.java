@@ -1,6 +1,6 @@
 package com.flipkart.client;
 
-public class GymOwnerClient {
+public class GymOwnerFlipFitMenu {
 
     void login(String username, String password){
         System.out.println("GymOwnerClient logged in Successfully");

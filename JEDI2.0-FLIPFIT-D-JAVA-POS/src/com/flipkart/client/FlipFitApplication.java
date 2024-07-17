@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class FlipFitApplication {
 
     static Scanner scanner = new Scanner(System.in);
-    static AdminClient adminClient = new AdminClient();
-    static GymOwnerClient gymOwnerClient = new GymOwnerClient();
-    static CustomerClient customerClient = new CustomerClient();
+    static AdminFlipFitMenu adminClient = new AdminFlipFitMenu();
+    static GymOwnerFlipFitMenu gymOwnerClient = new GymOwnerFlipFitMenu();
+    static CustomerFlipFitMenu customerClient = new CustomerFlipFitMenu();
 
     private static void displayMainMenu() {
         System.out.println("Welcome to the Flipfit Application:");
