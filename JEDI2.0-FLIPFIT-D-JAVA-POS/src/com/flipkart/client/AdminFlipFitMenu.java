@@ -10,6 +10,10 @@ public class AdminFlipFitMenu {
         adminService.adminLogin(username, password);
         adminMenu();
     }
+    void changeAdminPassword(String newPassword, String email){
+        adminService.changePassword(newPassword, email);
+    }
+
     void adminMenu(){
         System.out.println("\n\n--------------------WELCOME TO ADMIN MENU---------------------\n");
         System.out.println("1. View Pending Gym Owner Requests\n");

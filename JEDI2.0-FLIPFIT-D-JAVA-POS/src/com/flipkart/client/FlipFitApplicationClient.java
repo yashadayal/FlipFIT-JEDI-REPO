@@ -1,5 +1,7 @@
 package com.flipkart.client;
 
+import com.flipkart.business.AdminService;
+
 import java.util.Scanner;
 
 public class FlipFitApplicationClient {
@@ -22,13 +24,15 @@ public class FlipFitApplicationClient {
     private static void changePassword(){
         System.out.println("Enter your role");
         String role = scanner.next();
-        String pass = "";
         role = role.toUpperCase();
+        System.out.println("Enter your email");
+        String email = scanner.next();
         System.out.println("Please enter new password");
-        pass = scanner.nextLine();
+        String pass = "";
+        pass = scanner.next();
         switch (role){
             case "ADMIN":
-                System.out.println("Your password has been changed successfully");
+                adminFlipFitMenu.changeAdminPassword(pass, email);
                 break;
             case "GYM_OWNER":
                 System.out.println("Your password has been changed successfully");

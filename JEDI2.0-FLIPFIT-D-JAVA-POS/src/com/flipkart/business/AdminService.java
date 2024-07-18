@@ -1,5 +1,7 @@
 package com.flipkart.business;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 import com.flipkart.bean.Admin;
@@ -10,23 +12,28 @@ import com.flipkart.dao.AdminDAO;
 
 public class AdminService {
     public static AdminDAO adminDao = new AdminDAO();
+    private static int adminId = 0;
+    private String adminEmail = "admin@flipkart.com";
+    private static String adminPassword = "admin123";
 
-    private int generateRandomID() {
-        Random random = new Random();
-        return random.nextInt(100) + 1;
+
+    public void adminLogin(String email, String password) {
+
+        if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){
+            System.out.println("Admin with username " + email + " and password" + password + " logged in successfully.");
+        }
+        else{
+            System.out.println("Incorrect email or password.");
+        }
     }
-    public void adminLogin(String adminName, String password) {
-        addAdminData(adminName);
-        System.out.println("Admin with username " + adminName + "Logged In Successfully");
-    }
-    public void addAdminData(String adminName){
-        Admin admin = new Admin();
-        admin.setAdminId(generateRandomID());
-        admin.setAdminName(adminName);
-        admin.setRole(Role.valueOf("ADMIN"));
-        admin.setEmail("adminflipfit@flipkart.com");
-        admin.setPassword("admin123");
-//        dao impl
+
+    public void changePassword(String newPassword, String email){
+        if(!Objects.equals(email, adminEmail)){
+            System.out.println("Incorrect email.");
+            return;
+        }
+        adminPassword = newPassword;
+        System.out.println("Your password has been changed successfully" + adminPassword);
     }
 
     public ArrayList<GymOwner> viewListOfGymOwners(){
