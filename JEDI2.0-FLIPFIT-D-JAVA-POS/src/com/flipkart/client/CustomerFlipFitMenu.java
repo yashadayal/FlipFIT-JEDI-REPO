@@ -1,18 +1,24 @@
 package com.flipkart.client;
 
+import com.flipkart.bean.Customer;
 import com.flipkart.business.CustomerService;
 
 public class CustomerFlipFitMenu {
 
     private CustomerService customerService = new CustomerService();
+    Customer customer = new Customer();
+    void login(String email, String password){
 
-    void login(String username, String password){
-        customerService.loginCustomer(username, password);
+        CustomerService userBusiness = new CustomerService();
+        userBusiness.loginCustomer(email, password);
+        System.out.println("Customer logged-in successfully!");
         customerMenu();
     }
 
     void register(String name, String email, String password){
-        customerService.registerCustomer(name, email, password);
+        CustomerService userBusiness = new CustomerService();
+        userBusiness.registerCustomer(name, email, password);
+        System.out.println("Customer registered successfully!");
         customerMenu();
     }
 

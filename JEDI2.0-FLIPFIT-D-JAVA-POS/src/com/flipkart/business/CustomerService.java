@@ -1,16 +1,24 @@
 package com.flipkart.business;
 
+import com.flipkart.dao.CustomerDAO;
+
 import java.util.List;
 
 public class CustomerService {
 
-    public void registerCustomer(String name, String email, String password){
-        System.out.println("Customer with email " + email + " have been registered successfully");
+    CustomerDAO userDao = new CustomerDAO();
+    public boolean registerCustomer(String name, String email, String password)
+    {
+        boolean registerSuccess = false;
+        registerSuccess = CustomerDAO.registerCustomer(name,email,password);
+        return registerSuccess;
+
     }
 
-    public void loginCustomer(String username, String password){
-        System.out.println("Customer with "+  username + " logged in successfully");
-
+    public boolean loginCustomer(String email, String password){
+        boolean loginSuccess = false;
+        loginSuccess = CustomerDAO.loginCustomer(email,password);
+        return loginSuccess;
     }
 
     public List<String> viewGymCenter(){
