@@ -16,6 +16,9 @@ public class AdminFlipFitMenu {
         System.out.println("2. Approve Gym Owner Registration Requests\n");
         System.out.println("3. View Pending Gym Center Requests\n");
         System.out.println("4. Approve Gym Center Registration Requests\n");
+
+        // List of all gym owners
+        // list of all gym centers
         System.out.println("--------------------------------------------------------------\n");
     }
 }

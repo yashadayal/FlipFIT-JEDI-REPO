@@ -22,11 +22,10 @@ public class FlipFitApplicationClient {
     private static void changePassword(){
         System.out.println("Enter your role");
         String role = scanner.next();
-        Scanner scan = new Scanner(System.in);
         String pass = "";
         role = role.toUpperCase();
         System.out.println("Please enter new password");
-        pass = scan.nextLine();
+        pass = scanner.nextLine();
         switch (role){
             case "ADMIN":
                 System.out.println("Your password has been changed successfully");
@@ -45,8 +44,8 @@ public class FlipFitApplicationClient {
 
     private static void login(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Username: ");
-        String username = scanner.next();
+        System.out.println("Enter Email: ");
+        String email = scanner.next();
         System.out.println("Enter Password: ");
         String password = scanner.next();
         System.out.println("Enter Role (Admin, Gym_Owner, Customer): ");
@@ -54,13 +53,13 @@ public class FlipFitApplicationClient {
         role = role.toUpperCase();
         switch (role){
             case "ADMIN":
-                adminFlipFitMenu.login(username, password);
+                adminFlipFitMenu.login(email, password);
                 break;
             case "GYM_OWNER":
-                gymOwnerFlipFitMenu.login(username, password);
+                gymOwnerFlipFitMenu.login(email, password);
                 break;
             case "CUSTOMER":
-                customerFlipFitMenu.login(username, password);
+                customerFlipFitMenu.login(email, password);
                 break;
             default:
                 System.out.println("INVALID CHOICE");

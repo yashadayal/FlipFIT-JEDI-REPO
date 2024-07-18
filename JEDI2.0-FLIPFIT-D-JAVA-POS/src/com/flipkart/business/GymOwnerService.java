@@ -1,14 +1,54 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.GymOwner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class GymOwnerService {
+
+    ArrayList<GymOwner> gymOwners = new ArrayList<>();
+    HashSet<String> loggedInGymOwners = new HashSet<>();
+    HashMap<String, String> registeredGymOwners = new HashMap<>();
+
     public void registerGymOwner(String name, String email, String password ){
-        System.out.println("Gym owner with email " + email + " registered successfully");
+
+        if(registeredGymOwners.containsKey(email)){
+            System.out.println("Email already registered, Please login!\n\n");
+            return;
+        }
+
+        GymOwner gymOwner = new GymOwner();
+        gymOwner.setName(name);
+        gymOwner.setEmail(email);
+        gymOwner.setPassword(password);
+        gymOwners.add(gymOwner);
+        registeredGymOwners.put(email, password);
+        System.out.println("Gym owner with email " + email + " registered successfully\n\n");
+        // System.out.println(gymOwners.size());
+        return;
     }
 
-    public void loginGymOwner(String username, String password){
-        System.out.println("GymOwner " + username  + " logged in Successfully\n");
+    public boolean loginGymOwner(String email, String password){
+
+        if(loggedInGymOwners.contains(email)){
+            System.out.println("Gym owner with email " + email + " already logged in\n");
+            return false;
+        }
+
+        if(!registeredGymOwners.containsKey(email)){
+            System.out.println("Gym owner with email " + email + " does not exist\n");
+            return false;
+        }
+
+        if(!registeredGymOwners.get(email).equals(password)){
+            System.out.println("Incorrect password, please try again\n");
+        }
+
+        System.out.println("GymOwner " + email + " logged in Successfully\n");
+        return true;
     }
 
     public List<String> viewGymCenter(){
