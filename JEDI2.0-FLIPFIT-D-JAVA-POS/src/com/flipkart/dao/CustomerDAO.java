@@ -18,9 +18,7 @@ public class CustomerDAO {
        customer.setCustomerName(name);
        customer.setPassword(password);
        customer.setEmail(email);
-        //System.out.println(registeredCustomers.contains(customer));
        if(registeredCustomers.isEmpty()||!registeredCustomers.contains(customer)) {
-           System.out.println("start");
            registeredCustomers.add(customer);
            return true;
        }
