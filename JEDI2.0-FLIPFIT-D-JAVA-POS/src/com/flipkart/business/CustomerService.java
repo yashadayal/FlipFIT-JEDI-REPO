@@ -5,7 +5,7 @@ import java.util.List;
 public class CustomerService {
 
     public void registerCustomer(String name, String email, String password){
-        System.out.println("You have been registered successfully");
+        System.out.println("Customer with email " + email + " have been registered successfully");
     }
 
     public void loginCustomer(String username, String password){
