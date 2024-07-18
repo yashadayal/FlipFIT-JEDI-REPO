@@ -41,6 +41,7 @@ public class FlipFitApplicationClient {
                 System.out.println("Your password has been changed successfully");
                 break;
             case "CUSTOMER":
+                customerFlipFitMenu.changePassword(email, currPassword, newPassword);
                 System.out.println("Your password has been changed successfully");
                 break;
             default:

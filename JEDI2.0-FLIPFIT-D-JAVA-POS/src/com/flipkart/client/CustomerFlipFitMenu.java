@@ -60,6 +60,9 @@ public class CustomerFlipFitMenu {
 
     }
 
+    void changePassword(String email, String currPassword, String newPassword){
+        customerService.changePassword(email, currPassword, newPassword);
+    }
     void viewCenters(){
 
     }
