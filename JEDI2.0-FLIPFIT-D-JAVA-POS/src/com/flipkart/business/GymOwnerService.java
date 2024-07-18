@@ -45,10 +45,29 @@ public class GymOwnerService {
 
         if(!registeredGymOwners.get(email).equals(password)){
             System.out.println("Incorrect password, please try again\n");
+            return false;
         }
 
         System.out.println("GymOwner " + email + " logged in Successfully\n");
         return true;
+    }
+
+    public void changePassword(String email, String oldPassword, String newPassword){
+        if(!registeredGymOwners.containsKey(email)){
+            System.out.println("Gym owner with email " + email + " does not exist\n");
+            return;
+        }
+        if(!registeredGymOwners.get(email).equals(oldPassword)){
+            System.out.println("Incorrect old password, please try again\n");
+        }
+        registeredGymOwners.put(email, newPassword);
+        for(GymOwner gymOwner : gymOwners){
+            if(gymOwner.getEmail().equals(email)){
+                gymOwner.setPassword(newPassword);
+                break;
+            }
+        }
+        System.out.println("Gym owner with email " + email + " changed successfully\n");
     }
 
     public List<String> viewGymCenter(){
@@ -57,6 +76,7 @@ public class GymOwnerService {
 //        return gymCenter;
         return null;
     }
+
     public boolean addSlot(){
         System.out.println("Slot has been booked successfully");
         return true;

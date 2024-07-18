@@ -27,9 +27,13 @@ public class AdminService {
         }
     }
 
-    public void changePassword(String newPassword, String email){
+    public void changePassword(String email, String oldPassword, String newPassword){
         if(!Objects.equals(email, adminEmail)){
             System.out.println("Incorrect email.");
+            return;
+        }
+        if(!Objects.equals(oldPassword, adminPassword)){
+            System.out.println("Incorrect password.");
             return;
         }
         adminPassword = newPassword;

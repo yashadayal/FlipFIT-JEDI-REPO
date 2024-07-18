@@ -20,6 +20,10 @@ public class GymOwnerFlipFitMenu {
         gymOwnerService.registerGymOwner(name, email, password);
     }
 
+    void changePassword(String email, String currPassword, String newPassword){
+        gymOwnerService.changePassword(email, currPassword, newPassword);
+    }
+
     void gymOwnerMenu(){
         System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
         System.out.println("1. Register Gym Centers\n");

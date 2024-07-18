@@ -10,8 +10,8 @@ public class AdminFlipFitMenu {
         adminService.adminLogin(username, password);
         adminMenu();
     }
-    void changeAdminPassword(String newPassword, String email){
-        adminService.changePassword(newPassword, email);
+    void changeAdminPassword(String email, String currentPassword, String newPassword){
+        adminService.changePassword(email, currentPassword, newPassword);
     }
 
     void adminMenu(){

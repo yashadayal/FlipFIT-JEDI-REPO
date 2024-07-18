@@ -27,14 +27,17 @@ public class FlipFitApplicationClient {
         role = role.toUpperCase();
         System.out.println("Enter your email");
         String email = scanner.next();
+        System.out.println("Enter your current password");
+        String currPassword = scanner.next();
         System.out.println("Please enter new password");
-        String pass = "";
-        pass = scanner.next();
+        String newPassword = scanner.next();
+
         switch (role){
             case "ADMIN":
-                adminFlipFitMenu.changeAdminPassword(pass, email);
+                adminFlipFitMenu.changeAdminPassword(email, currPassword, newPassword);
                 break;
             case "GYM_OWNER":
+                gymOwnerFlipFitMenu.changePassword(email, currPassword, newPassword);
                 System.out.println("Your password has been changed successfully");
                 break;
             case "CUSTOMER":
