@@ -1,5 +1,8 @@
 package com.flipkart.bean;
-public class Admin{
+public class Admin extends User{
+    private int adminId;
+    private String adminName;
+
     public int getAdminId() {
         return adminId;
     }
@@ -8,15 +11,12 @@ public class Admin{
         this.adminId = adminId;
     }
 
-    public int getAdminName() {
+    public String getAdminName() {
         return adminName;
     }
 
-    public void setAdminName(int adminName) {
+    public void setAdminName(String adminName) {
         this.adminName = adminName;
     }
-
-    private int adminId;
-    private int adminName;
 
 }

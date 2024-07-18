@@ -4,13 +4,36 @@ import java.util.List;
 
 public class GymCenter{
     private int gymCenterId;
+    private String gymOwnerID;
+    private String gymCenterName;
+    private String gymCenterLocation;
+    protected String gymCenterGstin;
+    private int gymCenterCapacity;
+    private int gymCenterPrice;
+    private int isGymCenterApproved;
 
-    public String getGymCenterLocation() {
-        return gymCenterLocation;
+    public int getGymCenterCapacity() {
+        return gymCenterCapacity;
     }
 
-    public void setGymCenterLocation(String gymCenterLocation) {
-        this.gymCenterLocation = gymCenterLocation;
+    public void setGymCenterCapacity(int gymCenterCapacity) {
+        this.gymCenterCapacity = gymCenterCapacity;
+    }
+
+    public int getGymCenterPrice() {
+        return gymCenterPrice;
+    }
+
+    public void setGymCenterPrice(int gymCenterPrice) {
+        this.gymCenterPrice = gymCenterPrice;
+    }
+
+    public int getIsGymCenterApproved() {
+        return isGymCenterApproved;
+    }
+
+    public void setIsGymCenterApproved(int isGymCenterApproved) {
+        this.isGymCenterApproved = isGymCenterApproved;
     }
 
     public int getGymCenterId() {
@@ -21,24 +44,35 @@ public class GymCenter{
         this.gymCenterId = gymCenterId;
     }
 
-    public List<Slots> getSlotList() {
-        return slotList;
+    public String getGymOwnerID() {
+        return gymOwnerID;
     }
 
-    public void setSlotList(List<Slots> slotList) {
-        this.slotList = slotList;
+    public void setGymOwnerID(String gymOwnerID) {
+        this.gymOwnerID = gymOwnerID;
     }
 
-    public List<Customer> getCustomerList() {
-        return customerList;
+    public String getGymCenterName() {
+        return gymCenterName;
     }
 
-    public void setCustomerList(List<Customer> customerList) {
-        this.customerList = customerList;
+    public void setGymCenterName(String gymCenterName) {
+        this.gymCenterName = gymCenterName;
     }
 
-    private String gymCenterLocation;
-    private List<Slots> slotList;
-    private List<Customer> customerList;
+    public String getGymCenterLocation() {
+        return gymCenterLocation;
+    }
 
+    public void setGymCenterLocation(String gymCenterLocation) {
+        this.gymCenterLocation = gymCenterLocation;
+    }
+
+    public String getGstin() {
+        return gymCenterGstin;
+    }
+
+    public void setGstin(String gymCenterGstin) {
+        this.gymCenterGstin = gymCenterGstin;
+    }
 }
