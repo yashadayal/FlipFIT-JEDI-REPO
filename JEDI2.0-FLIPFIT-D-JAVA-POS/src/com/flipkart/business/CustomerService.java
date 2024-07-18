@@ -1,24 +1,34 @@
 package com.flipkart.business;
 
+import com.flipkart.bean.Customer;
 import com.flipkart.dao.CustomerDAO;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomerService {
-
-    CustomerDAO userDao = new CustomerDAO();
+    static ArrayList<Customer> registeredCustomers=new ArrayList<>();
     public boolean registerCustomer(String name, String email, String password)
     {
-        boolean registerSuccess = false;
-        registerSuccess = CustomerDAO.registerCustomer(name,email,password);
-        return registerSuccess;
-
+        Customer customer=new Customer();
+        customer.setCustomerName(name);
+        customer.setPassword(password);
+        customer.setEmail(email);
+        if(registeredCustomers.isEmpty()||!registeredCustomers.contains(customer)) {
+            registeredCustomers.add(customer);
+            return true;
+        }
+        return false;
     }
 
     public boolean loginCustomer(String email, String password){
-        boolean loginSuccess = false;
-        loginSuccess = CustomerDAO.loginCustomer(email,password);
-        return loginSuccess;
+        for(Customer it:registeredCustomers){
+            if(Objects.equals(it.getEmail(), email) && Objects.equals(it.getPassword(), password)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<String> viewGymCenter(){
