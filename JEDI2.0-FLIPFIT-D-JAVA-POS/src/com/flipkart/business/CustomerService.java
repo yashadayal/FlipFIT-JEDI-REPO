@@ -2,11 +2,8 @@ package com.flipkart.business;
 
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
-<<<<<<< Updated upstream
 import com.flipkart.bean.GymCenter;
-import com.flipkart.dao.CustomerDAO;
-=======
->>>>>>> Stashed changes
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +36,14 @@ public class CustomerService {
         return false;
     }
 
-<<<<<<< Updated upstream
-    public List<GymCenter> viewGymCenter(){
+    public List<GymCenter> viewGymCenter() {
 //        List<GymCenter> newGym = new ArrayList<GymCenter>();
 //        for (GymCenter gym : gyms) {
 //            newGym.add(gym);
 //        }
         return gyms;
-=======
+    }
+
     public void changePassword(String email, String oldPassword, String newPassword){
         boolean customerExists = false;
         boolean customerValid = false;
@@ -74,13 +71,7 @@ public class CustomerService {
 
         System.out.println("Customer with email " + email + " changed password successfully\n");
     }
-    public List<String> viewGymCenter(){
-//        List<String> gymCenter;
-//        System.out.println("List of available centers are: "+ gymCenter);
-//        return gymCenter;
-        return null;
->>>>>>> Stashed changes
-    }
+
     public boolean bookSlot(){
         System.out.println("Slot has been booked successfully");
         return true;
