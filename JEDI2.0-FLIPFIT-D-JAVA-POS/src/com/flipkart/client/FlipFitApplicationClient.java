@@ -6,7 +6,7 @@ public class FlipFitApplicationClient {
 
     static Scanner scanner = new Scanner(System.in);
     static AdminFlipFitMenu adminFlipFitMenu = new AdminFlipFitMenu();
-    static GymOwnerFitFlipMenu gymOwnerFitFlipMenu = new GymOwnerFitFlipMenu();
+    static GymOwnerFlipFitMenu gymOwnerFlipFitMenu = new GymOwnerFlipFitMenu();
     static CustomerFlipFitMenu customerFlipFitMenu = new CustomerFlipFitMenu();
 
     private static void displayMainMenu() {
@@ -57,7 +57,7 @@ public class FlipFitApplicationClient {
                 adminFlipFitMenu.login(username, password);
                 break;
             case "GYM_OWNER":
-                gymOwnerFitFlipMenu.login(username, password);
+                gymOwnerFlipFitMenu.login(username, password);
                 break;
             case "CUSTOMER":
                 customerFlipFitMenu.login(username, password);
@@ -76,7 +76,7 @@ public class FlipFitApplicationClient {
         String email = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
-        gymOwnerFitFlipMenu.register(name, email, password);
+        gymOwnerFlipFitMenu.register(name, email, password);
     }
 
     private static void registerGymCustomer(){

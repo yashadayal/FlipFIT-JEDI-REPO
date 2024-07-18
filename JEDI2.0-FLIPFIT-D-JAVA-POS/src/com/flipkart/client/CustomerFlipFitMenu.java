@@ -23,12 +23,6 @@ public class CustomerFlipFitMenu {
         System.out.println("3. Cancel My Bookings\n");
         System.out.println("4. Book Slots\n");
         System.out.println("-----------------------------------------------------------------\n");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     void viewCenters(){
