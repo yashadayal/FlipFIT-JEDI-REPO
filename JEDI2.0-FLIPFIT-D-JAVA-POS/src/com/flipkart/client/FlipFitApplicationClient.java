@@ -5,15 +5,9 @@ import java.util.Scanner;
 public class FlipFitApplicationClient {
 
     static Scanner scanner = new Scanner(System.in);
-<<<<<<< HEAD:JEDI2.0-FLIPFIT-D-JAVA-POS/src/com/flipkart/client/FlipFitApplication.java
-    static AdminFlipFitMenu adminClient = new AdminFlipFitMenu();
-    static GymOwnerFlipFitMenu gymOwnerClient = new GymOwnerFlipFitMenu();
-    static CustomerFlipFitMenu customerClient = new CustomerFlipFitMenu();
-=======
     static AdminFlipFitMenu adminFlipFitMenu = new AdminFlipFitMenu();
     static GymOwnerFitFlipMenu gymOwnerFitFlipMenu = new GymOwnerFitFlipMenu();
     static CustomerFlipFitMenu customerFlipFitMenu = new CustomerFlipFitMenu();
->>>>>>> d1230ecb2e3a5f30040bb7765ba23bde44c23aa2:JEDI2.0-FLIPFIT-D-JAVA-POS/src/com/flipkart/client/FlipFitApplicationClient.java
 
     private static void displayMainMenu() {
         System.out.println("Welcome to the Flipfit Application:");

@@ -1,11 +1,5 @@
 package com.flipkart.client;
 
-<<<<<<< HEAD
-public class AdminFlipFitMenu {
-
-    void login(String username, String password) {
-        System.out.println("Admin Logged In Successfully");
-=======
 import com.flipkart.business.AdminService;
 
 public class AdminFlipFitMenu {
@@ -23,6 +17,5 @@ public class AdminFlipFitMenu {
         System.out.println("3. View Pending Gym Center Requests\n");
         System.out.println("4. Approve Gym Center Registration Requests\n");
         System.out.println("--------------------------------------------------------------\n");
->>>>>>> d1230ecb2e3a5f30040bb7765ba23bde44c23aa2
     }
 }
