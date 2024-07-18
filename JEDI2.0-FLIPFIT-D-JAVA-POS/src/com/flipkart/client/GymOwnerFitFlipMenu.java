@@ -23,6 +23,11 @@ public class GymOwnerFitFlipMenu {
         System.out.println("3. Add Slots in your Gym Centers\n");
         System.out.println("4. View Status of your Gym Center Application\n");
         System.out.println("-----------------------------------------------------------------\n");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
     void getGymCenterList(){}
 
