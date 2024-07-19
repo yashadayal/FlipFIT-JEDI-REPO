@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class AdminFlipFitMenu {
 
     static AdminService adminService = new AdminService();
-
+    Scanner scanner = new Scanner(System.in);
     void login(String username, String password) {
         adminService.adminLogin(username, password);
         adminMenu();
@@ -17,32 +17,33 @@ public class AdminFlipFitMenu {
 
     void adminMenu(){
         System.out.println("\n\n--------------------WELCOME TO ADMIN MENU---------------------\n");
-        System.out.println("1. View Pending Gym Owner Requests\n");
-        System.out.println("2. Approve Gym Owner Registration Requests\n");
-        System.out.println("3. View Pending Gym Center Requests\n");
-        System.out.println("4. Approve Gym Center Registration Requests\n");
+        System.out.println("1. View All Gym Owners\n");
+        System.out.println("2. View All Gym Centers\n");
+        System.out.println("3. View Pending Gym Owner Requests\n");
+        System.out.println("4. View Pending Gym Center Requests\n");
         System.out.println("5. Previous Menu\n");
-
-        // List of all gym owners
-        // list of all gym centers
         System.out.println("--------------------------------------------------------------\n");
+
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    adminService.viewPendingListOfGymOwners();
+                    adminService.viewListOfGymOwners();
+                    prevMenuForAdmin();
                     break;
                 case 2:
-//                    adminService.;
-//                    break;
+                    adminService.viewListOfGymCenters();
+                    prevMenuForAdmin();
+                    break;
                 case 3:
-                    adminService.viewPendingListOfGymCenters();
+                    adminService.viewPendingListOfGymOwners();
+                    prevMenuForAdmin();
                     break;
                 case 4:
-//                    changePassword();
-//                    break;
+                    adminService.viewPendingListOfGymCenters();
+                    prevMenuForAdmin();
+                    break;
                 case 5:
                     break;
                 default:
@@ -51,6 +52,16 @@ public class AdminFlipFitMenu {
             if (choice == 5) {
                 break;
             }
+        }
+    }
+    void prevMenuForAdmin(){
+        System.out.println("\n\n1. Previous Menu");
+        int choice = scanner.nextInt();
+        if (choice==1){
+            adminMenu();
+        }
+        else{
+            System.out.println("Invalid Choice. Please press 1.");
         }
     }
 }

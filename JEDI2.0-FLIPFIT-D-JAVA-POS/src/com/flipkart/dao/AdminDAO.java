@@ -21,15 +21,19 @@ public class AdminDAO {
         return null;
     }
     public ArrayList<GymOwner> getListOfGymOwners(){
+        System.out.println("list of gym owners");
         return null;
     }
     public ArrayList<GymCenter> getListOfGymCenters(){
+        System.out.println("list of gym centers");
         return null;
     }
     public ArrayList<GymOwner> getListOfPendingGymOwners(){
+        System.out.println("Pending list of gym owners");
         return null;
     }
     public ArrayList<GymCenter> getListOfPendingGymCenters(){
+        System.out.println("Pending list of gym centers");
         return null;
     }
 }
