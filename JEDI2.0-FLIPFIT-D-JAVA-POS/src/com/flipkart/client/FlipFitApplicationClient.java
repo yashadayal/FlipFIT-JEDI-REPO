@@ -38,11 +38,9 @@ public class FlipFitApplicationClient {
                 break;
             case "GYM_OWNER":
                 gymOwnerFlipFitMenu.changePassword(email, currPassword, newPassword);
-                System.out.println("Your password has been changed successfully");
                 break;
             case "CUSTOMER":
                 customerFlipFitMenu.changePassword(email, currPassword, newPassword);
-                System.out.println("Your password has been changed successfully");
                 break;
             default:
                 System.out.println("INVALID CHOICE");
