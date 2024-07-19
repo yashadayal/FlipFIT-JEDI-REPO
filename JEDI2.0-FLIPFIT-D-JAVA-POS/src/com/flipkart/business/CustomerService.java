@@ -36,6 +36,9 @@ public class CustomerService {
         return false;
     }
 
+    public void viewProfile(){
+        return;
+    }
     public List<GymCenter> viewGymCenter() {
 //        List<GymCenter> newGym = new ArrayList<GymCenter>();
 //        for (GymCenter gym : gyms) {
@@ -81,6 +84,7 @@ public class CustomerService {
         System.out.println("Slot has been canceled successfully");
         return true;
     }
+
     public List<Booking> viewBooking(String email) {
 
         List<Booking> customerBookings = new ArrayList<Booking>();
@@ -92,6 +96,7 @@ public class CustomerService {
         }
         return customerBookings;
     }
+
     public boolean deleteBookings(String email){
         boolean bookingSuccess=false;
         for (Booking booking : bookings) {
@@ -107,4 +112,8 @@ public class CustomerService {
         return false;
     }
 
+    public boolean logout(){
+//        System.out.println("Slot has been booked successfully");
+        return true;
+    }
 }
