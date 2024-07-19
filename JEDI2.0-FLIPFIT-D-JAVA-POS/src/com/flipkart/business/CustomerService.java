@@ -7,7 +7,6 @@ import com.flipkart.dao.CustomerDAO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CustomerService {
     static ArrayList<Customer> registeredCustomers=new ArrayList<>();
@@ -26,12 +25,10 @@ public class CustomerService {
     }
 
     public boolean loginCustomer(String email, String password){
-        for(Customer it:registeredCustomers){
-            if(Objects.equals(it.getEmail(), email) && Objects.equals(it.getPassword(), password)){
-                return true;
-            }
-        }
-        return false;
+
+        System.out.println("Customer running");
+        boolean loginSuccess = userDao.loginCustomer(email, password);
+        return loginSuccess;
     }
 
     public void changePassword(String email, String oldPassword, String newPassword){
