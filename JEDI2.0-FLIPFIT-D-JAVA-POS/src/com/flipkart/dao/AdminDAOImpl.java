@@ -6,7 +6,7 @@ import com.flipkart.bean.GymOwner;
 
 import java.util.ArrayList;
 
-public class AdminDAO{
+public class AdminDAOImpl{
     private static int adminCount = 0;
     private static String password = "";
     public int getAdminCount() {

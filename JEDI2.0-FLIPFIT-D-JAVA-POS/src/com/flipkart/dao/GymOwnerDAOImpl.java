@@ -1,6 +1,6 @@
 package com.flipkart.dao;
 
-public class GymOwnerDAO{
+public class GymOwnerDAOImpl{
     public void sendOwnerApprovalRequest(String gymOwnerId){
 
     }

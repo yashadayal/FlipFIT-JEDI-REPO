@@ -2,7 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Customer;
 
-public class CustomerDAO {
+public class CustomerDAOImpl {
 
 
    public void getCustomerById(Integer id){

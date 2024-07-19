@@ -8,10 +8,10 @@ import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Role;
-import com.flipkart.dao.AdminDAO;
+import com.flipkart.dao.AdminDAOImpl;
 
 public class AdminService {
-    public static AdminDAO adminDao = new AdminDAO();
+    public static AdminDAOImpl adminDao = new AdminDAOImpl();
     private static int adminId = 0;
     private String adminEmail = "admin@flipkart.com";
     private static String adminPassword = "admin123";
