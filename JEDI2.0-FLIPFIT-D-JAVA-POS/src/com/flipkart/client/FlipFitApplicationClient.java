@@ -2,6 +2,7 @@ package com.flipkart.client;
 
 import com.flipkart.business.AdminService;
 
+import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
 public class FlipFitApplicationClient {
@@ -11,7 +12,8 @@ public class FlipFitApplicationClient {
     static GymOwnerFlipFitMenu gymOwnerFlipFitMenu = new GymOwnerFlipFitMenu();
     static CustomerFlipFitMenu customerFlipFitMenu = new CustomerFlipFitMenu();
 
-    private static void displayMainMenu() {
+    public static void displayMainMenu() {
+        System.out.println("\n----------------------------------------------------------");
         System.out.println("Welcome to the Flipfit Application:");
         System.out.println("1. Login");
         System.out.println("2. Registration of the GYM Customer");
@@ -96,8 +98,6 @@ public class FlipFitApplicationClient {
 
 
     public static void main(String[] args) {
-
-
         while (true) {
             displayMainMenu();
             Scanner scanner = new Scanner(System.in);

@@ -51,9 +51,8 @@ public class AdminService {
             System.out.println("Incorrect password.");
             return;
         }
-        adminPassword = newPassword;
-
-        System.out.println("Your password has been changed successfully" + adminPassword);
+        adminDao.setPassword(newPassword);
+        System.out.println("Your password has been changed successfully" + newPassword);
     }
 
     public ArrayList<GymOwner> viewListOfGymOwners(){

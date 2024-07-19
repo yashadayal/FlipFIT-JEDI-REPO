@@ -4,13 +4,13 @@ import java.util.List;
 
 public class GymCenter{
     private int gymCenterId;
-    private String gymOwnerID;
+    private int gymOwnerID;
     private String gymCenterName;
     private String gymCenterLocation;
-    protected String gymCenterGstin;
+    protected String gymCenterGSTin;
     private int gymCenterCapacity;
     private int gymCenterPrice;
-    private int isGymCenterApproved;
+    private boolean isGymCenterApproved;
 
     public int getGymCenterCapacity() {
         return gymCenterCapacity;
@@ -28,11 +28,11 @@ public class GymCenter{
         this.gymCenterPrice = gymCenterPrice;
     }
 
-    public int getIsGymCenterApproved() {
+    public boolean getIsGymCenterApproved() {
         return isGymCenterApproved;
     }
 
-    public void setIsGymCenterApproved(int isGymCenterApproved) {
+    public void setIsGymCenterApproved(boolean isGymCenterApproved) {
         this.isGymCenterApproved = isGymCenterApproved;
     }
 
@@ -44,11 +44,11 @@ public class GymCenter{
         this.gymCenterId = gymCenterId;
     }
 
-    public String getGymOwnerID() {
+    public int getGymOwnerID() {
         return gymOwnerID;
     }
 
-    public void setGymOwnerID(String gymOwnerID) {
+    public void setGymOwnerID(int gymOwnerID) {
         this.gymOwnerID = gymOwnerID;
     }
 
@@ -69,10 +69,10 @@ public class GymCenter{
     }
 
     public String getGstin() {
-        return gymCenterGstin;
+        return gymCenterGSTin;
     }
 
     public void setGstin(String gymCenterGstin) {
-        this.gymCenterGstin = gymCenterGstin;
+        this.gymCenterGSTin = gymCenterGstin;
     }
 }
