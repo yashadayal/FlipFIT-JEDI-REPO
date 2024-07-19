@@ -34,6 +34,31 @@ public class CustomerService {
         return false;
     }
 
+    public void changePassword(String email, String oldPassword, String newPassword){
+        boolean customerExists = false;
+        boolean customerValid = false;
+        for (Customer customer : registeredCustomers) {
+            if (customer.getEmail().equals(email)) {
+                customerExists = true;
+                if(customer.getPassword().equals(oldPassword)) {
+                    customer.setPassword(newPassword);
+                    customerValid = true;
+                }
+                break;
+            }
+        }
+        if (!customerExists) {
+            System.out.println("Customer with email " + email + " does not exist\n");
+            return;
+        }
+        if (!customerValid) {
+            System.out.println("Incorrect old password, please try again\n");
+            return;
+        }
+
+        System.out.println("Customer with email " + email + " changed password successfully\n");
+    }
+
     public void viewProfile(){
         return;
     }
