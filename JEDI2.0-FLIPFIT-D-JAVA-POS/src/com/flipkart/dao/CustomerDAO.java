@@ -2,7 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.Customer;
 import com.flipkart.jdbc.DBUtils;
-
+import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,8 +54,32 @@ public class CustomerDAO {
   }
  }
 
- public static void loginCustomer(String email, String password){
+ public static boolean loginCustomer(String email, String password) {
+  Connection connection = null;
+  PreparedStatement preparedStatement = null;
+  boolean loginSuccess = false;
 
+  String query = "SELECT * FROM flipfit_customer WHERE email = ? AND password = ?";
+  try {
+   connection = DBUtils.getConnection();
+   preparedStatement = connection.prepareStatement(query);
+   preparedStatement.setString(1, email);
+   preparedStatement.setString(2, password);
 
-    }
+   ResultSet resultSet = preparedStatement.executeQuery();
+   if (resultSet.next()) {
+    // Customer found, login successful
+    loginSuccess = true;
+    System.out.println("Login successful for email: " + email);
+   } else {
+    // Customer not found or credentials do not match
+    System.out.println("Login failed for email: " + email);
+   }
+  } catch (SQLException e) {
+   printSQLException(e);
+  }
+
+  return loginSuccess;
+ }
+}
 }
