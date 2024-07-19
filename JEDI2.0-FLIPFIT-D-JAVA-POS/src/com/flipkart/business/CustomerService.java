@@ -13,17 +13,16 @@ public class CustomerService {
     static ArrayList<Customer> registeredCustomers=new ArrayList<>();
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
+    CustomerDAO userDao = new CustomerDAO();
     public boolean registerCustomer(String name, String email, String password)
     {
         Customer customer=new Customer();
         customer.setCustomerName(name);
         customer.setPassword(password);
         customer.setEmail(email);
-        if(registeredCustomers.isEmpty()||!registeredCustomers.contains(customer)) {
-            registeredCustomers.add(customer);
-            return true;
-        }
-        return false;
+        boolean registerSuccess = false;
+        registerSuccess = userDao.registerCustomer(customer);
+        return registerSuccess;
     }
 
     public boolean loginCustomer(String email, String password){
