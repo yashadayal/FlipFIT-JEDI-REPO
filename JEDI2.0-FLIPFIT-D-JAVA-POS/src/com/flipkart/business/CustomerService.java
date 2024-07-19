@@ -34,6 +34,10 @@ public class CustomerService {
         return false;
     }
 
+    public void viewProfile(){
+        return;
+    }
+
     public List<GymCenter> viewGymCenter(){
 //        List<GymCenter> newGym = new ArrayList<GymCenter>();
 //        for (GymCenter gym : gyms) {
@@ -74,6 +78,11 @@ public class CustomerService {
             return true;
         }
         return false;
+    }
+
+    public boolean logout(){
+//        System.out.println("Slot has been booked successfully");
+        return true;
     }
 
 }
