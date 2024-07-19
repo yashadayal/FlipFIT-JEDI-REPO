@@ -44,9 +44,23 @@ public class AdminDAO {
         }
     }
 
-    public void setPassword(String pass){
-        password = pass;
-//      update pass in database
+    public void setPassword(String pass) {
+        this.password = pass;
+
+        try {
+            Connection connection = DBUtils.getConnection();
+            PreparedStatement stmt = connection.prepareStatement("UPDATE admins SET password = ? limit 1");
+            stmt.setString(1, pass);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Password updated successfully.");
+            } else {
+                System.out.println("Failed to update password. No rows affected.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public ArrayList<Admin> getAdminData(){
         return null;
