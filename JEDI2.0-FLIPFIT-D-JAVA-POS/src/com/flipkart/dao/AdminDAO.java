@@ -6,18 +6,16 @@ import com.flipkart.bean.GymOwner;
 
 import java.util.ArrayList;
 
-public class AdminDAOImpl{
-    private static int adminCount = 0;
+public class AdminDAO {
     private static String password = "";
-    public int getAdminCount() {
-        return adminCount;
+
+    public void setAdminData(){
+//      take admin data from service layer and save in db
     }
 
-    public void addAdmin() {
-        adminCount++;
-    }
     public void setPassword(String pass){
         password = pass;
+//      update pass in database
     }
     public ArrayList<Admin> getAdminData(){
         return null;
