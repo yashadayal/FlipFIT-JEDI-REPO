@@ -30,28 +30,34 @@ public class CustomerFlipFitMenu {
     void customerMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n\n--------------------WELCOME TO CUSTOMER MENU---------------------\n");
-        System.out.println("1. View all Gym Centers\n");
-        System.out.println("2. View My Bookings\n");
-        System.out.println("3. Cancel My Bookings\n");
-        System.out.println("4. Book Slots\n");
+        System.out.println("1. View Profile\n");
+        System.out.println("2. Book Slot\n");
+        System.out.println("3. View Booking\n");
+        System.out.println("4. Cancel Booking\n");
+        System.out.println("5. Logout");
         System.out.println("-----------------------------------------------------------------\n");
+        System.out.println("Enter your choice: ");
         Integer customerOptions = scanner.nextInt();
         switch (customerOptions){
             case 1:
-                customerService.viewGymCenter();
-                System.out.println("Successfully showed all Centers");
+                customerService.viewProfile();
+                System.out.println("Successfully showed customer profile");
                 break;
             case 2:
+                customerService.bookSlot();
+                System.out.println("Successfully booked slot");
+                break;
+            case 3:
                 customerService.viewBooking(customerEmail);
                 System.out.println("Successfully viewed the booking");
                 break;
-            case 3:
+            case 4:
                 customerService.deleteBookings(customerEmail);
                 System.out.println("Successfully deleted all bookings");
                 break;
-            case 4:
-                customerService.bookSlot();
-                System.out.println("Successfully booked the booking");
+            case 5:
+                customerService.logout();
+                System.out.println("Successfully logged out");
                 break;
             default:
                 System.out.println("INVALID CHOICE");
@@ -60,6 +66,9 @@ public class CustomerFlipFitMenu {
 
     }
 
+    void changePassword(String email, String currPassword, String newPassword){
+        customerService.changePassword(email, currPassword, newPassword);
+    }
     void viewCenters(){
 
     }

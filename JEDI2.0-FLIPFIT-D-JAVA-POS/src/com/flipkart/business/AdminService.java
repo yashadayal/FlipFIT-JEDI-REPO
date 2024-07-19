@@ -37,6 +37,7 @@ public class AdminService {
             return;
         }
         adminPassword = newPassword;
+
         System.out.println("Your password has been changed successfully" + adminPassword);
     }
 

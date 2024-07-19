@@ -12,7 +12,7 @@ public class GymOwnerFlipFitMenu {
 
     void login(String email, String password){
         if(gymOwnerService.loginGymOwner(email, password)) {
-            gymOwnerMenu();
+            gymOwnerMenu(email);
         }
     }
 
@@ -24,7 +24,7 @@ public class GymOwnerFlipFitMenu {
         gymOwnerService.changePassword(email, currPassword, newPassword);
     }
 
-    void gymOwnerMenu(){
+    void gymOwnerMenu(String email){
         System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
         System.out.println("1. Register Gym Centers\n");
         System.out.println("2. View All Gym Centers And Slots\n");
@@ -32,9 +32,16 @@ public class GymOwnerFlipFitMenu {
         System.out.println("4. View Status of your Gym Center Application\n");
         System.out.println("5. Log out\n");
         System.out.println("-----------------------------------------------------------------\n");
+        System.out.println("Enter your choice: ");
         int choice = scanner.nextInt();
-        // apply for approval
-        // take documents for while registering gym
+        switch (choice){
+            case 1:
+            case 2:
+            case 3:
+        }
+
+
+
         System.out.println("----------TO BE IMPLEMENTED---------");
     }
     void getGymCenterList(){}
