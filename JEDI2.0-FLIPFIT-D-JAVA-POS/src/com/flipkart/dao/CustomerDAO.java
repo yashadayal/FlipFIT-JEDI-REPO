@@ -8,20 +8,24 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 public class CustomerDAO {
 
-
+   static Integer customerId=0;
    public void getCustomerById(Integer id){
 
     }
     public static boolean registerCustomer(Customer customer) {
      Connection connection = null;
      boolean registerSuccess = false;
-     String query = "INSERT INTO customer VALUES (?,?,?)";
+     String query = "INSERT INTO flipfit_customer VALUES (?,?,?,?,?)";
      try {
+      customerId++;
       connection = DBUtils.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setString(1, customer.getEmail());
+      preparedStatement.setInt(1,customerId);
+
       preparedStatement.setString(2, customer.getCustomerName());
-      preparedStatement.setString(3, customer.getPassword());
+      preparedStatement.setInt(3,1);
+      preparedStatement.setString(4, customer.getEmail());
+      preparedStatement.setString(5, customer.getPassword());
 
       int rowsAffected = preparedStatement.executeUpdate();
       if (rowsAffected != 0)

@@ -22,7 +22,7 @@ public class AdminService {
         try {
 
             Properties prop = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("/Users/palak.sharma1/Desktop/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
+            FileInputStream fileInputStream = new FileInputStream("/Users/jhanvi.j/Documents/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
             prop.load(fileInputStream);
              adminEmail = prop.getProperty("adminEmail");
              adminPassword = prop.getProperty("adminPassword");
