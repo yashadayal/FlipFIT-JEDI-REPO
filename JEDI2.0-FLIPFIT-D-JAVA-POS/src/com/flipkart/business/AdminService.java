@@ -8,10 +8,10 @@ import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Role;
-import com.flipkart.dao.AdminDAOImpl;
+import com.flipkart.dao.AdminDAO;
 
 public class AdminService {
-    public static AdminDAOImpl adminDao = new AdminDAOImpl();
+    public static AdminDAO adminDao = new AdminDAO();
     private static int adminId = 0;
     private String adminEmail = "admin@flipkart.com";
     private static String adminPassword = "admin123";
@@ -36,9 +36,8 @@ public class AdminService {
             System.out.println("Incorrect password.");
             return;
         }
-        adminPassword = newPassword;
-
-        System.out.println("Your password has been changed successfully" + adminPassword);
+        adminDao.setPassword(newPassword);
+        System.out.println("Your password has been changed successfully" + newPassword);
     }
 
     public ArrayList<GymOwner> viewListOfGymOwners(){
