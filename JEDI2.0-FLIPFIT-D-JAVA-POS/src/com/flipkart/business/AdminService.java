@@ -1,22 +1,37 @@
 package com.flipkart.business;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
-
+import java.io.IOException;
+import java.sql.DriverManager;
+import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
 import com.flipkart.bean.Role;
 import com.flipkart.dao.AdminDAO;
+import java.util.Properties;
+
+
 
 public class AdminService {
     public static AdminDAO adminDao = new AdminDAO();
     private static int adminId = 0;
-    private String adminEmail = "admin@flipkart.com";
-    private static String adminPassword = "admin123";
+    String adminEmail="";
+    String adminPassword="";
+    public AdminService() {
+        try {
 
+            Properties prop = new Properties();
+            FileInputStream fileInputStream = new FileInputStream("/Users/palak.sharma1/Desktop/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
+            prop.load(fileInputStream);
+             adminEmail = prop.getProperty("adminEmail");
+             adminPassword = prop.getProperty("adminPassword");
+            adminDao.setAdminData(adminEmail,adminPassword);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void adminLogin(String email, String password) {
 
         if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){

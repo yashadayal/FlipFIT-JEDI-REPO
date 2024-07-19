@@ -16,7 +16,8 @@ public class CustomerDAO {
      Connection connection = null;
      boolean registerSuccess = false;
      String query = "INSERT INTO customer VALUES (?,?,?)";
-     try {connection = DBUtils.getConnection();
+     try {
+      connection = DBUtils.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
       preparedStatement.setString(1, customer.getEmail());
       preparedStatement.setString(2, customer.getCustomerName());
