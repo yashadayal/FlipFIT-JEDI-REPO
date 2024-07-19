@@ -56,8 +56,17 @@ public class CustomerService {
         System.out.println("Customer with email " + email + " changed password successfully\n");
     }
 
-    public void viewProfile(){
-        return;
+    public void viewProfile(String email){
+        Customer customerDetails= userDao.viewProfile(email);
+        if (customerDetails != null) {
+            System.out.println("Customer ID: " + customerDetails.getCustomerId());
+            System.out.println("Name: " + customerDetails.getCustomerName());
+            System.out.println("Phone: " + customerDetails.getCustomerPhone());
+            System.out.println("Address: " + customerDetails.getCustomerAddress());
+            System.out.println("Email: " + customerDetails.getEmail());
+        } else {
+            System.out.println("Customer not found!");
+        }
     }
 
     public List<GymCenter> viewGymCenter(){

@@ -47,7 +47,7 @@ public class CustomerFlipFitMenu {
         Integer customerOptions = scanner.nextInt();
         switch (customerOptions){
             case 1:
-                customerService.viewProfile();
+                customerService.viewProfile(customerEmail);
                 System.out.println("Successfully showed customer profile");
                 break;
             case 2:
