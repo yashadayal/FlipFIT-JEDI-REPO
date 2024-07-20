@@ -1,7 +1,10 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Customer;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.SQLExceptionHandler;
+import com.flipkart.exceptions.WrongCredentialException;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.ResultSet;
@@ -18,7 +21,7 @@ public class CustomerDAO {
 
     }
 
-    public static boolean registerCustomer(Customer customer) {
+    public static boolean registerCustomer(Customer customer) throws SQLException, RegistrationFailedException {
         Connection connection = null;
         boolean registerSuccess = false;
         String query = "INSERT INTO flipfit_customer VALUES (?,?,?,?,?)";
@@ -44,7 +47,7 @@ public class CustomerDAO {
         return registerSuccess;
     }
 
-    public static Customer viewProfile(String email) {
+    public static Customer viewProfile(String email) throws SQLException{
         Connection connection = null;
         Customer customer = null;
         String query = "SELECT customerId, customerName, customerPhone, customerAddress, email, password FROM Customer WHERE email = ?";
@@ -82,7 +85,7 @@ public class CustomerDAO {
         return customer;
     }
 
-    public static boolean loginCustomer(String email, String password) {
+    public static boolean loginCustomer(String email, String password) throws LoginFailedException, SQLException, WrongCredentialException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         boolean loginSuccess = false;

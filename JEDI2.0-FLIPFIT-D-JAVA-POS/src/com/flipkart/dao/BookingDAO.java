@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.exceptions.BookingFailedException;
 import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
@@ -13,7 +14,7 @@ public class BookingDAO {
     private final SlotDAO slotDao = new SlotDAO();
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
 
-    public void bookSlot(int customerId, int slotId) {
+    public void bookSlot(int customerId, int slotId) throws BookingFailedException,SQLException {
         try {
             String insertQuery = "INSERT INTO flipfit_booking (customerId, slotId) VALUES (?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
@@ -38,7 +39,7 @@ public class BookingDAO {
             sqlExceptionHandler.printSQLException(e);
         }
     }
-    public void cancelBooking(){
+    public void cancelBooking() throws BookingFailedException, SQLException{
 
     }
 }

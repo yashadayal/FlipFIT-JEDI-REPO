@@ -1,16 +1,15 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.GymCenter;
-import com.flipkart.exceptions.SQLExceptionHandler;
+import com.flipkart.exceptions.GymCentreNotFoundException;
+import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.*;
-import java.util.List;
 
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
 
-    private int getOwnerIdByEmail(String email) throws SQLException {
+    private int getOwnerIdByEmail(String email) throws GymCentreNotFoundException, SQLException {
         String query = "SELECT ownerId FROM flipfit_gymowner WHERE ownerEmail = ?";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         stmt1.setString(1, email);
@@ -20,7 +19,7 @@ public class GymCenterDAO {
         return ownerId;
     }
 
-    public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws SQLException {
+    public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
         int ownerId = getOwnerIdByEmail(email);
         String query = "INSERT INTO flipfit_gymcenter (gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice, ownerId) VALUES (?, ?, ?, ?, ?)";
@@ -34,7 +33,7 @@ public class GymCenterDAO {
         System.out.println("Gym center registered successfully. Pending for approval");
     }
 
-    public void viewGymCenterByEmail(String email) throws SQLException {
+    public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
 
         int ownerId = getOwnerIdByEmail(email);
         String query = "SELECT * FROM flipfit_gymcenter WHERE ownerId = ?";
@@ -52,7 +51,7 @@ public class GymCenterDAO {
     }
 
 
-    public void viewAllGymCenters() throws SQLException {
+    public void viewAllGymCenters() throws GymCentreNotFoundException, SQLException {
 
         String query = "SELECT * FROM flipfit_gymcenter";
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -69,7 +68,7 @@ public class GymCenterDAO {
         }
     }
 
-    public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws SQLException {
+    public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws GymCentreNotFoundException, SQLException {
         String query = "SELECT * FROM flipfit_gymcenter WHERE gymCenterId = ?";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         stmt1.setString(1, gymCenterId);
@@ -80,7 +79,7 @@ public class GymCenterDAO {
         return rs.getBoolean("isGymCenterApproved");
     }
 
-    public void viewPendingGymCentersList() throws SQLException {
+    public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
         String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
@@ -96,7 +95,7 @@ public class GymCenterDAO {
         }
     }
 
-    public void incrementCapacity(int gymCenterId)  throws SQLException {
+    public void incrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
         String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
 
@@ -105,7 +104,7 @@ public class GymCenterDAO {
         preparedStatement.executeUpdate();
     }
 
-    public void decrementCapacity(int gymCenterId)  throws SQLException {
+    public void decrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
         String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity - 1 WHERE gymcenterId = ?";
 

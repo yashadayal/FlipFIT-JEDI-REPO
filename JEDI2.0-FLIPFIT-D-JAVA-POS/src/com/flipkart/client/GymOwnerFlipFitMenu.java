@@ -2,6 +2,10 @@ package com.flipkart.client;
 
 import com.flipkart.business.GymCenterService;
 import com.flipkart.business.GymOwnerService;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -14,7 +18,7 @@ public class GymOwnerFlipFitMenu {
     private GymCenterService gymCenterService = new GymCenterService();
 
 
-    void gymOwnerMenu(String email) throws SQLException {
+    void gymOwnerMenu(String email) throws GymOwnerNotFoundException, SQLException {
         System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
         System.out.println("1. View Status of Gym Owner Approval Request\n");
         System.out.println("2. Register Gym Center\n");
@@ -59,13 +63,13 @@ public class GymOwnerFlipFitMenu {
         }
 
     }
-    void login(String email, String password) throws SQLException {
+    void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException {
         if(gymOwnerService.loginGymOwner(email, password)) {
             gymOwnerMenu(email);
         }
     }
 
-    void registerGymOwner() throws SQLException {
+    void registerGymOwner() throws GymOwnerNotFoundException, SQLException, RegistrationFailedException {
         System.out.println("Enter Name: ");
         String name = scanner.next();
         System.out.println("Enter Email: ");
@@ -75,7 +79,7 @@ public class GymOwnerFlipFitMenu {
         gymOwnerService.registerGymOwner(name, email, password);
     }
 
-    void changePassword(String email, String currPassword, String newPassword) throws SQLException {
+    void changePassword(String email, String currPassword, String newPassword) throws GymOwnerNotFoundException, SQLException, WrongCredentialException {
         gymOwnerService.changePassword(email, currPassword, newPassword);
     }
 

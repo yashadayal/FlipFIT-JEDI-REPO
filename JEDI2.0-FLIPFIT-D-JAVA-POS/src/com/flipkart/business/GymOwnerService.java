@@ -2,6 +2,10 @@ package com.flipkart.business;
 
 import com.flipkart.bean.GymOwner;
 import com.flipkart.dao.GymOwnerDAO;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,19 +23,19 @@ public class GymOwnerService {
 
     private GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
 
-    public void registerGymOwner(String name, String email, String password ) throws SQLException {
+    public void registerGymOwner(String name, String email, String password ) throws GymOwnerNotFoundException,SQLException, RegistrationFailedException {
         gymOwnerDAO.registerGymOwner(name, email, password);
     }
 
-    public boolean loginGymOwner(String email, String password) throws SQLException {
+    public boolean loginGymOwner(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException {
         return gymOwnerDAO.gymOwnerLogin(email, password);
     }
 
-    public void changePassword(String email, String oldPassword, String newPassword) throws SQLException {
+    public void changePassword(String email, String oldPassword, String newPassword) throws GymOwnerNotFoundException, SQLException, WrongCredentialException {
         gymOwnerDAO.changeGymOwnerPassword(email, oldPassword, newPassword);
     }
 
-    public void checkOwnerStatusByEmail(String email) throws SQLException {
+    public void checkOwnerStatusByEmail(String email) throws GymOwnerNotFoundException, SQLException {
         gymOwnerDAO.checkOwnerStatusByEmail(email);
     }
 

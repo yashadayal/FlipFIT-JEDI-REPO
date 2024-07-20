@@ -1,15 +1,17 @@
 package com.flipkart.business;
 import java.io.IOException;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
-import java.io.FileNotFoundException;
 import java.io.FileInputStream;
-import com.flipkart.bean.Admin;
+
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
-import com.flipkart.bean.Role;
 import com.flipkart.dao.AdminDAO;
+import com.flipkart.exceptions.GymCentreNotFoundException;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
+
 import java.util.Properties;
 
 
@@ -32,9 +34,11 @@ public class AdminService {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-    public boolean adminLogin(String email, String password) {
+    public boolean adminLogin(String email, String password) throws LoginFailedException, WrongCredentialException {
 
         if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){
             System.out.println("Admin with username " + email + " logged in successfully.");
@@ -45,7 +49,7 @@ public class AdminService {
         return false;
     }
 
-    public void changePassword(String email, String oldPassword, String newPassword){
+    public void changePassword(String email, String oldPassword, String newPassword) throws SQLException, WrongCredentialException {
         if(!Objects.equals(email, adminEmail)){
             System.out.println("Incorrect email.");
             return;
@@ -58,16 +62,16 @@ public class AdminService {
         System.out.println("Your password has been changed successfully" + newPassword);
     }
 
-    public ArrayList<GymOwner> viewListOfGymOwners() throws SQLException {
+    public ArrayList<GymOwner> viewListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
         return adminDao.getListOfGymOwners();
     }
-    public ArrayList<GymCenter> viewListOfGymCenters() throws SQLException {
+    public ArrayList<GymCenter> viewListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfGymCenters();
     }
-    public ArrayList<GymOwner> viewPendingListOfGymOwners() throws SQLException {
+    public ArrayList<GymOwner> viewPendingListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
         return adminDao.getListOfPendingGymOwners();
     }
-    public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException {
+    public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfPendingGymCenters();
     }
 

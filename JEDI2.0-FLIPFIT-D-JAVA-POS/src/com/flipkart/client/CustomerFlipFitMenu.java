@@ -2,7 +2,11 @@ package com.flipkart.client;
 
 import com.flipkart.bean.Customer;
 import com.flipkart.business.CustomerService;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class CustomerFlipFitMenu {
@@ -10,7 +14,7 @@ public class CustomerFlipFitMenu {
     private CustomerService customerService = new CustomerService();
     Customer customer = new Customer();
     String customerEmail;
-    void login(String email, String password){
+    void login(String email, String password) throws LoginFailedException, SQLException, WrongCredentialException {
 
         CustomerService userBusiness = new CustomerService();
         boolean loginSuccess = userBusiness.loginCustomer(email, password);
@@ -26,7 +30,7 @@ public class CustomerFlipFitMenu {
 
     }
 
-    void register(String name, String email, String password){
+    void register(String name, String email, String password) throws SQLException, RegistrationFailedException {
         CustomerService userBusiness = new CustomerService();
         userBusiness.registerCustomer(name, email, password);
         customerEmail=email;
@@ -34,7 +38,7 @@ public class CustomerFlipFitMenu {
         customerMenu();
     }
 
-    void customerMenu(){
+    void customerMenu() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n\n--------------------WELCOME TO CUSTOMER MENU---------------------\n");
         System.out.println("1. View Profile\n");
@@ -73,7 +77,7 @@ public class CustomerFlipFitMenu {
 
     }
 
-    void changePassword(String email, String currPassword, String newPassword){
+    void changePassword(String email, String currPassword, String newPassword) throws WrongCredentialException {
         customerService.changePassword(email, currPassword, newPassword);
     }
     void viewCenters(){

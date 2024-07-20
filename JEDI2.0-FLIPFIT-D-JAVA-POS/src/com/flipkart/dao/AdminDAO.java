@@ -3,16 +3,14 @@ package com.flipkart.dao;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.exceptions.GymCentreNotFoundException;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.SQLExceptionHandler;
+import com.flipkart.exceptions.WrongCredentialException;
 import com.flipkart.jdbc.DBUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-
-import java.util.Properties;
 
 public class AdminDAO {
     private static String password = "";
@@ -20,7 +18,7 @@ public class AdminDAO {
     private final GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
     private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
-    public void setAdminData(String adminEmail,String adminPassword){
+    public void setAdminData(String adminEmail,String adminPassword) throws SQLException{
         try {
             Connection connection = DBUtils.getConnection();
 
@@ -46,7 +44,7 @@ public class AdminDAO {
         }
     }
 
-    public void setPassword(String pass) {
+    public void setPassword(String pass) throws SQLException, WrongCredentialException {
         this.password = pass;
 
         try {
@@ -67,19 +65,19 @@ public class AdminDAO {
     public ArrayList<Admin> getAdminData(){
         return null;
     }
-    public ArrayList<GymOwner> getListOfGymOwners() throws SQLException {
+    public ArrayList<GymOwner> getListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
         gymOwnerDAO.viewAllGymOwners();
         return null;
     }
-    public ArrayList<GymCenter> getListOfGymCenters() throws SQLException {
+    public ArrayList<GymCenter> getListOfGymCenters() throws GymCentreNotFoundException, SQLException {
         gymCenterdao.viewAllGymCenters();
         return null;
     }
-    public ArrayList<GymOwner> getListOfPendingGymOwners() throws SQLException {
+    public ArrayList<GymOwner> getListOfPendingGymOwners() throws SQLException, GymOwnerNotFoundException {
         gymOwnerDAO.viewPendingGymOwnerList();
         return null;
     }
-    public ArrayList<GymCenter> getListOfPendingGymCenters() throws SQLException {
+    public ArrayList<GymCenter> getListOfPendingGymCenters() throws GymCentreNotFoundException, SQLException {
         gymCenterdao.viewPendingGymCentersList();
         return null;
     }

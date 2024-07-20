@@ -1,8 +1,6 @@
 package com.flipkart.exceptions;
-
-public class GymOwnerNotFoundException extends Exception{
-    public GymOwnerNotFoundException(String message) {
-        super(message);
-        System.out.println("GymOwnerNotFoundException" + message);
+public class GymOwnerNotFoundException extends Exception {
+    public GymOwnerNotFoundException() {
+        super("Gym Owner Not Found or Does Not Exist");
     }
 }

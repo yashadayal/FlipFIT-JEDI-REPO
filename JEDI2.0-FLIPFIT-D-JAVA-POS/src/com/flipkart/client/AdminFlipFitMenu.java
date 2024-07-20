@@ -1,6 +1,9 @@
 package com.flipkart.client;
 
 import com.flipkart.business.AdminService;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -9,16 +12,16 @@ public class AdminFlipFitMenu {
 
     static AdminService adminService = new AdminService();
     Scanner scanner = new Scanner(System.in);
-    void login(String username, String password) throws SQLException {
+    void login(String username, String password) throws SQLException, LoginFailedException, GymOwnerNotFoundException, WrongCredentialException {
         boolean adminLogin = adminService.adminLogin(username, password);
         if (adminLogin)
             adminMenu();
     }
-    void changeAdminPassword(String email, String currentPassword, String newPassword){
+    void changeAdminPassword(String email, String currentPassword, String newPassword) throws SQLException, WrongCredentialException {
         adminService.changePassword(email, currentPassword, newPassword);
     }
 
-    void adminMenu() throws SQLException {
+    void adminMenu() throws SQLException, GymOwnerNotFoundException {
         System.out.println("\n\n--------------------WELCOME TO ADMIN MENU---------------------\n");
         System.out.println("1. View All Gym Owners\n");
         System.out.println("2. View All Gym Centers\n");
@@ -53,7 +56,7 @@ public class AdminFlipFitMenu {
                 System.out.println("Invalid choice. Please enter a number between 1 and 5.");
         }
     }
-    void prevMenuForAdmin() throws SQLException {
+    void prevMenuForAdmin() throws SQLException, GymOwnerNotFoundException {
         System.out.println("\n\n1. Previous Menu");
         int choice = scanner.nextInt();
         if (choice==1){

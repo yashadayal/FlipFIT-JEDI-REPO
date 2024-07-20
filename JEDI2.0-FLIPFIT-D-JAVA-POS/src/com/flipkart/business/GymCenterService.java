@@ -1,11 +1,11 @@
 package com.flipkart.business;
 
-import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.GymCenterDAO;
 import com.flipkart.dao.GymOwnerDAO;
+import com.flipkart.exceptions.GymCentreNotFoundException;
+import com.flipkart.exceptions.RegistrationFailedException;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 public class GymCenterService {
@@ -14,7 +14,7 @@ public class GymCenterService {
     private GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
     private Scanner scanner = new Scanner(System.in);
 
-    public void registerGymCenter(String ownerEmail) throws SQLException {
+    public void registerGymCenter(String ownerEmail) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
         System.out.println("Enter Gym Center Name: ");
         String gymCenterName = scanner.nextLine();
@@ -28,19 +28,19 @@ public class GymCenterService {
         gymCenterDAO.registerGymCenter(ownerEmail, gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice);
     }
 
-    public void viewGymCenterByEmail(String email) throws SQLException {
+    public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
         gymCenterDAO.viewGymCenterByEmail(email);
     }
 
-    public void veiwAllGymCenters() throws SQLException {
+    public void veiwAllGymCenters() throws GymCentreNotFoundException, SQLException {
         gymCenterDAO.viewAllGymCenters();
     }
 
-    public boolean gymOwnerApprovalStatus(String email) throws SQLException {
+    public boolean gymOwnerApprovalStatus(String email) throws GymCentreNotFoundException, SQLException {
         return gymOwnerDAO.checkOwnerStatusByEmail(email);
     }
 
-    public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws SQLException {
+    public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws GymCentreNotFoundException, SQLException {
         return gymCenterDAO.viewGymCenterApprovalStatusByGymCenterId(gymCenterId);
     }
 

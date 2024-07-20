@@ -1,6 +1,9 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.GymOwner;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.Connection;
@@ -12,7 +15,7 @@ public class GymOwnerDAO {
 
     Connection connection = DBUtils.getConnection();
 
-    public void registerGymOwner(String name, String email, String password ) throws SQLException {
+    public void registerGymOwner(String name, String email, String password ) throws SQLException, RegistrationFailedException {
 
         String query1 = "SELECT ownerEmail FROM flipfit_gymowner WHERE ownerEmail = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query1);
@@ -31,7 +34,8 @@ public class GymOwnerDAO {
         System.out.println("Gym owner successfully registered.");
     }
 
-    public boolean gymOwnerLogin(String email, String password) throws SQLException {
+    public boolean gymOwnerLogin(String email, String password) throws SQLException, LoginFailedException, WrongCredentialException, GymOwnerNotFoundException {
+
         String query = "SELECT ownerPassword FROM flipfit_gymowner WHERE ownerEmail = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, email);
@@ -49,7 +53,7 @@ public class GymOwnerDAO {
         return false;
     }
 
-    public boolean changeGymOwnerPassword(String email, String currPassword, String newPassword) throws SQLException {
+    public boolean changeGymOwnerPassword(String email, String currPassword, String newPassword) throws SQLException, WrongCredentialException {
 
         String query = "Select ownerPassword FROM flipfit_gymowner WHERE ownerEmail = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -73,7 +77,7 @@ public class GymOwnerDAO {
         return false;
     }
 
-    public boolean checkOwnerStatusByEmail(String email) throws SQLException {
+    public boolean checkOwnerStatusByEmail(String email) throws SQLException,GymOwnerNotFoundException {
         String query = "SELECT isApproved FROM flipfit_gymowner WHERE ownerEmail = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, email);
@@ -87,7 +91,7 @@ public class GymOwnerDAO {
         }
     }
 
-    public void viewAllGymOwners() throws SQLException{
+    public void viewAllGymOwners() throws SQLException, GymOwnerNotFoundException{
         String query = "SELECT * FROM flipfit_gymowner";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
@@ -108,7 +112,7 @@ public class GymOwnerDAO {
     public void setPendingGymOwnerList(){
 
     }
-    public void viewPendingGymOwnerList() throws SQLException {
+    public void viewPendingGymOwnerList() throws GymOwnerNotFoundException, SQLException {
         String query = "SELECT * FROM flipfit_gymowner where isApproved=0";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();

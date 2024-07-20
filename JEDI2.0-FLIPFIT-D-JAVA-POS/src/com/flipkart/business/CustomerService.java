@@ -4,7 +4,11 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.CustomerDAO;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.exceptions.WrongCredentialException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +17,7 @@ public class CustomerService {
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
     CustomerDAO userDao = new CustomerDAO();
-    public boolean registerCustomer(String name, String email, String password)
-    {
+    public boolean registerCustomer(String name, String email, String password) throws SQLException, RegistrationFailedException {
         Customer customer=new Customer();
         customer.setCustomerName(name);
         customer.setPassword(password);
@@ -24,14 +27,14 @@ public class CustomerService {
         return registerSuccess;
     }
 
-    public boolean loginCustomer(String email, String password){
+    public boolean loginCustomer(String email, String password) throws SQLException, LoginFailedException, WrongCredentialException {
 
         System.out.println("Customer running");
         boolean loginSuccess = userDao.loginCustomer(email, password);
         return loginSuccess;
     }
 
-    public void changePassword(String email, String oldPassword, String newPassword){
+    public void changePassword(String email, String oldPassword, String newPassword) throws WrongCredentialException{
         boolean customerExists = false;
         boolean customerValid = false;
         for (Customer customer : registeredCustomers) {
@@ -56,7 +59,7 @@ public class CustomerService {
         System.out.println("Customer with email " + email + " changed password successfully\n");
     }
 
-    public void viewProfile(String email){
+    public void viewProfile(String email) throws SQLException {
         Customer customerDetails= userDao.viewProfile(email);
         if (customerDetails != null) {
             System.out.println("Customer ID: " + customerDetails.getCustomerId());
