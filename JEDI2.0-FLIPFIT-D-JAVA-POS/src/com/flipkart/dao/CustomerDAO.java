@@ -38,6 +38,44 @@ public class CustomerDAO {
      return registerSuccess;
     }
 
+ public static Customer viewProfile(String email) {
+  Connection connection = null;
+  Customer customer = null;
+  String query = "SELECT customerId, customerName, customerPhone, customerAddress, email, password FROM Customer WHERE email = ?";
+
+  try {
+   connection = DBUtils.getConnection();
+   PreparedStatement preparedStatement = connection.prepareStatement(query);
+   preparedStatement.setString(1, email);
+
+   ResultSet rs = preparedStatement.executeQuery();
+
+   if (rs.next()) {
+    customer = new Customer();
+    customer.setCustomerId(rs.getInt("customerId"));
+    customer.setCustomerName(rs.getString("customerName"));
+    customer.setCustomerPhone(rs.getInt("customerPhone"));
+    customer.setCustomerAddress(rs.getString("customerAddress"));
+    customer.setEmail(rs.getString("email"));
+    customer.setPassword(rs.getString("password"));
+   }
+
+   rs.close();
+  } catch (SQLException e) {
+   printSQLException(e);
+  } finally {
+   try {
+    if (connection != null) {
+     connection.close();
+    }
+   } catch (SQLException e) {
+    printSQLException(e);
+   }
+  }
+
+  return customer;
+ }
+
  public static void printSQLException(SQLException ex) {
   for (Throwable e : ex) {
    if (e instanceof SQLException) {
@@ -82,3 +120,4 @@ public class CustomerDAO {
   return loginSuccess;
  }
 }
+

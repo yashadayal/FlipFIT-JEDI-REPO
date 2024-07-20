@@ -1,7 +1,9 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.GymOwner;
+import com.flipkart.dao.GymOwnerDAO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,65 +11,28 @@ import java.util.List;
 
 public class GymOwnerService {
 
+
+
     ArrayList<GymOwner> gymOwners = new ArrayList<>();
     HashSet<String> loggedInGymOwners = new HashSet<>();
     HashMap<String, String> registeredGymOwners = new HashMap<>();
 
-    public void registerGymOwner(String name, String email, String password ){
+    private GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
 
-        if(registeredGymOwners.containsKey(email)){
-            System.out.println("Email already registered, Please login!\n\n");
-            return;
-        }
-
-        GymOwner gymOwner = new GymOwner();
-        gymOwner.setName(name);
-        gymOwner.setEmail(email);
-        gymOwner.setPassword(password);
-        gymOwners.add(gymOwner);
-        registeredGymOwners.put(email, password);
-        System.out.println("Gym owner with email " + email + " registered successfully\n\n");
-        // System.out.println(gymOwners.size());
-        return;
+    public void registerGymOwner(String name, String email, String password ) throws SQLException {
+        gymOwnerDAO.registerGymOwner(name, email, password);
     }
 
-    public boolean loginGymOwner(String email, String password){
-
-        if(loggedInGymOwners.contains(email)){
-            System.out.println("Gym owner with email " + email + " already logged in\n");
-            return false;
-        }
-
-        if(!registeredGymOwners.containsKey(email)){
-            System.out.println("Gym owner with email " + email + " does not exist\n");
-            return false;
-        }
-
-        if(!registeredGymOwners.get(email).equals(password)){
-            System.out.println("Incorrect password, please try again\n");
-            return false;
-        }
-
-        System.out.println("GymOwner " + email + " logged in Successfully\n");
-        return true;
+    public boolean loginGymOwner(String email, String password) throws SQLException {
+        return gymOwnerDAO.gymOwnerLogin(email, password);
     }
 
-    public void changePassword(String email, String oldPassword, String newPassword){
-        if(!registeredGymOwners.containsKey(email)){
-            System.out.println("Gym owner with email " + email + " does not exist\n");
-            return;
-        }
-        if(!registeredGymOwners.get(email).equals(oldPassword)){
-            System.out.println("Incorrect old password, please try again\n");
-        }
-        registeredGymOwners.put(email, newPassword);
-        for(GymOwner gymOwner : gymOwners){
-            if(gymOwner.getEmail().equals(email)){
-                gymOwner.setPassword(newPassword);
-                break;
-            }
-        }
-        System.out.println("Gym owner with email " + email + " changed successfully\n");
+    public void changePassword(String email, String oldPassword, String newPassword) throws SQLException {
+        gymOwnerDAO.changeGymOwnerPassword(email, oldPassword, newPassword);
+    }
+
+    public void checkOwnerStatusByEmail(String email) throws SQLException {
+        gymOwnerDAO.checkOwnerStatusByEmail(email);
     }
 
     public List<String> viewGymCenter(){
