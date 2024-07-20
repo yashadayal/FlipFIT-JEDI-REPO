@@ -4,7 +4,10 @@ public class Slots {
 
     private int slotID;
     private int gymCentreID;
-    private int totalSlots;
+    private int capacity;
+    private String date;
+    private String startTime;
+    private String endTime;
 
     public int getSlotID() {
         return slotID;
@@ -22,12 +25,12 @@ public class Slots {
         this.gymCentreID = gymCentreID;
     }
 
-    public int getTotal_slots() {
-        return totalSlots;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTotal_slots(int totalSlots) {
-        this.totalSlots = totalSlots;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getDate() {
@@ -53,8 +56,4 @@ public class Slots {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
-
-    private String date;
-    private String startTime;
-    private String endTime;
 }

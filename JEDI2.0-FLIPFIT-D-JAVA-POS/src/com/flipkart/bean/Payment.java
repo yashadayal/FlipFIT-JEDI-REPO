@@ -1,6 +1,10 @@
 package com.flipkart.bean;
 
 public class Payment {
+    private String paymentId;
+    private String amountPaid;
+    private String bookingId;
+
     public String getAmountPaid() {
         return amountPaid;
     }
@@ -24,8 +28,4 @@ public class Payment {
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
     }
-
-    private String paymentId;
-    private String amountPaid;
-    private String bookingId;
 }

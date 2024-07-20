@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
 import java.io.FileInputStream;
@@ -15,6 +16,9 @@ import java.util.Properties;
 
 public class AdminDAO {
     private static String password = "";
+    private final GymCenterDAO gymCenterdao=new GymCenterDAO();
+    private final GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
+    private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
     public void setAdminData(String adminEmail,String adminPassword){
         try {
@@ -64,23 +68,19 @@ public class AdminDAO {
         return null;
     }
     public ArrayList<GymOwner> getListOfGymOwners() throws SQLException {
-        GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
         gymOwnerDAO.viewAllGymOwners();
         return null;
     }
     public ArrayList<GymCenter> getListOfGymCenters() throws SQLException {
-        GymCenterDAO gymCenterdao=new GymCenterDAO();
         gymCenterdao.viewAllGymCenters();
         return null;
     }
     public ArrayList<GymOwner> getListOfPendingGymOwners() throws SQLException {
-        GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
         gymOwnerDAO.viewPendingGymOwnerList();
         return null;
     }
     public ArrayList<GymCenter> getListOfPendingGymCenters() throws SQLException {
-        GymCenterDAO gymCenterdao=new GymCenterDAO();
-        gymCenterdao.viewPendingGymCenterList();
+        gymCenterdao.viewPendingGymCentersList();
         return null;
     }
 }

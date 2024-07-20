@@ -3,6 +3,9 @@ public class Customer{
     private int customerId;
     private String customerName;
     private String email;
+    private String password;
+    private String customerAddress;
+    private int customerPhone;
 
     public String getPassword() {
         return password;
@@ -51,10 +54,4 @@ public class Customer{
     public void setCustomerPhone(int customerPhone) {
         this.customerPhone = customerPhone;
     }
-
-    private String password;
-    private String customerAddress;
-    private int customerPhone;
-
-
 }

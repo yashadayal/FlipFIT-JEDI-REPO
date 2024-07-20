@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.GymCenter;
+import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.*;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
+    private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
     private int getOwnerIdByEmail(String email) throws SQLException {
         String query = "SELECT ownerId FROM flipfit_gymowner WHERE ownerEmail = ?";
@@ -18,8 +20,6 @@ public class GymCenterDAO {
         int ownerId = rs1.getInt("ownerId");
         return ownerId;
     }
-
-
 
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws SQLException {
 
@@ -88,19 +88,37 @@ public class GymCenterDAO {
         return null;
     }
 
-    public void viewPendingGymCenterList() throws SQLException {
-        String query = "SELECT * FROM flipfit_gymcenter where isGymCenterApproved=0";
+    public void viewPendingGymCentersList() throws SQLException {
+        String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
         while (rs.next()) {
             System.out.println("Gym Center " + i++);
             System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
+            System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
             System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
         }
     }
+
+//    public void incrementCapacity(int gymCenterId) {
+//        PreparedStatement preparedStatement = null;
+//
+//        try {
+//            String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
+//            connection = DBUtils.getConnection();
+//            preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.setInt(1, gymCenterId);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            sqlExceptionHandler.printSQLException(e);
+//        } finally {
+//            DBUtils.close(preparedStatement);
+//            DBUtils.close(connection);
+//        }
+//    }
 
 }

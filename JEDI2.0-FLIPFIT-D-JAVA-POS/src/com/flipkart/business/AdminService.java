@@ -19,28 +19,30 @@ public class AdminService {
     private static int adminId = 0;
     String adminEmail="";
     String adminPassword="";
+
     public AdminService() {
         try {
 
             Properties prop = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("/Users/jhanvi.j/Documents/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
+            FileInputStream fileInputStream = new FileInputStream("/Users/rolly.kumari/Documents/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
             prop.load(fileInputStream);
-             adminEmail = prop.getProperty("adminEmail");
-             adminPassword = prop.getProperty("adminPassword");
+            adminEmail = prop.getProperty("adminEmail");
+            adminPassword = prop.getProperty("adminPassword");
             adminDao.setAdminData(adminEmail,adminPassword);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void adminLogin(String email, String password) {
+    public boolean adminLogin(String email, String password) {
 
         if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){
-            System.out.println("Admin with username " + email + " and password" + password + " logged in successfully.");
+            System.out.println("Admin with username " + email + " logged in successfully.");
+            return true;
         }
-        else{
-            System.out.println("Incorrect email or password.");
-        }
+
+        System.out.println("Incorrect email or password.");
+        return false;
     }
 
     public void changePassword(String email, String oldPassword, String newPassword){
