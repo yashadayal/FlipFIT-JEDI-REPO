@@ -1,22 +1,19 @@
 package com.flipkart.dao;
 
-import com.flipkart.bean.Customer;
 import com.flipkart.bean.Slots;
 import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class SlotDAO {
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
     private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
+    Connection connection = DBUtils.getConnection();
 
     public ArrayList<Slots> getSlotByCenterId(int gymCenterId) {
-        Connection connection = null;
         ArrayList<Slots> slots = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -56,7 +53,7 @@ public class SlotDAO {
         return slots;
     }
 
-    public void removeSlot(int gymCenterId, int slotId) {
+    public void removeSlot(int gymCenterId, int slotId){
         Connection connection = null;
         PreparedStatement slotStatement = null;
         PreparedStatement centerStatement = null;
@@ -82,10 +79,7 @@ public class SlotDAO {
             slotStatement.setInt(1, slotId);
             slotStatement.executeUpdate();
 
-            String incrementQuery = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
-            centerStatement = connection.prepareStatement(incrementQuery);
-            centerStatement.setInt(1, fetchedGymCenterId);
-            centerStatement.executeUpdate();
+            gymCenterDao.decrementCapacity(gymCenterId);
 
         } catch (SQLException e) {
             sqlExceptionHandler.printSQLException(e);
@@ -99,4 +93,71 @@ public class SlotDAO {
             }
         }
     }
+
+    public void addSlot(int gymCenterId, int capacity, String date, LocalDateTime startTime, LocalDateTime endTime) throws SQLException{
+        PreparedStatement slotStatement = null;
+        String insertQuery = "INSERT INTO flipfit_slots (gymCenterId, capacity, date, startTime, endTime) VALUES (?, ?, ?, ?, ?)";
+        slotStatement = connection.prepareStatement(insertQuery);
+        slotStatement.setInt(1, gymCenterId);
+        slotStatement.setInt(2, capacity);
+        slotStatement.setString(3, date);
+        slotStatement.setTimestamp(4, Timestamp.valueOf(startTime));
+        slotStatement.setTimestamp(5, Timestamp.valueOf(endTime));
+
+        int rowsAffected = slotStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            System.out.println("Slot added successfully.");
+        } else {
+            System.out.println("Failed to add slot.");
+        }
+        gymCenterDao.incrementCapacity(gymCenterId);
+    }
+
+    public boolean isAvailableSlot(int slotId) throws SQLException{
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String query = "SELECT capacity FROM flipfit_slots WHERE slotId = ?";
+        connection = DBUtils.getConnection();
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, slotId);
+
+        resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            int capacity = resultSet.getInt("capacity");
+            return capacity > 0;
+        }
+
+        return false;
+    }
+
+    public void decrementCapacity(int slotId)  throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String query = "UPDATE flipfit_slots SET capacity = capacity - 1 WHERE slotId = ?";
+
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, slotId);
+        preparedStatement.executeUpdate();
+    }
+
+    public int getGymCenterIdBySlotId(int slotId) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int gymCenterId = -1;
+        String query = "SELECT gymCenterId FROM flipfit_slots WHERE slotId = ?";
+
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, slotId);
+        resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            gymCenterId = resultSet.getInt("gymCenterId");
+        } else {
+            System.out.println("No gym center found for slotId: " + slotId);
+        }
+
+        return gymCenterId;
+    }
+
 }

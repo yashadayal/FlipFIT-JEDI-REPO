@@ -3,8 +3,8 @@ package com.flipkart.bean;
 public class Booking {
     private String bookingID;
     private String email;
-    private String userID;
-    private String scheduleID;
+    private String customerID;
+
     public String getEmail() {
         return email;
     }
@@ -12,20 +12,13 @@ public class Booking {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getScheduleID() {
-        return scheduleID;
+
+    public String getCustomerID() {
+        return customerID;
     }
 
-    public void setScheduleID(String scheduleID) {
-        this.scheduleID = scheduleID;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setCustomerID(String userID) {
+        this.customerID = customerID;
     }
 
     public String getBookingID() {

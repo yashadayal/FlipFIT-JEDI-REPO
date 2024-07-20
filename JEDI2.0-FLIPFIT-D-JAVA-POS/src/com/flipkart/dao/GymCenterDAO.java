@@ -9,7 +9,6 @@ import java.util.List;
 
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
-    private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
     private int getOwnerIdByEmail(String email) throws SQLException {
         String query = "SELECT ownerId FROM flipfit_gymowner WHERE ownerEmail = ?";
@@ -81,13 +80,6 @@ public class GymCenterDAO {
         return rs.getBoolean("isGymCenterApproved");
     }
 
-
-
-    public List<GymCenter> viewGymCenterStatus(String email){
-        // take the gyms under this email id and return them as a list
-        return null;
-    }
-
     public void viewPendingGymCentersList() throws SQLException {
         String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -104,21 +96,24 @@ public class GymCenterDAO {
         }
     }
 
-//    public void incrementCapacity(int gymCenterId) {
-//        PreparedStatement preparedStatement = null;
-//
-//        try {
-//            String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
-//            connection = DBUtils.getConnection();
-//            preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setInt(1, gymCenterId);
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            sqlExceptionHandler.printSQLException(e);
-//        } finally {
-//            DBUtils.close(preparedStatement);
-//            DBUtils.close(connection);
-//        }
-//    }
+    public void incrementCapacity(int gymCenterId)  throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
+
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, gymCenterId);
+        preparedStatement.executeUpdate();
+    }
+
+    public void decrementCapacity(int gymCenterId)  throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity - 1 WHERE gymcenterId = ?";
+
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, gymCenterId);
+        preparedStatement.executeUpdate();
+    }
+
+
 
 }
