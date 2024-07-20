@@ -63,20 +63,24 @@ public class AdminDAO {
     public ArrayList<Admin> getAdminData(){
         return null;
     }
-    public ArrayList<GymOwner> getListOfGymOwners(){
-        System.out.println("list of gym owners");
+    public ArrayList<GymOwner> getListOfGymOwners() throws SQLException {
+        GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
+        gymOwnerDAO.viewAllGymOwners();
         return null;
     }
-    public ArrayList<GymCenter> getListOfGymCenters(){
-        System.out.println("list of gym centers");
+    public ArrayList<GymCenter> getListOfGymCenters() throws SQLException {
+        GymCenterDAO gymCenterdao=new GymCenterDAO();
+        gymCenterdao.viewAllGymCenters();
         return null;
     }
-    public ArrayList<GymOwner> getListOfPendingGymOwners(){
-        System.out.println("Pending list of gym owners");
+    public ArrayList<GymOwner> getListOfPendingGymOwners() throws SQLException {
+        GymOwnerDAO gymOwnerDAO=new GymOwnerDAO();
+        gymOwnerDAO.viewPendingGymOwnerList();
         return null;
     }
-    public ArrayList<GymCenter> getListOfPendingGymCenters(){
-        System.out.println("Pending list of gym centers");
+    public ArrayList<GymCenter> getListOfPendingGymCenters() throws SQLException {
+        GymCenterDAO gymCenterdao=new GymCenterDAO();
+        gymCenterdao.viewPendingGymCenterList();
         return null;
     }
 }

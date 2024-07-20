@@ -87,11 +87,39 @@ public class GymOwnerDAO {
         }
     }
 
+    public void viewAllGymOwners() throws SQLException{
+        String query = "SELECT * FROM flipfit_gymowner";
+        PreparedStatement stmt1 = connection.prepareStatement(query);
+        ResultSet rs = stmt1.executeQuery();
+        int i=1;
+        while (rs.next()) {
+            System.out.println("Gym Owner " + i++);
+            System.out.println("Gym Owner Name: " + rs.getString("ownerName"));
+            System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
+            System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
+            System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
+            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
+        }
 
+    }
     public void sendOwnerApprovalRequest(String gymOwnerId){
 
     }
     public void setPendingGymOwnerList(){
 
+    }
+    public void viewPendingGymOwnerList() throws SQLException {
+        String query = "SELECT * FROM flipfit_gymowner where isApproved=0";
+        PreparedStatement stmt1 = connection.prepareStatement(query);
+        ResultSet rs = stmt1.executeQuery();
+        int i=1;
+        while (rs.next()) {
+            System.out.println("Gym Owner " + i++);
+            System.out.println("Gym Owner Name: " + rs.getString("ownerName"));
+            System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
+            System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
+            System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
+            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
+        }
     }
 }

@@ -88,9 +88,19 @@ public class GymCenterDAO {
         return null;
     }
 
-    public List<GymCenter> viewPendingGymCenter(){
-        //
-        return null;
+    public void viewPendingGymCenterList() throws SQLException {
+        String query = "SELECT * FROM flipfit_gymcenter where isGymCenterApproved=0";
+        PreparedStatement stmt1 = connection.prepareStatement(query);
+        ResultSet rs = stmt1.executeQuery();
+        int i=1;
+        while (rs.next()) {
+            System.out.println("Gym Center " + i++);
+            System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
+            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
+            System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
+            System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+        }
     }
 
 }

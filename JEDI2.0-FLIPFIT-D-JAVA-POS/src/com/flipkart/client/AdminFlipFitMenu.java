@@ -1,13 +1,15 @@
 package com.flipkart.client;
 
 import com.flipkart.business.AdminService;
+
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AdminFlipFitMenu {
 
     static AdminService adminService = new AdminService();
     Scanner scanner = new Scanner(System.in);
-    void login(String username, String password) {
+    void login(String username, String password) throws SQLException {
         adminService.adminLogin(username, password);
         adminMenu();
     }
@@ -15,7 +17,7 @@ public class AdminFlipFitMenu {
         adminService.changePassword(email, currentPassword, newPassword);
     }
 
-    void adminMenu(){
+    void adminMenu() throws SQLException {
         System.out.println("\n\n--------------------WELCOME TO ADMIN MENU---------------------\n");
         System.out.println("1. View All Gym Owners\n");
         System.out.println("2. View All Gym Centers\n");
@@ -54,7 +56,7 @@ public class AdminFlipFitMenu {
             }
         }
     }
-    void prevMenuForAdmin(){
+    void prevMenuForAdmin() throws SQLException {
         System.out.println("\n\n1. Previous Menu");
         int choice = scanner.nextInt();
         if (choice==1){

@@ -1,6 +1,7 @@
 package com.flipkart.business;
 import java.io.IOException;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
@@ -55,16 +56,16 @@ public class AdminService {
         System.out.println("Your password has been changed successfully" + newPassword);
     }
 
-    public ArrayList<GymOwner> viewListOfGymOwners(){
+    public ArrayList<GymOwner> viewListOfGymOwners() throws SQLException {
         return adminDao.getListOfGymOwners();
     }
-    public ArrayList<GymCenter> viewListOfGymCenters(){
+    public ArrayList<GymCenter> viewListOfGymCenters() throws SQLException {
         return adminDao.getListOfGymCenters();
     }
-    public ArrayList<GymOwner> viewPendingListOfGymOwners(){
+    public ArrayList<GymOwner> viewPendingListOfGymOwners() throws SQLException {
         return adminDao.getListOfPendingGymOwners();
     }
-    public ArrayList<GymCenter> viewPendingListOfGymCenters(){
+    public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException {
         return adminDao.getListOfPendingGymCenters();
     }
 
