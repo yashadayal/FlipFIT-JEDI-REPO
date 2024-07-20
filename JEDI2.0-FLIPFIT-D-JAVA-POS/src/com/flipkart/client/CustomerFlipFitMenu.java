@@ -13,10 +13,17 @@ public class CustomerFlipFitMenu {
     void login(String email, String password){
 
         CustomerService userBusiness = new CustomerService();
-        userBusiness.loginCustomer(email, password);
-        customerEmail=email;
-        System.out.println("Customer logged-in successfully!");
-        customerMenu();
+        boolean loginSuccess = userBusiness.loginCustomer(email, password);
+        if(loginSuccess)
+        {
+            customerEmail=email;
+            System.out.println("Customer logged-in successfully!");
+            customerMenu();
+        }
+        else {
+            System.out.println("You have entered wrong email id and password");
+        }
+
     }
 
     void register(String name, String email, String password){
@@ -40,7 +47,7 @@ public class CustomerFlipFitMenu {
         Integer customerOptions = scanner.nextInt();
         switch (customerOptions){
             case 1:
-                customerService.viewProfile();
+                customerService.viewProfile(customerEmail);
                 System.out.println("Successfully showed customer profile");
                 break;
             case 2:

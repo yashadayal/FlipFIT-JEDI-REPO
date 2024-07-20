@@ -17,14 +17,10 @@ public class AdminDAO {
     private static String password = "";
 
     public void setAdminData(String adminEmail,String adminPassword){
-//      take admin data from service layer and save in db
         try {
-            // Database connection and save operation
-            // Replace with your actual database handling cod
-
             Connection connection = DBUtils.getConnection();
 
-            PreparedStatement stmt1 = connection.prepareStatement("SELECT COUNT(*) FROM admins WHERE email = ?");
+            PreparedStatement stmt1 = connection.prepareStatement("SELECT COUNT(*) FROM flipfit_admin WHERE adminEmail = ?");
             stmt1.setString(1, adminEmail);
             ResultSet rs = stmt1.executeQuery();
             rs.next();
@@ -34,9 +30,11 @@ public class AdminDAO {
                 return;
             }
 
-            PreparedStatement stmt2 = connection.prepareStatement("INSERT INTO admins (email, password) VALUES (?, ?)");
-            stmt2.setString(1, adminEmail);
-            stmt2.setString(2, adminPassword);
+            PreparedStatement stmt2 = connection.prepareStatement("INSERT INTO flipfit_admin (adminId,adminName,adminEmail, adminPassword) VALUES (?,?,?, ?)");
+            stmt2.setInt(1,1);
+            stmt2.setString(2,"Admin");
+            stmt2.setString(3, adminEmail);
+            stmt2.setString(4, adminPassword);
             stmt2.executeUpdate();
             System.out.println("Admin data saved successfully.");
         } catch (SQLException e) {
@@ -49,7 +47,7 @@ public class AdminDAO {
 
         try {
             Connection connection = DBUtils.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("UPDATE admins SET password = ? limit 1");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE flipfit_admin SET adminPassword = ? limit 1");
             stmt.setString(1, pass);
 
             int rowsUpdated = stmt.executeUpdate();
