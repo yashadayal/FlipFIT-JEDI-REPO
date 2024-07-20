@@ -29,4 +29,5 @@ bin/
 .DS_Store
 .idea/uiDesigner.xml
 .idea/vcs.xml
+.idea/libraries/java.xml
 FlipFIT-JEDI-REPO.iml
