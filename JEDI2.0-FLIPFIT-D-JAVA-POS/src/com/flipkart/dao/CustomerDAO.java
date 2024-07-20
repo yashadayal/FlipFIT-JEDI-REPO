@@ -47,7 +47,7 @@ public class CustomerDAO {
     public static Customer viewProfile(String email) {
         Connection connection = null;
         Customer customer = null;
-        String query = "SELECT customerId, customerName, customerPhone, customerAddress, email, password FROM flipfit_customer WHERE customerEmail = ?";
+        String query = "SELECT customerId, customerName, customerPhone, customerAddress, customerEmail, password FROM flipfit_customer WHERE customerEmail = ?";
 
         try {
             connection = DBUtils.getConnection();
@@ -62,21 +62,12 @@ public class CustomerDAO {
                 customer.setCustomerName(rs.getString("customerName"));
                 customer.setCustomerPhone(rs.getInt("customerPhone"));
                 customer.setCustomerAddress(rs.getString("customerAddress"));
-                customer.setEmail(rs.getString("email"));
+                customer.setEmail(rs.getString("customerEmail"));
                 customer.setPassword(rs.getString("password"));
             }
-
             rs.close();
         } catch (SQLException e) {
             sqlExceptionHandler.printSQLException(e);
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                sqlExceptionHandler.printSQLException(e);
-            }
         }
 
         return customer;
@@ -131,7 +122,7 @@ public class CustomerDAO {
         PreparedStatement preparedStatement = null;
         boolean loginSuccess = false;
 
-        String query = "SELECT * FROM flipfit_customer WHERE email = ? AND password = ?";
+        String query = "SELECT * FROM flipfit_customer WHERE customerEmail = ? AND password = ?";
         try {
             connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(query);
