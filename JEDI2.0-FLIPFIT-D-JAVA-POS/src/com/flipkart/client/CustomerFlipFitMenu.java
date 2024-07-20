@@ -1,12 +1,13 @@
 package com.flipkart.client;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.business.CustomerService;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
-
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class CustomerFlipFitMenu {
@@ -21,7 +22,6 @@ public class CustomerFlipFitMenu {
         if(loginSuccess)
         {
             customerEmail=email;
-            System.out.println("Customer logged-in successfully!");
             customerMenu();
         }
         else {
@@ -52,29 +52,32 @@ public class CustomerFlipFitMenu {
         switch (customerOptions){
             case 1:
                 customerService.viewProfile(customerEmail);
-                System.out.println("Successfully showed customer profile");
+                customerMenu();
                 break;
             case 2:
                 customerService.bookSlot();
-                System.out.println("Successfully booked slot");
+                customerMenu();
                 break;
             case 3:
-                customerService.viewBooking(customerEmail);
+                List<Booking> customerBookings=customerService.viewBooking(customerEmail);
+                for (Booking booking : customerBookings) {
+                    System.out.println("Booking ID: " + booking.getBookingID());
+                }
+                customerMenu();
                 System.out.println("Successfully viewed the booking");
                 break;
             case 4:
                 customerService.deleteBookings(customerEmail);
-                System.out.println("Successfully deleted all bookings");
+                customerMenu();
                 break;
             case 5:
                 customerService.logout();
-                System.out.println("Successfully logged out");
                 break;
             default:
                 System.out.println("INVALID CHOICE");
+                customerMenu();
                 break;
         }
-
     }
 
     void changePassword(String email, String currPassword, String newPassword) throws WrongCredentialException {

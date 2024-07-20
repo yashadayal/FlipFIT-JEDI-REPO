@@ -4,12 +4,13 @@ import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.CustomerDAO;
-
+import com.flipkart.client.FlipFitApplicationClient;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
     static ArrayList<Customer> registeredCustomers=new ArrayList<>();
+    private FlipFitApplicationClient flipfitAppClient = new FlipFitApplicationClient();
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
     CustomerDAO userDao = new CustomerDAO();
@@ -44,8 +45,6 @@ public class CustomerService {
             System.out.println("Phone: " + customerDetails.getCustomerPhone());
             System.out.println("Address: " + customerDetails.getCustomerAddress());
             System.out.println("Email: " + customerDetails.getEmail());
-        } else {
-            System.out.println("Customer not found!");
         }
     }
 
@@ -91,9 +90,8 @@ public class CustomerService {
         return false;
     }
 
-    public boolean logout(){
-//        System.out.println("Slot has been booked successfully");
-        return true;
+    public void logout(){
+        System.out.println("Successfully logged out");
     }
 
 }
