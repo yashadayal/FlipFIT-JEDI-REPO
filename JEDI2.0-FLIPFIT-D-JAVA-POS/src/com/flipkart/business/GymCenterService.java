@@ -2,16 +2,19 @@ package com.flipkart.business;
 
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.GymCenterDAO;
+import com.flipkart.dao.GymOwnerDAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class GymCenterService {
 
     private GymCenterDAO gymCenterDAO = new GymCenterDAO();
+    private GymOwnerDAO gymOwnerDAO = new GymOwnerDAO();
     private Scanner scanner = new Scanner(System.in);
 
-    public void registerGymCenter() {
+    public void registerGymCenter(String ownerEmail) throws SQLException {
 
         System.out.println("Enter Gym Center Name: ");
         String gymCenterName = scanner.nextLine();
@@ -22,20 +25,23 @@ public class GymCenterService {
         System.out.println("Enter Gym Center Price: ");
         int gymCenterPrice = scanner.nextInt();
 
-        gymCenterDAO.registerGymCenter(gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice);
+        gymCenterDAO.registerGymCenter(ownerEmail, gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice);
     }
 
-    public List<GymCenter> veiwAllGymCenters() {
-        return gymCenterDAO.viewAllGymCenters();
+    public void viewGymCenterByEmail(String email) throws SQLException {
+        gymCenterDAO.viewGymCenterByEmail(email);
     }
 
-    public boolean approvalStatus(String email){
-        return gymCenterDAO.approvalStatus(email);
+    public void veiwAllGymCenters() throws SQLException {
+        gymCenterDAO.viewAllGymCenters();
     }
 
-    public List<GymCenter> viewGymCenterStatus(String email){
-        // take the gyms under this email id and return them as a list
-        return gymCenterDAO.viewGymCenterStatus(email);
+    public boolean gymOwnerApprovalStatus(String email) throws SQLException {
+        return gymOwnerDAO.checkOwnerStatusByEmail(email);
+    }
+
+    public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws SQLException {
+        return gymCenterDAO.viewGymCenterApprovalStatusByGymCenterId(gymCenterId);
     }
 
 }

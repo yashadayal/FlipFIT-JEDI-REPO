@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.business.AdminService;
 
 import java.net.StandardSocketOptions;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class FlipFitApplicationClient {
@@ -23,7 +24,7 @@ public class FlipFitApplicationClient {
         System.out.print("Enter your choice: ");
     }
 
-    private static void changePassword(){
+    private static void changePassword() throws SQLException {
         System.out.println("Enter your role");
         String role = scanner.next();
         role = role.toUpperCase();
@@ -50,7 +51,7 @@ public class FlipFitApplicationClient {
         }
     }
 
-    private static void login(){
+    private static void login() throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Email: ");
         String email = scanner.next();
@@ -76,14 +77,8 @@ public class FlipFitApplicationClient {
     }
 
 
-    private static void registerGymOwner(){
-        System.out.println("Enter Name: ");
-        String name = scanner.next();
-        System.out.println("Enter Email: ");
-        String email = scanner.next();
-        System.out.println("Enter password: ");
-        String password = scanner.next();
-        gymOwnerFlipFitMenu.register(name, email, password);
+    private static void registerGymOwner() throws SQLException {
+        gymOwnerFlipFitMenu.registerGymOwner();
     }
 
     private static void registerGymCustomer(){
@@ -97,7 +92,7 @@ public class FlipFitApplicationClient {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         while (true) {
             displayMainMenu();
             Scanner scanner = new Scanner(System.in);
