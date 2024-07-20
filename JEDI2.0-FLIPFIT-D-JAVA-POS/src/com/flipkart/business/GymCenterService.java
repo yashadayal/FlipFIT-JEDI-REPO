@@ -3,6 +3,7 @@ package com.flipkart.business;
 import com.flipkart.dao.GymCenterDAO;
 import com.flipkart.dao.GymOwnerDAO;
 import com.flipkart.exceptions.GymCentreNotFoundException;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.RegistrationFailedException;
 
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class GymCenterService {
         gymCenterDAO.viewAllGymCenters();
     }
 
-    public boolean gymOwnerApprovalStatus(String email) throws GymCentreNotFoundException, SQLException {
+    public boolean gymOwnerApprovalStatus(String email) throws GymCentreNotFoundException, SQLException, GymOwnerNotFoundException {
         return gymOwnerDAO.checkOwnerStatusByEmail(email);
     }
 

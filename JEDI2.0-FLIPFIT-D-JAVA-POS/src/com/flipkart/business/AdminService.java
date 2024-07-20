@@ -21,15 +21,14 @@ public class AdminService {
     private static int adminId = 0;
     String adminEmail="";
     String adminPassword="";
-
     public AdminService() {
         try {
 
             Properties prop = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("/Users/rolly.kumari/Documents/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
+            FileInputStream fileInputStream = new FileInputStream("/Users/sharaddha.chouksey1/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
             prop.load(fileInputStream);
-            adminEmail = prop.getProperty("adminEmail");
-            adminPassword = prop.getProperty("adminPassword");
+             adminEmail = prop.getProperty("adminEmail");
+             adminPassword = prop.getProperty("adminPassword");
             adminDao.setAdminData(adminEmail,adminPassword);
 
         } catch (IOException e) {
