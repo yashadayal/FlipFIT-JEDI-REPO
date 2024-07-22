@@ -25,22 +25,22 @@ public class AdminService {
     private static int adminId = 0;
     String adminEmail="";
     String adminPassword="";
-//    public AdminService() {
-//        try {
-//
-//            Properties prop = new Properties();
-//            FileInputStream fileInputStream = new FileInputStream("src/config.properties");
-//            prop.load(fileInputStream);
-//             adminEmail = prop.getProperty("adminEmail");
-//             adminPassword = prop.getProperty("adminPassword");
-//            adminDao.setAdminData(adminEmail,adminPassword);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public AdminService() {
+        try {
+
+            Properties prop = new Properties();
+            FileInputStream fileInputStream = new FileInputStream("src/config.properties");
+            prop.load(fileInputStream);
+             adminEmail = prop.getProperty("adminEmail");
+             adminPassword = prop.getProperty("adminPassword");
+            adminDao.setAdminData(adminEmail,adminPassword);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Method for admin login
@@ -122,7 +122,7 @@ public class AdminService {
     /**
      * Method to view pending list of gym centers
      * @throws SQLException
-     * @throws GymCenterNotFoundException
+     * @throws GymCentreNotFoundException
      */
     public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfPendingGymCenters();

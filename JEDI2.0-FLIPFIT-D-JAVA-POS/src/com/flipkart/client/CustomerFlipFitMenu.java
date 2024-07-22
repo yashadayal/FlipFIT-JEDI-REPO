@@ -7,6 +7,7 @@ import com.flipkart.business.CustomerService;
 import com.flipkart.business.GymCenterService;
 import com.flipkart.business.SlotService;
 import com.flipkart.dao.SlotDAO;
+import com.flipkart.exceptions.BookingNotFoundException;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
@@ -62,7 +63,7 @@ public class CustomerFlipFitMenu {
         }
     }
 
-    void customerMenu() throws SQLException {
+    void customerMenu() throws BookingNotFoundException, SQLException {
         try{
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n\n--------------------WELCOME TO CUSTOMER MENU---------------------\n");
@@ -72,7 +73,7 @@ public class CustomerFlipFitMenu {
         System.out.println("4. Logout");
         System.out.println("-----------------------------------------------------------------\n");
         System.out.println("Enter your choice: ");
-        Integer customerOptions = scanner.nextInt();
+        int customerOptions = scanner.nextInt();
         switch (customerOptions){
             case 1:
                 customerService.viewProfile(customerEmail);
@@ -113,7 +114,6 @@ public class CustomerFlipFitMenu {
             default:
                 System.out.println("INVALID CHOICE");
                 customerMenu();
-                break;
         }
         }
         catch(SQLException exp){

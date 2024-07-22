@@ -2,6 +2,7 @@ package com.flipkart.business;
 
 import com.flipkart.dao.BookingDAO;
 import com.flipkart.exceptions.BookingFailedException;
+import com.flipkart.exceptions.BookingNotFoundException;
 
 import java.sql.SQLException;
 
@@ -28,7 +29,8 @@ public class BookingService {
         bookingDAO.bookSlot(customerEmail, slotId);
     }
 
-    public void cancelBooking(String customerEmail, int bookingId) throws BookingFailedException, SQLException{
+    public void cancelBooking(String customerEmail, int bookingId) throws BookingNotFoundException, SQLException{
+        System.out.println("booking service call");
         bookingDAO.cancelBooking(customerEmail, bookingId);
     }
 }
