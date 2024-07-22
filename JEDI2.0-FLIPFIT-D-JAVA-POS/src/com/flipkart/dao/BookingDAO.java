@@ -48,26 +48,33 @@ public class BookingDAO {
         }
     }
     public void cancelBooking(String customerEmail, int bookingId) throws BookingNotFoundException, SQLException {
-        String deleteQuery = "DELETE FROM flipfit_booking WHERE bookingId = ? AND customerEmail = ?)";
+        System.out.println("booking dao call");
+        String deleteQuery = "DELETE FROM flipfit_booking WHERE bookingId = ? AND customerId = (SELECT customerId FROM flipfit_customer WHERE email = ?)";
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(deleteQuery);
             stmt.setInt(1, bookingId);
             stmt.setString(2, customerEmail);
-
+//            System.out.println("query run");
             int rowsAffected = stmt.executeUpdate();
-            int slotId = getSlotIdByBookingId(bookingId);
-
-            if (slotId==-1) throw new BookingNotFoundException("slot id for booking id " + bookingId + " not found.");
-            slotDao.incrementCapacity(slotId);
-
-            int gymCenterId = slotDao.getGymCenterIdBySlotId(slotId);
-            if (gymCenterId==-1) throw new BookingNotFoundException("Gym Center id for slot id " + slotId + " with booking id " + bookingId + " not found.");
-            gymCenterDao.incrementCapacity(gymCenterId);
 
             if (rowsAffected > 0) {
+//                System.out.println("query run");
+                int slotId = getSlotIdByBookingId(bookingId);
+                if (slotId == -1) {
+                    throw new BookingNotFoundException("Slot ID for booking ID " + bookingId + " not found.");
+                }
+                slotDao.incrementCapacity(slotId);
+//                System.out.println("slot query run");
+                int gymCenterId = slotDao.getGymCenterIdBySlotId(slotId);
+                if (gymCenterId == -1) {
+                    throw new BookingNotFoundException("Gym Center ID for slot ID " + slotId + " with booking ID " + bookingId + " not found.");
+                }
+                gymCenterDao.incrementCapacity(gymCenterId);
+//                System.out.println("gym center query run");
                 System.out.println("Booking with ID " + bookingId + " for customer with email " + customerEmail + " cancelled successfully.");
             } else {
+                System.out.println("gym center query run");
                 throw new BookingFailedException("Cancellation failed. No booking found with ID " + bookingId + " for customer with email " + customerEmail);
             }
         } finally {
@@ -75,8 +82,8 @@ public class BookingDAO {
                 stmt.close();
             }
         }
-
     }
+
 
     public int getSlotIdByBookingId(int bookingId) throws SQLException {
         PreparedStatement preparedStatement = null;

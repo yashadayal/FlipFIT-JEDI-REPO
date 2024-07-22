@@ -1,9 +1,6 @@
 package com.flipkart.client;
 
-import com.flipkart.exceptions.GymOwnerNotFoundException;
-import com.flipkart.exceptions.LoginFailedException;
-import com.flipkart.exceptions.RegistrationFailedException;
-import com.flipkart.exceptions.WrongCredentialException;
+import com.flipkart.exceptions.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -59,7 +56,7 @@ public class FlipFitApplicationClient {
         }
     }
 
-    private static void login() throws SQLException, GymOwnerNotFoundException, LoginFailedException, WrongCredentialException, ParseException {
+    private static void login() throws SQLException, BookingNotFoundException, GymOwnerNotFoundException, LoginFailedException, WrongCredentialException, ParseException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Email: ");
         String email = scanner.next();
@@ -89,7 +86,7 @@ public class FlipFitApplicationClient {
         gymOwnerFlipFitMenu.registerGymOwner();
     }
 
-    private static void registerGymCustomer() throws SQLException,RegistrationFailedException {
+    private static void registerGymCustomer() throws SQLException,BookingNotFoundException,RegistrationFailedException {
         System.out.println("Enter Name: ");
         String name = scanner.next();
         System.out.println("Enter Email: ");
@@ -100,7 +97,7 @@ public class FlipFitApplicationClient {
     }
 
 
-    public static void main(String[] args) throws SQLException, GymOwnerNotFoundException, WrongCredentialException, ParseException {
+    public static void main(String[] args) throws SQLException, BookingNotFoundException, GymOwnerNotFoundException, WrongCredentialException, ParseException {
         while (true) {
             displayMainMenu();
             Scanner scanner = new Scanner(System.in);
