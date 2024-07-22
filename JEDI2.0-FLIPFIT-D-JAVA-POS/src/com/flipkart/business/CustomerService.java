@@ -42,7 +42,6 @@ public class CustomerService {
 
     public void changePassword(String email, String oldPassword, String newPassword){
         userDao.changePassword(email, oldPassword, newPassword);
-        return;
     }
 
     public void viewProfile(String email){
@@ -71,7 +70,7 @@ public class CustomerService {
     }
 
     public boolean deleteSlot(){
-        System.out.println("Slot has been canceled successfully");
+        System.out.println("Slot has been cancelled successfully");
         return true;
     }
 //    public List<Booking> viewBooking(String email) {

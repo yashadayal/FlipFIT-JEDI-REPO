@@ -113,6 +113,39 @@ public class GymCenterDAO {
         preparedStatement.executeUpdate();
     }
 
+    public void approveAllPendingGymCenters() throws SQLException {
+        String updateQuery = "UPDATE flipfit_gymcenter SET isGymCenterApproved = 1 WHERE isGymCenterApproved = 0";
+        PreparedStatement stmt = null;
 
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected + " gym centers approved successfully.");
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+    public void approveGymCenterById(int gymCenterId) throws SQLException, GymCentreNotFoundException {
+        String updateQuery = "UPDATE flipfit_gymcenter SET isGymCenterApproved = 1 WHERE gymcenterId = ?";
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            stmt.setInt(1, gymCenterId);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Gym center with ID " + gymCenterId + " approved successfully.");
+            } else {
+                System.out.println("No gym center found with ID " + gymCenterId);
+            }
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
 
 }

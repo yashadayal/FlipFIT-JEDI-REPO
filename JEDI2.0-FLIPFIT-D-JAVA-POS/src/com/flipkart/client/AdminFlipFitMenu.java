@@ -44,11 +44,46 @@ public class AdminFlipFitMenu {
                 break;
             case 3:
                 adminService.viewPendingListOfGymOwners();
-                prevMenuForAdmin();
+                System.out.println("1. Approve all Gym Owners");
+                System.out.println("2. Approve Gym Owners by Email");
+                System.out.println("3. Previous Menu");
+                int pick = scanner.nextInt();
+                switch (pick){
+                    case 1:
+                        adminService.approveAllGymOwners();
+                        break;
+                    case 2:
+                        System.out.println("Enter Email:");
+                        String email = scanner.next();
+                        adminService.approveGymOwnerByEmail(email);
+                        break;
+                    case 3:
+                        adminMenu();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                }
                 break;
             case 4:
-                adminService.viewPendingListOfGymCenters();
-                prevMenuForAdmin();
+                System.out.println("1. Approve all Gym Centers");
+                System.out.println("2. Approve Gym Centers by Id");
+                System.out.println("3. Previous Menu");
+                int pick1 = scanner.nextInt();
+                switch (pick1){
+                    case 1:
+                        adminService.approveAllGymCenter();
+                        break;
+                    case 2:
+                        System.out.println("Enter gym Center Id:");
+                        int id = scanner.nextInt();
+                        adminService.approveGymCenterById(id);
+                        break;
+                    case 3:
+                        adminMenu();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+                }
                 break;
             case 5:
                 break;

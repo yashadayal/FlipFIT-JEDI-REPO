@@ -126,4 +126,38 @@ public class GymOwnerDAO {
             System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
         }
     }
+
+    public void approveAllGymOwners() throws SQLException {
+        String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE isApproved = 0";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected + " gym owners approved successfully.");
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+    public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException {
+        String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE ownerEmail = ?";
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            stmt.setString(1, gymOwnerEmail);
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Gym owner with email " + gymOwnerEmail + " approved successfully.");
+            } else {
+                System.out.println("No gym owner found with email " + gymOwnerEmail);
+            }
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
 }
