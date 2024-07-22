@@ -22,63 +22,78 @@ public class CustomerFlipFitMenu {
     String customerEmail;
     void login(String email, String password) throws LoginFailedException, SQLException, WrongCredentialException {
 
-        CustomerService userBusiness = new CustomerService();
-        boolean loginSuccess = userBusiness.loginCustomer(email, password);
-        if(loginSuccess)
-        {
-            customerEmail=email;
-            customerMenu();
+        try{
+            CustomerService userBusiness = new CustomerService();
+            boolean loginSuccess = userBusiness.loginCustomer(email, password);
+            if (loginSuccess) {
+                customerEmail = email;
+                customerMenu();
+            } else {
+                System.out.println("You have entered wrong email id and password");
+            }
         }
-        else {
-            System.out.println("You have entered wrong email id and password");
+        catch(LoginFailedException exp){
+            throw new LoginFailedException("Login Failed!");
         }
-
+        catch(SQLException exp){
+            throw new SQLException("Error Occurred!");
+        }
     }
 
     void register(String name, String email, String password) throws SQLException, RegistrationFailedException {
-        CustomerService userBusiness = new CustomerService();
-        userBusiness.registerCustomer(name, email, password);
-        customerEmail=email;
-        System.out.println("Customer registered successfully!");
-        customerMenu();
+        try{
+            CustomerService userBusiness = new CustomerService();
+            userBusiness.registerCustomer(name, email, password);
+            customerEmail = email;
+            System.out.println("Customer registered successfully!");
+            customerMenu();
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration failed");
+        }
     }
 
     void customerMenu() throws SQLException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("\n\n--------------------WELCOME TO CUSTOMER MENU---------------------\n");
-        System.out.println("1. View Profile\n");
-        System.out.println("2. Book Slot\n");
-        System.out.println("3. View Booking\n");
-        System.out.println("4. Cancel Booking\n");
-        System.out.println("5. Logout");
-        System.out.println("-----------------------------------------------------------------\n");
-        System.out.println("Enter your choice: ");
-        Integer customerOptions = scanner.nextInt();
-        switch (customerOptions){
-            case 1:
-                customerService.viewProfile(customerEmail);
-                customerMenu();
-                break;
-            case 2:
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("\n\n--------------------WELCOME TO CUSTOMER MENU---------------------\n");
+            System.out.println("1. View Profile\n");
+            System.out.println("2. Book Slot\n");
+            System.out.println("3. View Booking\n");
+            System.out.println("4. Cancel Booking\n");
+            System.out.println("5. Logout");
+            System.out.println("-----------------------------------------------------------------\n");
+            System.out.println("Enter your choice: ");
+            Integer customerOptions = scanner.nextInt();
+            switch (customerOptions) {
+                case 1:
+                    customerService.viewProfile(customerEmail);
+                    customerMenu();
+                    break;
+                case 2:
 //                customerService.bookSlot();
-                customerMenu();
-                break;
-            case 3:
-                if(customerService.viewBooking(customerEmail))
-                    System.out.println("Successfully viewed the booking");
-                customerMenu();
-                break;
-            case 4:
-                customerService.deleteBookings(customerEmail);
-                customerMenu();
-                break;
-            case 5:
-                customerService.logout();
-                break;
-            default:
-                System.out.println("INVALID CHOICE");
-                customerMenu();
-                break;
+                    customerMenu();
+                    break;
+                case 3:
+                    if (customerService.viewBooking(customerEmail))
+                        System.out.println("Successfully viewed the booking");
+                    customerMenu();
+                    break;
+                case 4:
+                    customerService.deleteBookings(customerEmail);
+                    customerMenu();
+                    break;
+                case 5:
+                    customerService.logout();
+                    break;
+                default:
+                    System.out.println("INVALID CHOICE");
+                    customerMenu();
+                    break;
+            }
+        }
+        catch(SQLException exp){
+            throw new SQLException("Error Occurred!");
         }
     }
 

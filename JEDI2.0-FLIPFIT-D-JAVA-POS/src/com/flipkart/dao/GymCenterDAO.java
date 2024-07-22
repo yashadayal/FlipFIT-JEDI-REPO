@@ -27,16 +27,21 @@ public class GymCenterDAO {
 
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
-        int ownerId = getOwnerIdByEmail(email);
-        String query = Constants.INSERT_GYM_DATA;
-        PreparedStatement stmt1 = connection.prepareStatement(query);
-        stmt1.setString(1, gymCenterName);
-        stmt1.setString(2, gymCenterGSTin);
-        stmt1.setInt(3, gymCenterCapacity);
-        stmt1.setInt(4, gymCenterPrice);
-        stmt1.setInt(5, ownerId);
-        stmt1.executeUpdate();
-        System.out.println("Gym center registered successfully. Pending for approval");
+        try{
+            int ownerId = getOwnerIdByEmail(email);
+            String query = Constants.INSERT_GYM_DATA;
+            PreparedStatement stmt1 = connection.prepareStatement(query);
+            stmt1.setString(1, gymCenterName);
+            stmt1.setString(2, gymCenterGSTin);
+            stmt1.setInt(3, gymCenterCapacity);
+            stmt1.setInt(4, gymCenterPrice);
+            stmt1.setInt(5, ownerId);
+            stmt1.executeUpdate();
+            System.out.println("Gym center registered successfully. Pending for approval");
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration failed!");
+        }
     }
 
     public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
