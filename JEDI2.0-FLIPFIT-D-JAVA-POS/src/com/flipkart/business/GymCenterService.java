@@ -9,6 +9,11 @@ import com.flipkart.exceptions.RegistrationFailedException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Center Service Operations
+ */
+
 public class GymCenterService {
 
     private GymCenterDAO gymCenterDAO = new GymCenterDAO();
@@ -17,16 +22,23 @@ public class GymCenterService {
 
     public void registerGymCenter(String ownerEmail) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
-        System.out.println("Enter Gym Center Name: ");
-        String gymCenterName = scanner.nextLine();
-        System.out.println("Enter Gym Center GSTIN: ");
-        String gymCenterGSTin =  scanner.nextLine();
-        System.out.println("Enter Gym Center Capacity: ");
-        int gymCenterCapacity = scanner.nextInt();
-        System.out.println("Enter Gym Center Price: ");
-        int gymCenterPrice = scanner.nextInt();
-
-        gymCenterDAO.registerGymCenter(ownerEmail, gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice);
+        try{
+            System.out.println("Enter Gym Center Name: ");
+            String gymCenterName = scanner.nextLine();
+            System.out.println("Enter Gym Center GSTIN: ");
+            String gymCenterGSTin = scanner.nextLine();
+            System.out.println("Enter Gym Center Capacity: ");
+            int gymCenterCapacity = scanner.nextInt();
+            System.out.println("Enter Gym Center Price: ");
+            int gymCenterPrice = scanner.nextInt();
+            gymCenterDAO.registerGymCenter(ownerEmail, gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice);
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration failed!");
+        }
+        catch(GymCentreNotFoundException exp){
+            throw new GymCentreNotFoundException("Gym center not found!");
+        }
     }
 
     public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {

@@ -1,5 +1,10 @@
 package com.flipkart.bean;
 
+/**
+ * @author JEDI-04
+ * Payment Class
+ */
+
 public class Payment {
     private String paymentId;
     private String amountPaid;

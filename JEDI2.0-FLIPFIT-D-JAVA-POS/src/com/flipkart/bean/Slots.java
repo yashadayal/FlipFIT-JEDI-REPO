@@ -1,5 +1,10 @@
 package com.flipkart.bean;
 
+/**
+ * @author JEDI-04
+ * Slots Class
+ */
+
 public class Slots {
 
     private int slotID;

@@ -12,69 +12,89 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Owner Dao Operations
+ */
+
 public class GymOwnerDAO {
 
     Connection connection = DBUtils.getConnection();
 
     public void registerGymOwner(String name, String email, String password ) throws SQLException, RegistrationFailedException {
 
-        String query1 = Constants.FETCH_OWNER_WITH_EMAIL;
-        PreparedStatement preparedStatement = connection.prepareStatement(query1);
-        preparedStatement.setString(1, email);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            System.out.println("Email already exists.");
-            return;
+        try{
+            String query1 = Constants.FETCH_OWNER_WITH_EMAIL;
+            PreparedStatement preparedStatement = connection.prepareStatement(query1);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println("Email already exists.");
+                return;
+            }
+            String query2 = Constants.INSERT_OWNER;
+            PreparedStatement stmt1 = connection.prepareStatement(query2);
+            stmt1.setString(1, name);
+            stmt1.setString(2, email);
+            stmt1.setString(3, password);
+            stmt1.executeUpdate();
+            System.out.println("Gym owner successfully registered.");
         }
-        String query2 = Constants.INSERT_OWNER;
-        PreparedStatement stmt1 = connection.prepareStatement(query2);
-        stmt1.setString(1, name);
-        stmt1.setString(2, email);
-        stmt1.setString(3, password);
-        stmt1.executeUpdate();
-        System.out.println("Gym owner successfully registered.");
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration Failed!");
+        }
     }
 
     public boolean gymOwnerLogin(String email, String password) throws SQLException, LoginFailedException, WrongCredentialException, GymOwnerNotFoundException {
 
-        String query = Constants.FETCH_OWNER_PASSWORD;
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, email);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (!resultSet.next()) {
-            System.out.println("Email does not exist.");
-            return false;
+        try{
+            String query = Constants.FETCH_OWNER_PASSWORD;
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                System.out.println("Email does not exist.");
+                return false;
+            }
+            String actualPassword = resultSet.getString("ownerPassword");
+            if (actualPassword.equals(password)) {
+                System.out.println("Gym Owner successfully logged in.");
+                return true;
+            }
+            System.out.println("Incorrect password. Please try again.");
         }
-        String actualPassword = resultSet.getString("ownerPassword");
-        if (actualPassword.equals(password)) {
-            System.out.println("Gym Owner successfully logged in.");
-            return true;
+        catch(LoginFailedException exp){
+            throw new LoginFailedException("Login Failed!");
         }
-        System.out.println("Incorrect password. Please try again.");
         return false;
     }
 
     public boolean changeGymOwnerPassword(String email, String currPassword, String newPassword) throws SQLException, WrongCredentialException {
 
-        String query = Constants.FETCH_OWNER_PASSWORD;
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, email);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (!resultSet.next()) {
-            System.out.println("Email does not exist.");
-            return false;
+        try{
+            String query = Constants.FETCH_OWNER_PASSWORD;
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                System.out.println("Email does not exist.");
+                return false;
+            }
+            String actualPassword = resultSet.getString("ownerPassword");
+            if (actualPassword.equals(currPassword)) {
+                String updateQuery = Constants.UPDATE_OWNER_PASSWORD;
+                PreparedStatement preparedStatement1 = connection.prepareStatement(updateQuery);
+                preparedStatement1.setString(1, newPassword);
+                preparedStatement1.setString(2, email);
+                preparedStatement1.executeUpdate();
+                System.out.println("Password updated successfully.");
+                return true;
+            }
+            System.out.println("Incorrect current password. Please try again.");
         }
-        String actualPassword = resultSet.getString("ownerPassword");
-        if (actualPassword.equals(currPassword)) {
-            String updateQuery = Constants.UPDATE_OWNER_PASSWORD;
-            PreparedStatement preparedStatement1 = connection.prepareStatement(updateQuery);
-            preparedStatement1.setString(1, newPassword);
-            preparedStatement1.setString(2, email);
-            preparedStatement1.executeUpdate();
-            System.out.println("Password updated successfully.");
-            return true;
+        catch(SQLException exp){
+            throw new SQLException("Error Occurred!");
         }
-        System.out.println("Incorrect current password. Please try again.");
         return false;
     }
 

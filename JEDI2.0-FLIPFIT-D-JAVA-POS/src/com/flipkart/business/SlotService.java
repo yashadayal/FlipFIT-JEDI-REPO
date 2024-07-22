@@ -5,6 +5,11 @@ import com.flipkart.dao.SlotDAO;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * @author JEDI-04
+ * Java class for Slot Service Operations
+ */
+
 public class SlotService {
     private static SlotDAO slotDao = new SlotDAO();
 

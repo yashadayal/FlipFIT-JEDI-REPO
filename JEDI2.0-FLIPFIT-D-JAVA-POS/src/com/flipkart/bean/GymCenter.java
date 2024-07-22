@@ -2,6 +2,11 @@ package com.flipkart.bean;
 
 import java.util.List;
 
+/**
+ * @author JEDI-04
+ * Gym Center Class
+ */
+
 public class GymCenter{
     private int gymCenterId;
     private int gymOwnerID;

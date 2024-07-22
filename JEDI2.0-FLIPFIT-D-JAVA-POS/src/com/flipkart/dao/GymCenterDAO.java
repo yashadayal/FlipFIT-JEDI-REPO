@@ -7,6 +7,11 @@ import com.flipkart.jdbc.DBUtils;
 
 import java.sql.*;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Center Dao Operations
+ */
+
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
 
@@ -22,6 +27,21 @@ public class GymCenterDAO {
 
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
+        try{
+            int ownerId = getOwnerIdByEmail(email);
+            String query = Constants.INSERT_GYM_DATA;
+            PreparedStatement stmt1 = connection.prepareStatement(query);
+            stmt1.setString(1, gymCenterName);
+            stmt1.setString(2, gymCenterGSTin);
+            stmt1.setInt(3, gymCenterCapacity);
+            stmt1.setInt(4, gymCenterPrice);
+            stmt1.setInt(5, ownerId);
+            stmt1.executeUpdate();
+            System.out.println("Gym center registered successfully. Pending for approval");
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration failed!");
+        }
         int ownerId = getOwnerIdByEmail(email);
         PreparedStatement stmt1 = connection.prepareStatement(Constants.INSERT_GYM_DATA);
         stmt1.setString(1, gymCenterName);
@@ -80,7 +100,7 @@ public class GymCenterDAO {
     }
 
     public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
-        String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
+        String query = Constants.FETCH_VALID_GYM;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;

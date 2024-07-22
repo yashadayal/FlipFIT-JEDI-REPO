@@ -1,5 +1,10 @@
 package com.flipkart.constants;
 
+/**
+ * @author JEDI-04
+ * Constants Class
+ */
+
 public class Constants {
 
     // queries for Admin DAO

@@ -10,6 +10,11 @@ import com.flipkart.exceptions.WrongCredentialException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ *  The class displays the menu for gym owner client
+ */
+
 public class GymOwnerFlipFitMenu {
 
 
@@ -19,64 +24,76 @@ public class GymOwnerFlipFitMenu {
 
 
     void gymOwnerMenu(String email) throws GymOwnerNotFoundException, SQLException {
-        System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
-        System.out.println("1. View Status of Gym Owner Approval Request\n");
-        System.out.println("2. Register Gym Center\n");
-        System.out.println("3. View All Gym Centers\n");
-        //System.out.println("3. Add Slots in your Gym Centers\n");
-        System.out.println("4. View Status of your Gym Centers\n");
-        System.out.println("5. Log out\n");
-        System.out.println("-----------------------------------------------------------------\n");
-        System.out.println("Enter your choice: ");
-        int choice = scanner.nextInt();
-        boolean ownerApproved = gymCenterService.gymOwnerApprovalStatus(email);
-        switch (choice){
-            case 1:
-                if(ownerApproved){
-                    System.out.println("You have been approved by the Admin");
-                }
-                else{
-                    System.out.println("Your gym owner application is still pending for approval");
-                }
-                gymOwnerMenu(email);
-                break;
+        try{
+            System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
+            System.out.println("1. View Status of Gym Owner Approval Request\n");
+            System.out.println("2. Register Gym Center\n");
+            System.out.println("3. View All Gym Centers\n");
+            //System.out.println("3. Add Slots in your Gym Centers\n");
+            System.out.println("4. View Status of your Gym Centers\n");
+            System.out.println("5. Log out\n");
+            System.out.println("-----------------------------------------------------------------\n");
+            System.out.println("Enter your choice: ");
+            int choice = scanner.nextInt();
+            boolean ownerApproved = gymCenterService.gymOwnerApprovalStatus(email);
+            switch (choice) {
+                case 1:
+                    if (ownerApproved) {
+                        System.out.println("You have been approved by the Admin");
+                    } else {
+                        System.out.println("Your gym owner application is still pending for approval");
+                    }
+                    gymOwnerMenu(email);
+                    break;
 
-            case 2:
-                if(ownerApproved){
-                    gymCenterService.registerGymCenter(email);
-                }
-                else{
-                    System.out.println("Your can not add Gym Center before you're approved by the Admin");
-                }
-                gymOwnerMenu(email);
-                break;
-            case 3:
-                gymCenterService.veiwAllGymCenters();
-                gymOwnerMenu(email);
-                break;
-            case 4:
-                gymCenterService.viewGymCenterByEmail(email);
-                gymOwnerMenu(email);
-                break;
-            case 5:
-                return;
+                case 2:
+                    if (ownerApproved) {
+                        gymCenterService.registerGymCenter(email);
+                    } else {
+                        System.out.println("Your can not add Gym Center before you're approved by the Admin");
+                    }
+                    gymOwnerMenu(email);
+                    break;
+                case 3:
+                    gymCenterService.veiwAllGymCenters();
+                    gymOwnerMenu(email);
+                    break;
+                case 4:
+                    gymCenterService.viewGymCenterByEmail(email);
+                    gymOwnerMenu(email);
+                    break;
+                case 5:
+                    return;
+            }
         }
-
+        catch(SQLException exp){
+            throw new SQLException("Gym Owner not found!");
+        }
     }
     void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException {
-        if(gymOwnerService.loginGymOwner(email, password)) {
-            gymOwnerMenu(email);
+        try{
+            if (gymOwnerService.loginGymOwner(email, password)) {
+                gymOwnerMenu(email);
+            }
+        }
+        catch(LoginFailedException exp){
+            throw new LoginFailedException("Login Failed!");
         }
     }
 
     void registerGymOwner() throws GymOwnerNotFoundException, SQLException, RegistrationFailedException {
-        System.out.println("Enter Name: ");
-        String name = scanner.next();
-        System.out.println("Enter Email: ");
-        String email = scanner.next();
-        System.out.println("Enter password: ");
-        String password = scanner.next();
-        gymOwnerService.registerGymOwner(name, email, password);
+        try{
+            System.out.println("Enter Name: ");
+            String name = scanner.next();
+            System.out.println("Enter Email: ");
+            String email = scanner.next();
+            System.out.println("Enter password: ");
+            String password = scanner.next();
+            gymOwnerService.registerGymOwner(name, email, password);
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration Failed!");
+        }
     }
 
     void changePassword(String email, String currPassword, String newPassword) throws GymOwnerNotFoundException, SQLException, WrongCredentialException {

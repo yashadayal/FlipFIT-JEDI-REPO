@@ -2,6 +2,11 @@ package com.flipkart.bean;
 
 import java.util.Date;
 
+/**
+ * @author JEDI-04
+ * Schedule Class
+ */
+
 public class Schedule {
     private String scheduleID;
     private Date date;

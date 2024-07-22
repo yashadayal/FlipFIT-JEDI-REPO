@@ -5,11 +5,7 @@ import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.CustomerDAO;
 import com.flipkart.client.FlipFitApplicationClient;
-import com.flipkart.jdbc.DBUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.flipkart.dao.SlotDAO;
 
@@ -18,13 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
-    static ArrayList<Customer> registeredCustomers=new ArrayList<>();
     private FlipFitApplicationClient flipfitAppClient = new FlipFitApplicationClient();
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
     CustomerDAO userDao = new CustomerDAO();
-    BookingService bookingService = new BookingService();
-
     public boolean registerCustomer(String name, String email, String password)
     {
         Customer customer=new Customer();
@@ -74,74 +67,13 @@ public class CustomerService {
         System.out.println("Slot has been canceled successfully");
         return true;
     }
-//    public List<Booking> viewBooking(String email) {
-//
-//        List<Booking> customerBookings = new ArrayList<Booking>();
-//
-//        for (Booking b : bookings) {
-//            if (b.getEmail().equals(email)) {
-//                customerBookings.add(b);
-//            }
-//        }
-//        return customerBookings;
-//    }
 
-
-    public List<Booking> viewBooking(String email) {
-
-        List<Booking> customerBookings = new ArrayList<>();
-
-        Connection connection = null;
-//        System.out.println(userId);
-        boolean bookingSuccess = false;
-        String query = "SELECT * FROM flipfit_booking WHERE customerId = ?";
-        String userId_query = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
-        try {
-            connection = DBUtils.getConnection();
-
-            PreparedStatement preparedStatement_email = connection.prepareStatement(userId_query);
-            preparedStatement_email.setString(1, email);
-
-            ResultSet resultSet = preparedStatement_email.executeQuery();
-
-            String customerId = "na"; // Assuming -1 is not a valid customerId
-
-            if (resultSet.next()) {
-                customerId = resultSet.getString("customerId");
-            } else {
-                // Handle case where no customer with the given email is found
-                System.out.println("No customer found with email: " + email);
-                return customerBookings; // Return empty list
-            }
-
-
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, customerId);
-
-            ResultSet resultSet2 = preparedStatement.executeQuery();
-
-
-
-            // Iterate through the result set
-            while (resultSet2.next()) {
-                // Retrieve data from the result set and create a Booking object
-                int bookingID = resultSet2.getInt("bookingId");
-                String customerID = resultSet2.getString("customerId");
-                // Assuming other fields like date, time, etc., adjust as per your database schema
-
-                Booking booking = new Booking(customerID,bookingID); // Adjust constructor as per your Booking class
-
-                // Add Booking object to the list
-                customerBookings.add(booking);
-                System.out.println(booking);
-            }
+    public boolean viewBooking(String email) throws SQLException {
+        List<Booking> customerBookings = userDao.viewBooking(email);
+        for (Booking booking : customerBookings) {
+            System.out.println("Booking ID: " + booking.getBookingID());
         }
-        catch (SQLException e) {
-            e.printStackTrace(); // Handle exceptions according to your application's needs
-        }
-
-        // Return the list of bookings
-        return customerBookings;
+        return true;
     }
 
     public boolean deleteBookings(String email){

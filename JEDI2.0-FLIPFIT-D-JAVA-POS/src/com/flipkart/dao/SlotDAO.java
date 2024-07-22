@@ -9,6 +9,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+/**
+ * @author JEDI-04
+ * Java class for Slot Dao Operations
+ */
+
 public class SlotDAO {
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
     private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
