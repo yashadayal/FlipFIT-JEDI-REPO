@@ -26,6 +26,13 @@ public class GymOwnerFlipFitMenu {
     private GymCenterService gymCenterService = new GymCenterService();
 
 
+    /**
+     * Method for gym owner menu
+     * @param email
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     * @throws ParseException
+     */
     void gymOwnerMenu(String email) throws GymOwnerNotFoundException, SQLException, ParseException {
         System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
         System.out.println("1. View Status of Gym Owner Approval Request\n");
@@ -74,6 +81,17 @@ public class GymOwnerFlipFitMenu {
         }
 
     }
+
+    /**
+     * Method for login
+     * @param email
+     * @param password
+     * @throws SQLException
+     * @throws LoginFailedException
+     * @throws WrongCredentialException
+     * @throws ParseException
+     * @throws GymOwnerNotFoundException
+     */
     void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException, ParseException {
         try{
             if (gymOwnerService.loginGymOwner(email, password)) {
@@ -85,6 +103,12 @@ public class GymOwnerFlipFitMenu {
         }
     }
 
+    /**
+     * Method for register gym owner
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     * @throws RegistrationFailedException
+     */
     void registerGymOwner() throws GymOwnerNotFoundException, SQLException, RegistrationFailedException {
         try{
             System.out.println("Enter Name: ");
@@ -100,11 +124,27 @@ public class GymOwnerFlipFitMenu {
         }
     }
 
+    /**
+     * Method for change password
+     * @param email
+     * @param currPassword
+     * @param newPassword
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     * @throws WrongCredentialException
+     */
     void changePassword(String email, String currPassword, String newPassword) throws GymOwnerNotFoundException, SQLException, WrongCredentialException {
         gymOwnerService.changePassword(email, currPassword, newPassword);
     }
 
 
+    /**
+     * Method for login
+     * @param email
+     * @throws RegistrationFailedException
+     * @throws SQLException
+     * @throws ParseException
+     */
     void addSlot(String email) throws GymOwnerNotFoundException, SQLException, RegistrationFailedException, ParseException {
         // show the list of gym centers under this gym owner
         gymCenterService.viewApprovedGymCenterByEmail(email);

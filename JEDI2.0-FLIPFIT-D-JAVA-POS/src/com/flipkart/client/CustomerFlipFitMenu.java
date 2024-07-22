@@ -7,6 +7,7 @@ import com.flipkart.business.CustomerService;
 import com.flipkart.business.GymCenterService;
 import com.flipkart.business.SlotService;
 import com.flipkart.dao.SlotDAO;
+import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
@@ -29,6 +30,15 @@ public class CustomerFlipFitMenu {
     SlotDAO slotDAO=new SlotDAO();
     BookingService bookingService=new BookingService();
     String customerEmail;
+
+    /**
+     * Method for login
+     * @param email
+     * @param password
+     * @throws SQLException
+     * @throws LoginFailedException
+     * @throws WrongCredentialException
+     */
     void login(String email, String password) throws LoginFailedException, SQLException, WrongCredentialException {
 
         try{
@@ -49,6 +59,14 @@ public class CustomerFlipFitMenu {
         }
     }
 
+    /**
+     * Method for register
+     * @param name
+     * @param email
+     * @param password
+     * @throws SQLException
+     * @throws RegistrationFailedException
+     */
     void register(String name, String email, String password) throws SQLException, RegistrationFailedException {
         try{
             CustomerService userBusiness = new CustomerService();
@@ -62,6 +80,10 @@ public class CustomerFlipFitMenu {
         }
     }
 
+    /**
+     * Method for customer menu
+     * @throws SQLException
+     */
     void customerMenu() throws SQLException {
         try{
         Scanner scanner = new Scanner(System.in);
@@ -121,9 +143,17 @@ public class CustomerFlipFitMenu {
         }
     }
 
+    /**
+     * Method for changing password for customer
+     * @param email
+     * @param currPassword
+     * @param newPassword
+     * @throws WrongCredentialException
+     */
     void changePassword(String email, String currPassword, String newPassword) throws WrongCredentialException {
         customerService.changePassword(email, currPassword, newPassword);
     }
+
     void viewCenters(){
 
     }
