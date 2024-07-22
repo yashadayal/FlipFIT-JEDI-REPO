@@ -16,7 +16,7 @@ public class BookingService {
         } catch (BookingFailedException | SQLException e) {
             System.out.println(e.getMessage());
         }
-        if(!isAvailableSlot) {
+        if(!isAvailableSlot){
             System.out.println("No seats available for the booking");
             return;
         }

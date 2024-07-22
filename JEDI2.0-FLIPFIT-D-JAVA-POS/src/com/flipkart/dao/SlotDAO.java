@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Slots;
+import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
@@ -18,7 +19,7 @@ public class SlotDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECT * FROM flipfit_slots WHERE gymCenterId = ?";
+        String query = Constants.FETCH_SLOTS_WITH_ID;
 
         try {
             connection = DBUtils.getConnection();
@@ -60,7 +61,7 @@ public class SlotDAO {
         ResultSet resultSet = null;
 
         try {
-            String fetchQuery = "SELECT gymCenterId FROM flipfit_slots WHERE slotId = ?";
+            String fetchQuery = Constants.FETCH_GYM_WITH_SLOT;
             connection = DBUtils.getConnection();
             slotStatement = connection.prepareStatement(fetchQuery);
             slotStatement.setInt(1, slotId);
@@ -74,7 +75,7 @@ public class SlotDAO {
 
             int fetchedGymCenterId = resultSet.getInt("gymCenterId");
 
-            String removeQuery = "DELETE FROM flipfit_slots WHERE slotId = ?";
+            String removeQuery = Constants.DELETE_SLOT;
             slotStatement = connection.prepareStatement(removeQuery);
             slotStatement.setInt(1, slotId);
             slotStatement.executeUpdate();
@@ -96,7 +97,7 @@ public class SlotDAO {
 
     public void addSlot(int gymCenterId, int capacity, String date, LocalDateTime startTime, LocalDateTime endTime) throws SQLException{
         PreparedStatement slotStatement = null;
-        String insertQuery = "INSERT INTO flipfit_slots (gymCenterId, capacity, date, startTime, endTime) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = Constants.INSERT_SLOT;
         slotStatement = connection.prepareStatement(insertQuery);
         slotStatement.setInt(1, gymCenterId);
         slotStatement.setInt(2, capacity);
@@ -117,7 +118,7 @@ public class SlotDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String query = "SELECT capacity FROM flipfit_slots WHERE slotId = ?";
+        String query = Constants.FETCH_CAPACITY;
         connection = DBUtils.getConnection();
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, slotId);
@@ -134,7 +135,7 @@ public class SlotDAO {
 
     public void decrementCapacity(int slotId)  throws SQLException {
         PreparedStatement preparedStatement = null;
-        String query = "UPDATE flipfit_slots SET capacity = capacity - 1 WHERE slotId = ?";
+        String query = Constants.DECREMENT_SLOT_CAPACITY;
 
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, slotId);
@@ -145,7 +146,7 @@ public class SlotDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         int gymCenterId = -1;
-        String query = "SELECT gymCenterId FROM flipfit_slots WHERE slotId = ?";
+        String query = Constants.FETCH_GYM_WITH_SLOT;
 
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, slotId);

@@ -1,6 +1,7 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Customer;
+import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.SQLExceptionHandler;
 import com.flipkart.jdbc.DBUtils;
 
@@ -11,7 +12,6 @@ import java.sql.SQLException;
 
 public class CustomerDAO {
 
-    static Integer customerId = 0;
     private static final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
     public void getCustomerById(Integer id) {
@@ -21,17 +21,13 @@ public class CustomerDAO {
     public static boolean registerCustomer(Customer customer) {
         Connection connection = null;
         boolean registerSuccess = false;
-        String query = "INSERT INTO flipfit_customer VALUES (?,?,?,?,?)";
-        try {
-            customerId++;
-            connection = DBUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, customerId);
 
-            preparedStatement.setString(2, customer.getCustomerName());
-            preparedStatement.setInt(3, 1);
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setString(5, customer.getPassword());
+        try {
+            connection = DBUtils.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(Constants.REGISTER_CUSTOMER);
+            preparedStatement.setString(1, customer.getCustomerName());
+            preparedStatement.setString(2, customer.getEmail());
+            preparedStatement.setString(3, customer.getPassword());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 0)
@@ -47,11 +43,10 @@ public class CustomerDAO {
     public static Customer viewProfile(String email) {
         Connection connection = null;
         Customer customer = null;
-        String query = "SELECT customerId, customerName, customerPhone, customerAddress, customerEmail, password FROM flipfit_customer WHERE customerEmail = ?";
 
         try {
             connection = DBUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(Constants.FETCH_CUSTOMER_DATA);
             preparedStatement.setString(1, email);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -75,14 +70,12 @@ public class CustomerDAO {
 
     public static void changePassword(String email, String oldPassword, String newPassword) {
         Connection connection = null;
-        String selectQuery = "SELECT password FROM flipfit_customer WHERE customerEmail = ?";
-        String updateQuery = "UPDATE flipfit_customer SET password = ? WHERE customerEmail = ?";
 
         try {
             connection = DBUtils.getConnection();
 
             // Step 1: Check if the user exists
-            PreparedStatement selectStatement = connection.prepareStatement(selectQuery);
+            PreparedStatement selectStatement = connection.prepareStatement(Constants.FETCH_CUSTOMER_PASSWORD);
             selectStatement.setString(1, email);
             ResultSet rs = selectStatement.executeQuery();
 
@@ -90,7 +83,7 @@ public class CustomerDAO {
                 String storedPassword = rs.getString("password");
                 if (storedPassword.equals(oldPassword)) {
                     // Step 2: If user exists and old password matches, update the password
-                    PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                    PreparedStatement updateStatement = connection.prepareStatement(Constants.UPDATE_CUSTOMER_PASSWORD);
                     updateStatement.setString(1, newPassword);
                     updateStatement.setString(2, email);
 
@@ -122,10 +115,9 @@ public class CustomerDAO {
         PreparedStatement preparedStatement = null;
         boolean loginSuccess = false;
 
-        String query = "SELECT * FROM flipfit_customer WHERE customerEmail = ? AND password = ?";
         try {
             connection = DBUtils.getConnection();
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(Constants.VERIFY_CUSTOMER);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
 
