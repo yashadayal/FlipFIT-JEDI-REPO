@@ -23,7 +23,7 @@ public class GymCenterDAO {
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
         int ownerId = getOwnerIdByEmail(email);
-        PreparedStatement stmt1 = connection.prepareStatement(Constants.INSERT_GYM_DATA;);
+        PreparedStatement stmt1 = connection.prepareStatement(Constants.INSERT_GYM_DATA);
         stmt1.setString(1, gymCenterName);
         stmt1.setString(2, gymCenterGSTin);
         stmt1.setInt(3, gymCenterCapacity);

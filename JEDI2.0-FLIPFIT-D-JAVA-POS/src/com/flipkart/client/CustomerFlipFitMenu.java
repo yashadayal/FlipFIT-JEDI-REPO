@@ -3,6 +3,7 @@ package com.flipkart.client;
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
+import com.flipkart.bean.Slots;
 import com.flipkart.business.BookingService;
 import com.flipkart.business.CustomerService;
 import com.flipkart.business.GymCenterService;
@@ -12,6 +13,7 @@ import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -69,9 +71,7 @@ public class CustomerFlipFitMenu {
                 System.out.println("List of gym center slots. Please select your gym slot id");
                 slotDAO.getSlotByCenterId(gymCenterId);
                 int slotId=scanner.nextInt();
-
                 bookingService.bookSlot(customerEmail,slotId);
-                customerService.bookSlot();
                 customerMenu();
                 break;
             case 3:

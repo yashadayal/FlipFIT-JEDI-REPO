@@ -37,19 +37,16 @@ public class SlotDAO {
                 slot.setStartTime(String.valueOf(resultSet.getTimestamp("startTime")));
                 slot.setEndTime(String.valueOf(resultSet.getTimestamp("endTime")));
 
+                    System.out.println("Slot Id " + resultSet.getString("slotId"));
+                    System.out.println("Gym Center Id: " + resultSet.getString("gymCenterId"));
+                    System.out.println("Capacity: " + resultSet.getString("capacity"));
+                    System.out.println("Date: " + resultSet.getString("date"));
+                    System.out.println("Start Time: " + resultSet.getString("startTime"));
+                    System.out.println("End time: " + resultSet.getString("endTime"));
                 slots.add(slot);
             }
-            resultSet.close();
         } catch (SQLException e) {
             sqlExceptionHandler.printSQLException(e);
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                sqlExceptionHandler.printSQLException(e);
-            }
         }
         return slots;
     }
@@ -124,7 +121,6 @@ public class SlotDAO {
         preparedStatement.setInt(1, slotId);
 
         resultSet = preparedStatement.executeQuery();
-
         if (resultSet.next()) {
             int capacity = resultSet.getInt("capacity");
             return capacity > 0;

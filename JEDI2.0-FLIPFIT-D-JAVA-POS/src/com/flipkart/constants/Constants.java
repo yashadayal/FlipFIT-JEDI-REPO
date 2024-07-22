@@ -8,7 +8,7 @@ public class Constants {
     public static final String UPDATE_ADMIN_CRED = "UPDATE flipfit_admin SET adminPassword = ? limit 1";
 
     // Booking DAO
-    public static final String INSERT_BOOKING = "INSERT INTO flipfit_booking (customerId, email, slotId) VALUES (?, ?, ?)";
+    public static final String INSERT_BOOKING = "INSERT INTO flipfit_booking (email, scheduleId) VALUES (?, ?)";
 
     // Customer DAO
     public static final String REGISTER_CUSTOMER = "INSERT INTO flipfit_customer (customerName, customerEmail, password) VALUES (?, ?, ?)";

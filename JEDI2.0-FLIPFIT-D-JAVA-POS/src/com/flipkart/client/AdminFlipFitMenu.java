@@ -50,12 +50,12 @@ public class AdminFlipFitMenu {
                 int pick = scanner.nextInt();
                 switch (pick){
                     case 1:
-                        adminService.approveAllGymOwners();
+//                        adminService.approveAllGymOwners();
                         break;
                     case 2:
                         System.out.println("Enter Email:");
                         String email = scanner.next();
-                        adminService.approveGymOwnerByEmail(email);
+//                        adminService.approveGymOwnerByEmail(email);
                         break;
                     case 3:
                         adminMenu();
@@ -71,12 +71,12 @@ public class AdminFlipFitMenu {
                 int pick1 = scanner.nextInt();
                 switch (pick1){
                     case 1:
-                        adminService.approveAllGymCenter();
+//                        adminService.approveAllGymCenter();
                         break;
                     case 2:
                         System.out.println("Enter gym Center Id:");
                         int id = scanner.nextInt();
-                        adminService.approveGymCenterById(id);
+//                        adminService.approveGymCenterById(id);
                         break;
                     case 3:
                         adminMenu();
