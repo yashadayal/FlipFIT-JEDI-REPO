@@ -9,6 +9,11 @@ import com.flipkart.exceptions.RegistrationFailedException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Center Service Operations
+ */
+
 public class GymCenterService {
 
     private GymCenterDAO gymCenterDAO = new GymCenterDAO();

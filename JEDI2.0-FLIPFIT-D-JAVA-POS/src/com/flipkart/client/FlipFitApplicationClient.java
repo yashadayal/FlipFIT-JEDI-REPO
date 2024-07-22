@@ -8,6 +8,11 @@ import com.flipkart.exceptions.WrongCredentialException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ * This class is used as the main entry point of the application
+ */
+
 public class FlipFitApplicationClient {
 
     static Scanner scanner = new Scanner(System.in);

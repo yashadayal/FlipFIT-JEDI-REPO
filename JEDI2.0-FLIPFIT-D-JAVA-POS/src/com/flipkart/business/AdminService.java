@@ -15,7 +15,10 @@ import com.flipkart.exceptions.WrongCredentialException;
 
 import java.util.Properties;
 
-
+/**
+ * @author JEDI-04
+ * Java class for Admin Service Operations
+ */
 
 public class AdminService {
     public static AdminDAO adminDao = new AdminDAO();

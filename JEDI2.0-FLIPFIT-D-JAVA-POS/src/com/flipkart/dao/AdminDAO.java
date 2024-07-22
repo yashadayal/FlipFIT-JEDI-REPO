@@ -13,6 +13,11 @@ import com.flipkart.jdbc.DBUtils;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author JEDI-04
+ * Java class for Admin Dao Operations
+ */
+
 public class AdminDAO {
     private static String password = "";
     private final GymCenterDAO gymCenterdao=new GymCenterDAO();

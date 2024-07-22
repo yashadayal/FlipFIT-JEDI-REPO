@@ -10,6 +10,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ *  The class displays the menu for customer client
+ */
+
 public class CustomerFlipFitMenu {
 
     private CustomerService customerService = new CustomerService();

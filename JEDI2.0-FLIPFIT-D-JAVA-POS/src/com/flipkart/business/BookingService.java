@@ -5,6 +5,11 @@ import com.flipkart.exceptions.BookingFailedException;
 
 import java.sql.SQLException;
 
+/**
+ * @author JEDI-04
+ * Java class for Booking Service Operations
+ */
+
 public class BookingService {
     private static final BookingDAO bookingDAO = new BookingDAO();
     private static SlotService slotService = new SlotService();

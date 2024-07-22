@@ -8,6 +8,11 @@ import com.flipkart.exceptions.WrongCredentialException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ * Class that display Admin Menu
+ */
+
 public class AdminFlipFitMenu {
 
     static AdminService adminService = new AdminService();

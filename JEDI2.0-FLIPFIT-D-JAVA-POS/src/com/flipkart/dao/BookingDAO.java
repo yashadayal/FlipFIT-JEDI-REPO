@@ -9,6 +9,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 
+/**
+ * @author JEDI-04
+ * Java class for Booking Dao Operations
+ */
+
 public class BookingDAO {
     Connection connection = DBUtils.getConnection();
     private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();

@@ -12,6 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Owner Dao Operations
+ */
+
 public class GymOwnerDAO {
 
     Connection connection = DBUtils.getConnection();

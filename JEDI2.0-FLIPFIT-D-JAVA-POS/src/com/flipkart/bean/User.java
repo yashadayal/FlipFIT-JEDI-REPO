@@ -1,5 +1,10 @@
 package com.flipkart.bean;
 
+/**
+ * @author JEDI-04
+ * User Class
+ */
+
 public class User {
 
     private String userID;

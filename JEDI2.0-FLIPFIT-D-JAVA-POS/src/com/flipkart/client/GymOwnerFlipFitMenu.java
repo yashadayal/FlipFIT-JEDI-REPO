@@ -10,6 +10,11 @@ import com.flipkart.exceptions.WrongCredentialException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ *  The class displays the menu for gym owner client
+ */
+
 public class GymOwnerFlipFitMenu {
 
 

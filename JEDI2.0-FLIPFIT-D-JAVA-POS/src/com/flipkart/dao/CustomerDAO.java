@@ -10,6 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * @author JEDI-04
+ * Java class for Customer Dao Operations
+ */
+
 public class CustomerDAO {
 
     private static final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();

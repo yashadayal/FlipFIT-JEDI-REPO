@@ -16,6 +16,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author JEDI-04
+ * Java class for Customer Service Operations
+ */
+
 public class CustomerService {
     static ArrayList<Customer> registeredCustomers=new ArrayList<>();
     private FlipFitApplicationClient flipfitAppClient = new FlipFitApplicationClient();

@@ -1,5 +1,10 @@
 package com.flipkart.bean;
 
+/**
+ * @author JEDI-04
+ * Booking Class
+ */
+
 public class Booking {
 
     public Booking(String customerID, int bookingID) {
