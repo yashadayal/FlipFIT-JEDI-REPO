@@ -14,6 +14,8 @@ public class CustomerService {
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
     CustomerDAO userDao = new CustomerDAO();
+    BookingService bookingService = new BookingService();
+
     public boolean registerCustomer(String name, String email, String password)
     {
         Customer customer=new Customer();
@@ -55,7 +57,9 @@ public class CustomerService {
 //        }
         return gyms;
     }
-    public boolean bookSlot(){
+    public boolean bookSlot(String email, int slotId){
+//        fetch customer id using email and pass the values to book slot
+//        bookingService.bookSlot();
         System.out.println("Slot has been booked successfully");
         return true;
     }

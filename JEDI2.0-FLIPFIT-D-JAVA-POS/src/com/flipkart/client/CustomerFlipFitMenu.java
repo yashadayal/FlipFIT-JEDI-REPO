@@ -55,7 +55,7 @@ public class CustomerFlipFitMenu {
                 customerMenu();
                 break;
             case 2:
-                customerService.bookSlot();
+//                customerService.bookSlot();
                 customerMenu();
                 break;
             case 3:

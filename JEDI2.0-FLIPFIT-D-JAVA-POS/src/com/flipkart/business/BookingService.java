@@ -9,7 +9,7 @@ public class BookingService {
     private static final BookingDAO bookingDAO = new BookingDAO();
     private static SlotService slotService = new SlotService();
 
-    public void bookSlot(int customerId, int slotId) throws BookingFailedException, SQLException {
+    public void bookSlot(int customerId, String email, int slotId) throws BookingFailedException, SQLException {
         boolean isAvailableSlot = false;
         try {
             isAvailableSlot = slotService.isAvailableSlot(slotId);
@@ -20,7 +20,7 @@ public class BookingService {
             System.out.println("No seats available for the booking");
             return;
         }
-        bookingDAO.bookSlot(customerId, slotId);
+        bookingDAO.bookSlot(customerId, email, slotId);
     }
 
     public void cancelBooking() throws BookingFailedException, SQLException{
