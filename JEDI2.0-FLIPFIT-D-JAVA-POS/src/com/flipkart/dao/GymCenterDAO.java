@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.exceptions.GymCentreNotFoundException;
 import com.flipkart.exceptions.RegistrationFailedException;
+import com.flipkart.constants.Constants;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.*;
@@ -10,7 +11,7 @@ public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
 
     private int getOwnerIdByEmail(String email) throws GymCentreNotFoundException, SQLException {
-        String query = "SELECT ownerId FROM flipfit_gymowner WHERE ownerEmail = ?";
+        String query = Constants.FETCH_OWNER;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         stmt1.setString(1, email);
         ResultSet rs1 = stmt1.executeQuery();
@@ -22,7 +23,7 @@ public class GymCenterDAO {
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
         int ownerId = getOwnerIdByEmail(email);
-        String query = "INSERT INTO flipfit_gymcenter (gymCenterName, gymCenterGSTin, gymCenterCapacity, gymCenterPrice, ownerId) VALUES (?, ?, ?, ?, ?)";
+        String query = Constants.INSERT_GYM_DATA;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         stmt1.setString(1, gymCenterName);
         stmt1.setString(2, gymCenterGSTin);
@@ -36,7 +37,7 @@ public class GymCenterDAO {
     public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
 
         int ownerId = getOwnerIdByEmail(email);
-        String query = "SELECT * FROM flipfit_gymcenter WHERE ownerId = ?";
+        String query = Constants.FETCH_GYMCENTER_WITH_OWNER;
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, ownerId);
         ResultSet rs= stmt.executeQuery();
@@ -53,7 +54,7 @@ public class GymCenterDAO {
 
     public void viewAllGymCenters() throws GymCentreNotFoundException, SQLException {
 
-        String query = "SELECT * FROM flipfit_gymcenter";
+        String query = Constants.FETCH_GYMCENTER;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
@@ -69,7 +70,7 @@ public class GymCenterDAO {
     }
 
     public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws GymCentreNotFoundException, SQLException {
-        String query = "SELECT * FROM flipfit_gymcenter WHERE gymCenterId = ?";
+        String query = Constants.FETCH_GYMCENTER_WITH_ID;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         stmt1.setString(1, gymCenterId);
         ResultSet rs = stmt1.executeQuery();
@@ -80,7 +81,7 @@ public class GymCenterDAO {
     }
 
     public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
-        String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
+        String query = Constants.FETCH_VALID_GYM;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
@@ -97,7 +98,7 @@ public class GymCenterDAO {
 
     public void incrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
-        String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
+        String query = Constants.INCREMENT_CAPACITY;
 
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, gymCenterId);
@@ -106,7 +107,7 @@ public class GymCenterDAO {
 
     public void decrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
-        String query = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity - 1 WHERE gymcenterId = ?";
+        String query = Constants.DECREMENT_CAPACITY;
 
         preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1, gymCenterId);
