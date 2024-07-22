@@ -18,7 +18,7 @@ public class DBUtils {
         else {
             try {
                 Properties prop = new Properties();
-                FileInputStream fileInputStream = new FileInputStream("/Users/rolly.kumari/Documents/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
+                FileInputStream fileInputStream = new FileInputStream("src/config.properties");
                 prop.load(fileInputStream);
                 String url = prop.getProperty("url");
                 String user = prop.getProperty("user");

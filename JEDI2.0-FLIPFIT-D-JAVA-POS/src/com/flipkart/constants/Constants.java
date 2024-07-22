@@ -26,6 +26,7 @@ public class Constants {
     public static final String FETCH_VALID_GYM = "SELECT * FROM flipfit_gymcenter where isApproved=0";
     public static final String INCREMENT_CAPACITY = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity + 1 WHERE gymcenterId = ?";
     public static final String DECREMENT_CAPACITY = "UPDATE flipfit_gymcenter SET gymCenterCapacity = gymCenterCapacity - 1 WHERE gymcenterId = ?";
+    public static final String FETCH_APPROVED_GYMCENTER_BY_EMAIL = "SELECT * FROM flipfit_gymcenter WHERE ownerId = ? AND isGymCenterApproved=1";
 
     //Gym Owner DAO
     public static final String FETCH_OWNER_WITH_EMAIL = "SELECT ownerEmail FROM flipfit_gymowner WHERE ownerEmail = ?";

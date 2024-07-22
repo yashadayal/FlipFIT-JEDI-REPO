@@ -7,6 +7,7 @@ import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.RegistrationFailedException;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Scanner;
 
 public class GymCenterService {
@@ -33,6 +34,10 @@ public class GymCenterService {
         gymCenterDAO.viewGymCenterByEmail(email);
     }
 
+    public void viewApprovedGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
+        gymCenterDAO.viewApprovedGymCenterByEmail(email);
+    }
+
     public void veiwAllGymCenters() throws GymCentreNotFoundException, SQLException {
         gymCenterDAO.viewAllGymCenters();
     }
@@ -45,4 +50,7 @@ public class GymCenterService {
         return gymCenterDAO.viewGymCenterApprovalStatusByGymCenterId(gymCenterId);
     }
 
+    public void addSlot(int gymCenterId, Date startDateTime, Date endDateTime, int capacity) throws GymCentreNotFoundException, SQLException {
+        gymCenterDAO.addSlot(gymCenterId, startDateTime, endDateTime, capacity);
+    }
 }

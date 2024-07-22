@@ -6,6 +6,7 @@ import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class FlipFitApplicationClient {
@@ -53,7 +54,7 @@ public class FlipFitApplicationClient {
         }
     }
 
-    private static void login() throws SQLException, GymOwnerNotFoundException, LoginFailedException,WrongCredentialException {
+    private static void login() throws SQLException, GymOwnerNotFoundException, LoginFailedException, WrongCredentialException, ParseException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Email: ");
         String email = scanner.next();
@@ -94,7 +95,7 @@ public class FlipFitApplicationClient {
     }
 
 
-    public static void main(String[] args) throws SQLException, GymOwnerNotFoundException, WrongCredentialException {
+    public static void main(String[] args) throws SQLException, GymOwnerNotFoundException, WrongCredentialException, ParseException {
         while (true) {
             displayMainMenu();
             Scanner scanner = new Scanner(System.in);

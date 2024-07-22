@@ -6,6 +6,7 @@ import com.flipkart.constants.Constants;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.*;
+import java.util.Date;
 
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
@@ -41,13 +42,14 @@ public class GymCenterDAO {
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, ownerId);
         ResultSet rs= stmt.executeQuery();
-        rs.next();
+
         while (rs.next()) {
             System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
             System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
+
         }
     }
 
@@ -65,7 +67,7 @@ public class GymCenterDAO {
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
         }
     }
 
@@ -84,15 +86,13 @@ public class GymCenterDAO {
         String query = Constants.FETCH_VALID_GYM;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
-        int i=1;
         while (rs.next()) {
-            System.out.println("Gym Center " + i++);
             System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
             System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
-            System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
-            System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center OwnerId: " + rs.getInt("ownerId"));
+            System.out.println("Gym Center Capacity: " + rs.getInt("gymCenterCapacity"));
+            System.out.println("Gym Center Price: " + rs.getInt("gymCenterPrice"));
         }
     }
 
@@ -147,6 +147,35 @@ public class GymCenterDAO {
                 stmt.close();
             }
         }
+    }
+
+    public void viewApprovedGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
+
+        int ownerID = getOwnerIdByEmail(email);
+        PreparedStatement stmt1 = connection.prepareStatement(Constants.FETCH_APPROVED_GYMCENTER_BY_EMAIL);
+        stmt1.setInt(1, ownerID);
+        ResultSet rs = stmt1.executeQuery();
+        while (rs.next()) {
+            System.out.println("Gym Center " + rs.getString("gymCenterName"));
+            System.out.println("Gym Center Id: " + rs.getInt("gymCenterId"));
+            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
+            System.out.println("Gym Center OwnerId: " + rs.getInt("ownerId"));
+            System.out.println("Gym Center Capacity: " + rs.getInt("gymCenterCapacity"));
+            System.out.println("Gym Center Price: " + rs.getInt("gymCenterPrice"));
+        }
+    }
+
+    public void addSlot(int gymCenterId, Date startDateTime, Date endDateTime, int capacity) throws GymCentreNotFoundException, SQLException {
+        String query = "INSERT INTO flipfit_slots (gymCenterId, startTime, endTime, capacity, date) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        stmt.setInt(1, gymCenterId);
+        stmt.setTimestamp(2, new Timestamp(startDateTime.getTime()));
+        stmt.setTimestamp(3, new Timestamp(endDateTime.getTime()));
+        stmt.setInt(4, capacity);
+        stmt.setDate(5, new java.sql.Date(startDateTime.getDate()));
+        stmt.executeUpdate();
+        System.out.println("Slot successfully added.");
+
     }
 
 }

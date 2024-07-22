@@ -8,6 +8,9 @@ import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class GymOwnerFlipFitMenu {
@@ -18,14 +21,14 @@ public class GymOwnerFlipFitMenu {
     private GymCenterService gymCenterService = new GymCenterService();
 
 
-    void gymOwnerMenu(String email) throws GymOwnerNotFoundException, SQLException {
+    void gymOwnerMenu(String email) throws GymOwnerNotFoundException, SQLException, ParseException {
         System.out.println("\n\n--------------------WELCOME TO GYM OWNER MENU---------------------\n");
         System.out.println("1. View Status of Gym Owner Approval Request\n");
         System.out.println("2. Register Gym Center\n");
         System.out.println("3. View All Gym Centers\n");
-        //System.out.println("3. Add Slots in your Gym Centers\n");
-        System.out.println("4. View Status of your Gym Centers\n");
-        System.out.println("5. Log out\n");
+        System.out.println("4. Add Slots in your Gym Centers\n");
+        System.out.println("5. View Status of your Gym Centers\n");
+        System.out.println("6. Log out\n");
         System.out.println("-----------------------------------------------------------------\n");
         System.out.println("Enter your choice: ");
         int choice = scanner.nextInt();
@@ -55,15 +58,18 @@ public class GymOwnerFlipFitMenu {
                 gymOwnerMenu(email);
                 break;
             case 4:
+                addSlot(email);
+                break;
+            case 5:
                 gymCenterService.viewGymCenterByEmail(email);
                 gymOwnerMenu(email);
                 break;
-            case 5:
+            case 6:
                 return;
         }
 
     }
-    void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException {
+    void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException, ParseException {
         if(gymOwnerService.loginGymOwner(email, password)) {
             gymOwnerMenu(email);
         }
@@ -84,16 +90,37 @@ public class GymOwnerFlipFitMenu {
     }
 
 
-    private boolean checkOwnerStatus(String email){
+    void addSlot(String email) throws GymOwnerNotFoundException, SQLException, RegistrationFailedException, ParseException {
+        // show the list of gym centers under this gym owner
+        gymCenterService.viewApprovedGymCenterByEmail(email);
 
-        return true;
-//        if(gymCenterService.approvalStatus(email)){
-//            return true;
-//        }
-//        else{
-//            System.out.println("You are not approved yet, please contact admin");
-//            return false;
-//        }
+        // take input of gym center id
+        System.out.println("Enter gym center id: ");
+        int gymCenterId = scanner.nextInt();
+
+        // add a slot in that gym
+        System.out.println("Enter Date (YYYY-MM-DD): ");
+        String dateString = scanner.next();
+
+        System.out.println("Enter slot start time (HH:mm:ss): ");
+        String starttimeString = scanner.next();
+
+        String startDateTime = dateString + " " + starttimeString;
+        SimpleDateFormat startDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = startDateFormat.parse(startDateTime);
+
+        System.out.println("Enter slot end time (HH:mm:ss): ");
+        String endtimeString = scanner.next();
+
+        String endDateTime = dateString + " " + endtimeString;
+        SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date end = endDateFormat.parse(startDateTime);
+        System.out.println("Enter capacity: ");
+        int capacity = scanner.nextInt();
+
+        gymCenterService.addSlot(gymCenterId, start, end, capacity);
+
     }
 
 
@@ -101,7 +128,8 @@ public class GymOwnerFlipFitMenu {
 
     void addCenter(){}
 
-    void getSlots(){}
+    void getSlots(){
 
-    void addSlot(){}
+    }
+
 }
