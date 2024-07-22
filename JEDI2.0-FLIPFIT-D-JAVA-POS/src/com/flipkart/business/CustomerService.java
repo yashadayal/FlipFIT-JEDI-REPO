@@ -7,9 +7,6 @@ import com.flipkart.dao.CustomerDAO;
 import com.flipkart.client.FlipFitApplicationClient;
 
 import java.sql.SQLException;
-import com.flipkart.dao.SlotDAO;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,27 +53,22 @@ public class CustomerService {
         }
     }
 
-    public List<GymCenter> viewGymCenter(){
-//        List<GymCenter> newGym = new ArrayList<GymCenter>();
-//        for (GymCenter gym : gyms) {
-//            newGym.add(gym);
-//        }
-        return gyms;
-    }
-    public boolean bookSlot(){
+    public boolean bookSlot(String email, int slotId){
+//        fetch customer id using email and pass the values to book slot
+//        bookingService.bookSlot();
         System.out.println("Slot has been booked successfully");
         return true;
     }
 
     public boolean deleteSlot(){
-        System.out.println("Slot has been canceled successfully");
+        System.out.println("Slot has been cancelled successfully");
         return true;
     }
 
     public boolean viewBooking(String email) throws SQLException {
         List<Booking> customerBookings = userDao.viewBooking(email);
         for (Booking booking : customerBookings) {
-            System.out.println("Booking ID: " + booking.getBookingID());
+            System.out.println("Booking ID: " + booking.getBookingID()+" startTime:"+booking.getStartTime()+" endTime:"+booking.getEndTime());
         }
         return true;
     }

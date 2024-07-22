@@ -7,14 +7,17 @@ package com.flipkart.bean;
 
 public class Booking {
 
-    public Booking(String customerID, int bookingID) {
-        this.customerID = customerID;
+    public Booking( int bookingID,String startTime,String endTime) {
         this.bookingID = bookingID;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     private int bookingID;
     private String email;
     private String customerID;
+    private final String startTime;
+    private final String endTime;
 
     public String getEmail() {
         return email;
@@ -40,5 +43,10 @@ public class Booking {
         this.bookingID = bookingID;
     }
 
-
+    public String getStartTime() {
+        return startTime;
+    }
+    public String getEndTime() {
+        return endTime;
+    }
 }

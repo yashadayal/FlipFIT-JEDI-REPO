@@ -118,45 +118,43 @@ public class CustomerDAO {
     }
 
     public List<Booking> viewBooking(String email) throws SQLException {
-
         List<Booking> customerBookings = new ArrayList<>();
-
         Connection connection = null;
-        boolean bookingSuccess = false;
-        String query = "SELECT * FROM flipfit_booking WHERE customerId = ?";
-        String userId_query = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
+        String customerIdQuery = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
+        String bookingQuery = "SELECT b.bookingId, s.startTime, s.endTime " +
+                "FROM flipfit_booking b " +
+                "JOIN flipfit_slots s ON b.slotId = s.slotId " +
+                "WHERE b.customerId = ?";
         try {
             connection = DBUtils.getConnection();
+            PreparedStatement customerIdStatement = connection.prepareStatement(customerIdQuery);
+            customerIdStatement.setString(1, email);
+            ResultSet customerIdResult = customerIdStatement.executeQuery();
 
-            PreparedStatement preparedStatement_email = connection.prepareStatement(userId_query);
-            preparedStatement_email.setString(1, email);
-
-            ResultSet resultSet = preparedStatement_email.executeQuery();
-
-            String customerId = "na";
-
-            if (resultSet.next()) {
-                customerId = resultSet.getString("customerId");
+            int customerId = -1;
+            if (customerIdResult.next()) {
+                customerId = customerIdResult.getInt("customerId");
             } else {
-                // Handle case where no customer with the given email is found
                 System.out.println("No customer found with email: " + email);
-                return customerBookings; // Return empty list
+                return customerBookings;
             }
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, customerId);
+            PreparedStatement bookingStatement = connection.prepareStatement(bookingQuery);
+            bookingStatement.setInt(1, customerId);
+            ResultSet bookingResult = bookingStatement.executeQuery();
 
-            ResultSet resultSet2 = preparedStatement.executeQuery();
+            while (bookingResult.next()) {
+                int bookingId = bookingResult.getInt("bookingId");
+                String startTime = bookingResult.getString("startTime");
+                String endTime = bookingResult.getString("endTime");
 
-            while (resultSet2.next()) {
-                int bookingID = resultSet2.getInt("bookingId");
-                String customerID = resultSet2.getString("customerId");
-                Booking booking = new Booking(customerID,bookingID);
+                Booking booking = new Booking(bookingId,startTime,endTime);
+
                 customerBookings.add(booking);
-                System.out.println(booking);
             }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            bookingResult.close();
+            bookingStatement.close();
+        } catch (SQLException e) {
+            sqlExceptionHandler.printSQLException(e);
         }
         return customerBookings;
     }

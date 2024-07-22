@@ -47,7 +47,7 @@ public class AdminService {
      * @param email
      * @param password
      * @throws LoginFailedException
-     * @throws WrongCredentialExceptio
+     * @throws WrongCredentialException
      */
     public boolean adminLogin(String email, String password) throws LoginFailedException, WrongCredentialException {
 
