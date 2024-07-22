@@ -2,7 +2,12 @@ package com.flipkart.client;
 
 import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
+import com.flipkart.bean.GymCenter;
+import com.flipkart.business.BookingService;
 import com.flipkart.business.CustomerService;
+import com.flipkart.business.GymCenterService;
+import com.flipkart.business.SlotService;
+import com.flipkart.dao.SlotDAO;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.WrongCredentialException;
@@ -14,6 +19,9 @@ public class CustomerFlipFitMenu {
 
     private CustomerService customerService = new CustomerService();
     Customer customer = new Customer();
+    GymCenterService gymCenterService=new GymCenterService();
+    SlotDAO slotDAO=new SlotDAO();
+    BookingService bookingService=new BookingService();
     String customerEmail;
     void login(String email, String password) throws LoginFailedException, SQLException, WrongCredentialException {
 
@@ -55,6 +63,14 @@ public class CustomerFlipFitMenu {
                 customerMenu();
                 break;
             case 2:
+                System.out.println("List of gym centers. Please select your gym center id");
+                gymCenterService.veiwAllGymCenters();
+                int gymCenterId=scanner.nextInt();
+                System.out.println("List of gym center slots. Please select your gym slot id");
+                slotDAO.getSlotByCenterId(gymCenterId);
+                int slotId=scanner.nextInt();
+
+                bookingService.bookSlot(customerEmail,slotId);
                 customerService.bookSlot();
                 customerMenu();
                 break;

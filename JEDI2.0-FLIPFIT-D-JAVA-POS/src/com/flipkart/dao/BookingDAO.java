@@ -14,11 +14,11 @@ public class BookingDAO {
     private final SlotDAO slotDao = new SlotDAO();
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
 
-    public void bookSlot(int customerId, int slotId) throws BookingFailedException,SQLException {
+    public void bookSlot(String customerEmail, int slotId) throws BookingFailedException,SQLException {
         try {
-            String insertQuery = "INSERT INTO flipfit_booking (customerId, slotId) VALUES (?, ?)";
+            String insertQuery = "INSERT INTO flipfit_booking (email, slotId) VALUES (?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
-            insertStatement.setInt(1, customerId);
+            insertStatement.setString(1, customerEmail);
             insertStatement.setInt(2, slotId);
 
             int rowsAffected = insertStatement.executeUpdate();

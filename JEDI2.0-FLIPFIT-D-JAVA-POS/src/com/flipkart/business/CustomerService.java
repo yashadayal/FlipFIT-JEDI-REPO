@@ -5,6 +5,9 @@ import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.CustomerDAO;
 import com.flipkart.client.FlipFitApplicationClient;
+import com.flipkart.dao.SlotDAO;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +59,8 @@ public class CustomerService {
         return gyms;
     }
     public boolean bookSlot(){
+//        SlotDAO bookSlowdao=new SlotDAO();
+//        bookSlowdao.addSlot( gymCenterId,  capacity,  date,  startTime,  endTime);
         System.out.println("Slot has been booked successfully");
         return true;
     }

@@ -46,7 +46,7 @@ public class GymCenterDAO {
             System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
         }
     }
 
@@ -64,7 +64,7 @@ public class GymCenterDAO {
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
         }
     }
 
@@ -80,7 +80,7 @@ public class GymCenterDAO {
     }
 
     public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
-        String query = "SELECT * FROM flipfit_gymcenter where isApproved=0";
+        String query = "SELECT * FROM flipfit_gymcenter where isGymCenterApproved=0";
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
@@ -91,7 +91,7 @@ public class GymCenterDAO {
             System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
             System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
             System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice\n"));
+            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
         }
     }
 

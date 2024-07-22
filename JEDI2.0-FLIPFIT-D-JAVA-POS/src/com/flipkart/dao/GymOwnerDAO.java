@@ -102,7 +102,7 @@ public class GymOwnerDAO {
             System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
             System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
             System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
-            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
+            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard"));
         }
 
     }
@@ -123,7 +123,7 @@ public class GymOwnerDAO {
             System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
             System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
             System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
-            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
+            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard"));
         }
     }
 }
