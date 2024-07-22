@@ -20,6 +20,13 @@ public class CustomerService {
     List<Booking> bookings = new ArrayList<>();
     List<GymCenter> gyms = new ArrayList<>();
     CustomerDAO userDao = new CustomerDAO();
+
+    /**
+     * Method for registering customer
+     * @param name
+     * @param email
+     * @param password
+     */
     public boolean registerCustomer(String name, String email, String password)
     {
         Customer customer=new Customer();
@@ -31,6 +38,11 @@ public class CustomerService {
         return registerSuccess;
     }
 
+    /**
+     * Method for login customer
+     * @param email
+     * @param password
+     */
     public boolean loginCustomer(String email, String password){
 
         System.out.println("Customer running");
@@ -38,10 +50,20 @@ public class CustomerService {
         return loginSuccess;
     }
 
+    /**
+     * Method for changing password
+     * @param email
+     * @param oldPassword
+     * @param newPassword
+     */
     public void changePassword(String email, String oldPassword, String newPassword){
         userDao.changePassword(email, oldPassword, newPassword);
     }
 
+    /**
+     * Method for viewing profile
+     * @param email
+     */
     public void viewProfile(String email){
         Customer customerDetails= userDao.viewProfile(email);
         if (customerDetails != null) {
@@ -53,6 +75,25 @@ public class CustomerService {
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * Method for view gym center list
+     */
+    public List<GymCenter> viewGymCenter(){
+//        List<GymCenter> newGym = new ArrayList<GymCenter>();
+//        for (GymCenter gym : gyms) {
+//            newGym.add(gym);
+//        }
+        return gyms;
+    }
+
+    /**
+     * Method for booking slot
+     * @param email
+     * @param slotId
+     */
+>>>>>>> Stashed changes
     public boolean bookSlot(String email, int slotId){
 //        fetch customer id using email and pass the values to book slot
 //        bookingService.bookSlot();
@@ -60,11 +101,19 @@ public class CustomerService {
         return true;
     }
 
+    /**
+     * Method for deleting slot
+     */
     public boolean deleteSlot(){
         System.out.println("Slot has been cancelled successfully");
         return true;
     }
 
+    /**
+     * Method for checking booking
+     * @param email
+     * @throws SQLException
+     */
     public boolean viewBooking(String email) throws SQLException {
         List<Booking> customerBookings = userDao.viewBooking(email);
         for (Booking booking : customerBookings) {
@@ -73,6 +122,10 @@ public class CustomerService {
         return true;
     }
 
+    /**
+     * Method for delete booking
+     * @param email
+     */
     public boolean deleteBookings(String email){
         boolean bookingSuccess=false;
         for (Booking booking : bookings) {
@@ -88,6 +141,9 @@ public class CustomerService {
         return false;
     }
 
+    /**
+     * Method for logout
+     */
     public void logout(){
         System.out.println("Successfully logged out");
     }
