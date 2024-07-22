@@ -13,6 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * @author JEDI-04
+ *  The class displays the menu for gym owner client
+ */
+
 public class GymOwnerFlipFitMenu {
 
 
@@ -70,19 +75,29 @@ public class GymOwnerFlipFitMenu {
 
     }
     void login(String email, String password) throws GymOwnerNotFoundException, SQLException, LoginFailedException, WrongCredentialException, ParseException {
-        if(gymOwnerService.loginGymOwner(email, password)) {
-            gymOwnerMenu(email);
+        try{
+            if (gymOwnerService.loginGymOwner(email, password)) {
+                gymOwnerMenu(email);
+            }
+        }
+        catch(LoginFailedException exp){
+            throw new LoginFailedException("Login Failed!");
         }
     }
 
     void registerGymOwner() throws GymOwnerNotFoundException, SQLException, RegistrationFailedException {
-        System.out.println("Enter Name: ");
-        String name = scanner.next();
-        System.out.println("Enter Email: ");
-        String email = scanner.next();
-        System.out.println("Enter password: ");
-        String password = scanner.next();
-        gymOwnerService.registerGymOwner(name, email, password);
+        try{
+            System.out.println("Enter Name: ");
+            String name = scanner.next();
+            System.out.println("Enter Email: ");
+            String email = scanner.next();
+            System.out.println("Enter password: ");
+            String password = scanner.next();
+            gymOwnerService.registerGymOwner(name, email, password);
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration Failed!");
+        }
     }
 
     void changePassword(String email, String currPassword, String newPassword) throws GymOwnerNotFoundException, SQLException, WrongCredentialException {

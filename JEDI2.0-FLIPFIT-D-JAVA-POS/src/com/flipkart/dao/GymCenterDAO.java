@@ -8,6 +8,11 @@ import com.flipkart.jdbc.DBUtils;
 import java.sql.*;
 import java.util.Date;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Center Dao Operations
+ */
+
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
 

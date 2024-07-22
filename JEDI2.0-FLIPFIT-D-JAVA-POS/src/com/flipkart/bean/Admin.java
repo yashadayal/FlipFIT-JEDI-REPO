@@ -1,4 +1,10 @@
 package com.flipkart.bean;
+
+/**
+ * @author JEDI-04
+ * Admin Class
+ */
+
 public class Admin extends User{
     private int adminId;
     private String adminName;

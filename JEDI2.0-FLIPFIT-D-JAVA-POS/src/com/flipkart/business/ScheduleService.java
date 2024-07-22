@@ -5,6 +5,12 @@
 //import com.flipkart.bean.Schedule;
 //import com.flipkart.dao.ScheduleDAO;
 //
+
+/**
+ * @author JEDI-04
+ * Java class for Schedule Service Operations
+ */
+
 //public class ScheduleService {
 //    private GymCenterService gymCentreService = new GymCenterService();
 //    private SlotService slotService = new SlotService();

@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.SQLExceptionHandler;
@@ -9,6 +10,13 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author JEDI-04
+ * Java class for Customer Dao Operations
+ */
 
 public class CustomerDAO {
 
@@ -109,6 +117,47 @@ public class CustomerDAO {
        }
     }
 
+    public List<Booking> viewBooking(String email) throws SQLException {
+        List<Booking> customerBookings = new ArrayList<>();
+        Connection connection = null;
+        String customerIdQuery = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
+        String bookingQuery = "SELECT b.bookingId, s.startTime, s.endTime " +
+                "FROM flipfit_booking b " +
+                "JOIN flipfit_slots s ON b.slotId = s.slotId " +
+                "WHERE b.customerId = ?";
+        try {
+            connection = DBUtils.getConnection();
+            PreparedStatement customerIdStatement = connection.prepareStatement(customerIdQuery);
+            customerIdStatement.setString(1, email);
+            ResultSet customerIdResult = customerIdStatement.executeQuery();
+
+            int customerId = -1;
+            if (customerIdResult.next()) {
+                customerId = customerIdResult.getInt("customerId");
+            } else {
+                System.out.println("No customer found with email: " + email);
+                return customerBookings;
+            }
+            PreparedStatement bookingStatement = connection.prepareStatement(bookingQuery);
+            bookingStatement.setInt(1, customerId);
+            ResultSet bookingResult = bookingStatement.executeQuery();
+
+            while (bookingResult.next()) {
+                int bookingId = bookingResult.getInt("bookingId");
+                String startTime = bookingResult.getString("startTime");
+                String endTime = bookingResult.getString("endTime");
+
+                Booking booking = new Booking(bookingId,startTime,endTime);
+
+                customerBookings.add(booking);
+            }
+            bookingResult.close();
+            bookingStatement.close();
+        } catch (SQLException e) {
+            sqlExceptionHandler.printSQLException(e);
+        }
+        return customerBookings;
+    }
 
     public static boolean loginCustomer(String email, String password) {
         Connection connection = null;

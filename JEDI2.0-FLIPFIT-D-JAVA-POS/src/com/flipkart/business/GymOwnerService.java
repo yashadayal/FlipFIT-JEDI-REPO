@@ -13,6 +13,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * @author JEDI-04
+ * Java class for Gym Owner Service Operations
+ */
+
 public class GymOwnerService {
 
 

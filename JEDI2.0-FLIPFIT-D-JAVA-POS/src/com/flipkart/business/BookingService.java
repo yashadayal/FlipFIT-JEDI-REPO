@@ -5,11 +5,16 @@ import com.flipkart.exceptions.BookingFailedException;
 
 import java.sql.SQLException;
 
+/**
+ * @author JEDI-04
+ * Java class for Booking Service Operations
+ */
+
 public class BookingService {
     private static final BookingDAO bookingDAO = new BookingDAO();
     private static SlotService slotService = new SlotService();
 
-    public void bookSlot(int customerId, String email, int slotId) throws BookingFailedException, SQLException {
+    public void bookSlot(String customerEmail, int slotId) throws BookingFailedException, SQLException {
         boolean isAvailableSlot = false;
         try {
             isAvailableSlot = slotService.isAvailableSlot(slotId);
@@ -20,7 +25,7 @@ public class BookingService {
             System.out.println("No seats available for the booking");
             return;
         }
-        bookingDAO.bookSlot(customerId, email, slotId);
+        bookingDAO.bookSlot(customerEmail, slotId);
     }
 
     public void cancelBooking() throws BookingFailedException, SQLException{

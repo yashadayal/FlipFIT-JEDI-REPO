@@ -1,4 +1,10 @@
 package com.flipkart.bean;
+
+/**
+ * @author JEDI-04
+ * Customer Class
+ */
+
 public class Customer{
     private int customerId;
     private String customerName;
