@@ -143,6 +143,15 @@ public class SlotDAO {
         preparedStatement.executeUpdate();
     }
 
+    public void incrementCapacity(int slotId)  throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String query = Constants.INCREMENT_SLOT_CAPACITY;
+
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, slotId);
+        preparedStatement.executeUpdate();
+    }
+
     public int getGymCenterIdBySlotId(int slotId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

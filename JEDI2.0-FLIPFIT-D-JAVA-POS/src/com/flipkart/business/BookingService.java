@@ -28,7 +28,7 @@ public class BookingService {
         bookingDAO.bookSlot(customerEmail, slotId);
     }
 
-    public void cancelBooking() throws BookingFailedException, SQLException{
-
+    public void cancelBooking(String customerEmail, int bookingId) throws BookingFailedException, SQLException{
+        bookingDAO.cancelBooking(customerEmail, bookingId);
     }
 }

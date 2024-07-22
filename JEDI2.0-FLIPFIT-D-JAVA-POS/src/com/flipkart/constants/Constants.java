@@ -49,4 +49,5 @@ public class Constants {
     public static final String INSERT_SLOT = "INSERT INTO flipfit_slots (gymCenterId, capacity, date, startTime, endTime) VALUES (?, ?, ?, ?, ?)";
     public static final String FETCH_CAPACITY = "SELECT capacity FROM flipfit_slots WHERE slotId = ?";
     public static final String DECREMENT_SLOT_CAPACITY = "UPDATE flipfit_slots SET capacity = capacity - 1 WHERE slotId = ?";
+    public static final String INCREMENT_SLOT_CAPACITY =  "UPDATE flipfit_slots SET capacity = capacity + 1 WHERE slotId = ?";
 }
