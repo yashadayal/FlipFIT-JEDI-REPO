@@ -69,8 +69,7 @@ public class CustomerFlipFitMenu {
         System.out.println("1. View Profile\n");
         System.out.println("2. Book Slot\n");
         System.out.println("3. View Booking\n");
-        System.out.println("4. Cancel Booking\n");
-        System.out.println("5. Logout");
+        System.out.println("4. Logout");
         System.out.println("-----------------------------------------------------------------\n");
         System.out.println("Enter your choice: ");
         Integer customerOptions = scanner.nextInt();
@@ -90,16 +89,25 @@ public class CustomerFlipFitMenu {
                 customerMenu();
                 break;
             case 3:
-                if(customerService.viewBooking(customerEmail)) {
-                    System.out.println("Successfully viewed the booking");
+                customerService.viewBooking(customerEmail);
+                System.out.println("\n\n1. Cancel Booking");
+                System.out.println("2. Previous Menu");
+
+                int pick = scanner.nextInt();
+                switch (pick){
+                    case 1:
+                        System.out.println("Enter the booking id to cancel: ");
+                        int bookingId = scanner.nextInt();
+                        bookingService.cancelBooking(customerEmail, bookingId);
+                        break;
+                    case 2:
+                        customerMenu();
+                        break;
+                    default:
+                        System.out.println("INVALID CHOICE.");
                 }
-                customerMenu();
                 break;
             case 4:
-                customerService.deleteBookings(customerEmail);
-                customerMenu();
-                break;
-            case 5:
                 customerService.logout();
                 break;
             default:
