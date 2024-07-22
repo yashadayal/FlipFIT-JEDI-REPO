@@ -87,34 +87,53 @@ public class CustomerService {
 //    }
 
 
-    public List<Booking> viewBooking(String userId) {
+    public List<Booking> viewBooking(String email) {
 
         List<Booking> customerBookings = new ArrayList<>();
 
         Connection connection = null;
+//        System.out.println(userId);
         boolean bookingSuccess = false;
         String query = "SELECT * FROM flipfit_booking WHERE customerId = ?";
+        String userId_query = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
         try {
             connection = DBUtils.getConnection();
+
+            PreparedStatement preparedStatement_email = connection.prepareStatement(userId_query);
+            preparedStatement_email.setString(1, email);
+
+            ResultSet resultSet = preparedStatement_email.executeQuery();
+
+            String customerId = "na"; // Assuming -1 is not a valid customerId
+
+            if (resultSet.next()) {
+                customerId = resultSet.getString("customerId");
+            } else {
+                // Handle case where no customer with the given email is found
+                System.out.println("No customer found with email: " + email);
+                return customerBookings; // Return empty list
+            }
+
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, userId);
+            preparedStatement.setString(1, customerId);
 
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet2 = preparedStatement.executeQuery();
 
 
 
             // Iterate through the result set
-            while (resultSet.next()) {
+            while (resultSet2.next()) {
                 // Retrieve data from the result set and create a Booking object
-                String bookingID = resultSet.getString("bookingId");
-                String customerID = resultSet.getString("customerId");
+                int bookingID = resultSet2.getInt("bookingId");
+                String customerID = resultSet2.getString("customerId");
                 // Assuming other fields like date, time, etc., adjust as per your database schema
 
                 Booking booking = new Booking(customerID,bookingID); // Adjust constructor as per your Booking class
 
                 // Add Booking object to the list
                 customerBookings.add(booking);
+                System.out.println(booking);
             }
         }
         catch (SQLException e) {
