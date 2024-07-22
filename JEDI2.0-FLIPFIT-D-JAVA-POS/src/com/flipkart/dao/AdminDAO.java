@@ -3,6 +3,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Admin;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.bean.GymOwner;
+import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.GymCentreNotFoundException;
 import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.SQLExceptionHandler;
@@ -22,7 +23,7 @@ public class AdminDAO {
         try {
             Connection connection = DBUtils.getConnection();
 
-            PreparedStatement stmt1 = connection.prepareStatement("SELECT COUNT(*) FROM flipfit_admin WHERE adminEmail = ?");
+            PreparedStatement stmt1 = connection.prepareStatement(Constants.COUNT_ADMIN);
             stmt1.setString(1, adminEmail);
             ResultSet rs = stmt1.executeQuery();
             rs.next();
@@ -32,7 +33,7 @@ public class AdminDAO {
                 return;
             }
 
-            PreparedStatement stmt2 = connection.prepareStatement("INSERT INTO flipfit_admin (adminId,adminName,adminEmail, adminPassword) VALUES (?,?,?, ?)");
+            PreparedStatement stmt2 = connection.prepareStatement(Constants.INSERT_ADMIN_CRED);
             stmt2.setInt(1,1);
             stmt2.setString(2,"Admin");
             stmt2.setString(3, adminEmail);
@@ -49,7 +50,7 @@ public class AdminDAO {
 
         try {
             Connection connection = DBUtils.getConnection();
-            PreparedStatement stmt = connection.prepareStatement("UPDATE flipfit_admin SET adminPassword = ? limit 1");
+            PreparedStatement stmt = connection.prepareStatement(Constants.UPDATE_ADMIN_CRED);
             stmt.setString(1, pass);
 
             int rowsUpdated = stmt.executeUpdate();
