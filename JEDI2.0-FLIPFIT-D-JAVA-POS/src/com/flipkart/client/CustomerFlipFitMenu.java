@@ -64,11 +64,8 @@ public class CustomerFlipFitMenu {
                 customerMenu();
                 break;
             case 3:
-                List<Booking> customerBookings=customerService.viewBooking(customerEmail);
-                for (Booking booking : customerBookings) {
-                    System.out.println("Booking ID: " + booking.getBookingID());
-                }
-                System.out.println("Successfully viewed the booking");
+                if(customerService.viewBooking(customerEmail))
+                    System.out.println("Successfully viewed the booking");
                 customerMenu();
                 break;
             case 4:

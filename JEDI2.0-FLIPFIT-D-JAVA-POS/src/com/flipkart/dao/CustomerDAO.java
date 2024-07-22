@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.Booking;
 import com.flipkart.bean.Customer;
 import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.SQLExceptionHandler;
@@ -9,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author JEDI-04
@@ -114,6 +117,49 @@ public class CustomerDAO {
        }
     }
 
+    public List<Booking> viewBooking(String email) throws SQLException {
+
+        List<Booking> customerBookings = new ArrayList<>();
+
+        Connection connection = null;
+        boolean bookingSuccess = false;
+        String query = "SELECT * FROM flipfit_booking WHERE customerId = ?";
+        String userId_query = "SELECT customerId FROM flipfit_customer WHERE customerEmail = ?";
+        try {
+            connection = DBUtils.getConnection();
+
+            PreparedStatement preparedStatement_email = connection.prepareStatement(userId_query);
+            preparedStatement_email.setString(1, email);
+
+            ResultSet resultSet = preparedStatement_email.executeQuery();
+
+            String customerId = "na";
+
+            if (resultSet.next()) {
+                customerId = resultSet.getString("customerId");
+            } else {
+                // Handle case where no customer with the given email is found
+                System.out.println("No customer found with email: " + email);
+                return customerBookings; // Return empty list
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, customerId);
+
+            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+            while (resultSet2.next()) {
+                int bookingID = resultSet2.getInt("bookingId");
+                String customerID = resultSet2.getString("customerId");
+                Booking booking = new Booking(customerID,bookingID);
+                customerBookings.add(booking);
+                System.out.println(booking);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerBookings;
+    }
 
     public static boolean loginCustomer(String email, String password) {
         Connection connection = null;
