@@ -41,6 +41,14 @@ public class AdminService {
 //            throw new RuntimeException(e);
 //        }
 //    }
+
+    /**
+     * Method for admin login
+     * @param email
+     * @param password
+     * @throws LoginFailedException
+     * @throws WrongCredentialExceptio
+     */
     public boolean adminLogin(String email, String password) throws LoginFailedException, WrongCredentialException {
 
         try{
@@ -55,6 +63,14 @@ public class AdminService {
         return false;
     }
 
+    /**
+     * Method for change password
+     * @param email
+     * @param oldPassword
+     * @param newPassword
+     * @throws SQLException
+     * @throws WrongCredentialException
+     */
     public void changePassword(String email, String oldPassword, String newPassword) throws SQLException, WrongCredentialException {
         try{
             if (!Objects.equals(email, adminEmail)) {
@@ -76,27 +92,70 @@ public class AdminService {
         }
     }
 
+    /**
+     * Method to view list of gym owners
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     */
     public ArrayList<GymOwner> viewListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
         return adminDao.getListOfGymOwners();
     }
+
+    /**
+     * Method to view list of gym centers
+     * @throws SQLException
+     * @throws GymCentreNotFoundException
+     */
     public ArrayList<GymCenter> viewListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfGymCenters();
     }
+
+    /**
+     * Method to view pending list of gym owners
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     */
     public ArrayList<GymOwner> viewPendingListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
         return adminDao.getListOfPendingGymOwners();
     }
+
+    /**
+     * Method to view pending list of gym centers
+     * @throws SQLException
+     * @throws GymCenterNotFoundException
+     */
     public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfPendingGymCenters();
     }
+
+    /**
+     * Method to approve all gym centers
+     * @throws SQLException
+     */
     public void approveAllGymCenter() throws SQLException {
         adminDao.approveAllGymCenter();
     }
+
+    /**
+     * Method to approve gym center by gym center id
+     * @throws SQLException
+     */
     public void approveGymCenterById(int gymCenterId) throws SQLException{
         adminDao.approveGymCenterById(gymCenterId);
     }
+
+    /**
+     * Method to approve all gym owners
+     * @throws SQLException
+     */
     public void approveAllGymOwners() throws SQLException {
         adminDao.approveAllGymOwners();
     }
+
+    /**
+     * Method to approve gym owner by gym owner email
+     * @throws SQLException
+     */
     public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException{
         adminDao.approveGymOwnerByEmail(gymOwnerEmail);
     }
