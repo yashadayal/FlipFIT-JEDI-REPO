@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.LoginFailedException;
 import com.flipkart.exceptions.RegistrationFailedException;
@@ -17,7 +18,7 @@ public class GymOwnerDAO {
 
     public void registerGymOwner(String name, String email, String password ) throws SQLException, RegistrationFailedException {
 
-        String query1 = "SELECT ownerEmail FROM flipfit_gymowner WHERE ownerEmail = ?";
+        String query1 = Constants.FETCH_OWNER_WITH_EMAIL;
         PreparedStatement preparedStatement = connection.prepareStatement(query1);
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -25,7 +26,7 @@ public class GymOwnerDAO {
             System.out.println("Email already exists.");
             return;
         }
-        String query2 = "INSERT INTO flipfit_gymowner (ownerName, ownerEmail, ownerPassword) VALUES (?, ?, ?)";
+        String query2 = Constants.INSERT_OWNER;
         PreparedStatement stmt1 = connection.prepareStatement(query2);
         stmt1.setString(1, name);
         stmt1.setString(2, email);
@@ -36,7 +37,7 @@ public class GymOwnerDAO {
 
     public boolean gymOwnerLogin(String email, String password) throws SQLException, LoginFailedException, WrongCredentialException, GymOwnerNotFoundException {
 
-        String query = "SELECT ownerPassword FROM flipfit_gymowner WHERE ownerEmail = ?";
+        String query = Constants.FETCH_OWNER_PASSWORD;
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -55,7 +56,7 @@ public class GymOwnerDAO {
 
     public boolean changeGymOwnerPassword(String email, String currPassword, String newPassword) throws SQLException, WrongCredentialException {
 
-        String query = "Select ownerPassword FROM flipfit_gymowner WHERE ownerEmail = ?";
+        String query = Constants.FETCH_OWNER_PASSWORD;
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -65,7 +66,7 @@ public class GymOwnerDAO {
         }
         String actualPassword = resultSet.getString("ownerPassword");
         if (actualPassword.equals(currPassword)) {
-            String updateQuery = "UPDATE flipfit_gymowner SET ownerPassword = ? WHERE ownerEmail = ?";
+            String updateQuery = Constants.UPDATE_OWNER_PASSWORD;
             PreparedStatement preparedStatement1 = connection.prepareStatement(updateQuery);
             preparedStatement1.setString(1, newPassword);
             preparedStatement1.setString(2, email);
@@ -78,7 +79,7 @@ public class GymOwnerDAO {
     }
 
     public boolean checkOwnerStatusByEmail(String email) throws SQLException,GymOwnerNotFoundException {
-        String query = "SELECT isApproved FROM flipfit_gymowner WHERE ownerEmail = ?";
+        String query = Constants.APPROVED_OWNERS;
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,7 +93,7 @@ public class GymOwnerDAO {
     }
 
     public void viewAllGymOwners() throws SQLException, GymOwnerNotFoundException{
-        String query = "SELECT * FROM flipfit_gymowner";
+        String query = Constants.FETCH_GYM_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
@@ -113,7 +114,7 @@ public class GymOwnerDAO {
 
     }
     public void viewPendingGymOwnerList() throws GymOwnerNotFoundException, SQLException {
-        String query = "SELECT * FROM flipfit_gymowner where isApproved=0";
+        String query = Constants.UNAPPROVED_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         int i=1;
@@ -124,6 +125,40 @@ public class GymOwnerDAO {
             System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
             System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
             System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard\n"));
+        }
+    }
+
+    public void approveAllGymOwners() throws SQLException {
+        String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE isApproved = 0";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected + " gym owners approved successfully.");
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+    public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException {
+        String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE ownerEmail = ?";
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = connection.prepareStatement(updateQuery);
+            stmt.setString(1, gymOwnerEmail);
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Gym owner with email " + gymOwnerEmail + " approved successfully.");
+            } else {
+                System.out.println("No gym owner found with email " + gymOwnerEmail);
+            }
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
         }
     }
 }

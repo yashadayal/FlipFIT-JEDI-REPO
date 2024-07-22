@@ -73,5 +73,17 @@ public class AdminService {
     public ArrayList<GymCenter> viewPendingListOfGymCenters() throws SQLException, GymCentreNotFoundException {
         return adminDao.getListOfPendingGymCenters();
     }
+    public void approveAllGymCenter() throws SQLException {
+        adminDao.approveAllGymCenter();
+    }
+    public void approveGymCenterById(int gymCenterId) throws SQLException{
+        adminDao.approveGymCenterById(gymCenterId);
+    }
+    public void approveAllGymOwners() throws SQLException {
+        adminDao.approveAllGymOwners();
+    }
+    public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException{
+        adminDao.approveGymOwnerByEmail(gymOwnerEmail);
+    }
 
 }

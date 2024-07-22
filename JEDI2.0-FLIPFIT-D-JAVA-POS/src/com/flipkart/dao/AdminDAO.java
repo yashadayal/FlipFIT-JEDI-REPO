@@ -82,4 +82,17 @@ public class AdminDAO {
         gymCenterdao.viewPendingGymCentersList();
         return null;
     }
+    public void approveAllGymCenter() throws SQLException {
+        gymCenterdao.approveAllPendingGymCenters();
+    }
+    public void approveGymCenterById(int gymCenterId) throws SQLException {
+        gymCenterdao.approveGymCenterById(gymCenterId);
+    }
+    public void approveAllGymOwners() throws SQLException {
+        gymOwnerDAO.approveAllGymOwners();
+    }
+    public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException{
+        gymOwnerDAO.approveGymOwnerByEmail(gymOwnerEmail);
+    }
+
 }
