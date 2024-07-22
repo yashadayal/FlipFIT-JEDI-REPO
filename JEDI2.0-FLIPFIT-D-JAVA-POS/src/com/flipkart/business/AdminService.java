@@ -21,22 +21,22 @@ public class AdminService {
     private static int adminId = 0;
     String adminEmail="";
     String adminPassword="";
-    public AdminService() {
-        try {
-
-            Properties prop = new Properties();
-            FileInputStream fileInputStream = new FileInputStream("/Users/sharaddha.chouksey1/FlipFIT-JEDI-REPO/JEDI2.0-FLIPFIT-D-JAVA-POS/src/config.properties");
-            prop.load(fileInputStream);
-             adminEmail = prop.getProperty("adminEmail");
-             adminPassword = prop.getProperty("adminPassword");
-            adminDao.setAdminData(adminEmail,adminPassword);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public AdminService() {
+//        try {
+//
+//            Properties prop = new Properties();
+//            FileInputStream fileInputStream = new FileInputStream("src/config.properties");
+//            prop.load(fileInputStream);
+//             adminEmail = prop.getProperty("adminEmail");
+//             adminPassword = prop.getProperty("adminPassword");
+//            adminDao.setAdminData(adminEmail,adminPassword);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
     public boolean adminLogin(String email, String password) throws LoginFailedException, WrongCredentialException {
 
         if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){
