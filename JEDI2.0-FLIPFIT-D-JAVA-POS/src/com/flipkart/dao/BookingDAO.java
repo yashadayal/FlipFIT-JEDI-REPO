@@ -15,12 +15,12 @@ public class BookingDAO {
     private final SlotDAO slotDao = new SlotDAO();
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
 
-    public void bookSlot(int customerId, int slotId) throws BookingFailedException,SQLException {
+    public void bookSlot(int customerId, String email, int slotId) throws BookingFailedException,SQLException {
         try {
-            String insertQuery = Constants.INSERT_BOOKING;
-            PreparedStatement insertStatement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement insertStatement = connection.prepareStatement(Constants.INSERT_BOOKING, Statement.RETURN_GENERATED_KEYS);
             insertStatement.setInt(1, customerId);
-            insertStatement.setInt(2, slotId);
+            insertStatement.setString(2, email);
+            insertStatement.setInt(3, slotId);
 
             int rowsAffected = insertStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -44,5 +44,4 @@ public class BookingDAO {
 
     }
 }
-
 
