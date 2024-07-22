@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class CustomerDAO {
 
-    static Integer customerId = 0;
     private static final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
     public void getCustomerById(Integer id) {
@@ -21,17 +20,13 @@ public class CustomerDAO {
     public static boolean registerCustomer(Customer customer) {
         Connection connection = null;
         boolean registerSuccess = false;
-        String query = "INSERT INTO flipfit_customer VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO flipfit_customer (customerName, customerEmail, password) VALUES (?, ?, ?)";
         try {
-            customerId++;
             connection = DBUtils.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, customerId);
-
-            preparedStatement.setString(2, customer.getCustomerName());
-            preparedStatement.setInt(3, 1);
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setString(5, customer.getPassword());
+            preparedStatement.setString(1, customer.getCustomerName());
+            preparedStatement.setString(2, customer.getEmail());
+            preparedStatement.setString(3, customer.getPassword());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected != 0)
