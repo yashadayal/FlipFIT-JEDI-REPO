@@ -1,6 +1,12 @@
 package com.flipkart.bean;
 
 public class Booking {
+
+    public Booking(String customerID, String bookingID) {
+        this.customerID = customerID;
+        this.bookingID = bookingID;
+    }
+
     private String bookingID;
     private String email;
     private String customerID;
