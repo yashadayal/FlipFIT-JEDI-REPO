@@ -5,6 +5,8 @@ import com.flipkart.bean.Customer;
 import com.flipkart.bean.GymCenter;
 import com.flipkart.dao.CustomerDAO;
 import com.flipkart.client.FlipFitApplicationClient;
+import com.flipkart.exceptions.LoginFailedException;
+import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.jdbc.DBUtils;
 
 import java.sql.Connection;
@@ -22,22 +24,32 @@ public class CustomerService {
     CustomerDAO userDao = new CustomerDAO();
     BookingService bookingService = new BookingService();
 
-    public boolean registerCustomer(String name, String email, String password)
+    public boolean registerCustomer(String name, String email, String password) throws RegistrationFailedException
     {
-        Customer customer=new Customer();
-        customer.setCustomerName(name);
-        customer.setPassword(password);
-        customer.setEmail(email);
         boolean registerSuccess = false;
-        registerSuccess = userDao.registerCustomer(customer);
+        try{
+            Customer customer = new Customer();
+            customer.setCustomerName(name);
+            customer.setPassword(password);
+            customer.setEmail(email);
+            registerSuccess = userDao.registerCustomer(customer);
+        }
+        catch(RegistrationFailedException exp){
+            throw new RegistrationFailedException("Registration failed!");
+        }
         return registerSuccess;
     }
 
-    public boolean loginCustomer(String email, String password){
+    public boolean loginCustomer(String email, String password) throws LoginFailedException {
 
-        System.out.println("Customer running");
-        boolean loginSuccess = userDao.loginCustomer(email, password);
-        return loginSuccess;
+        try{
+            System.out.println("Customer running");
+            boolean loginSuccess = userDao.loginCustomer(email, password);
+            return loginSuccess;
+        }
+        catch(LoginFailedException exp){
+            throw new LoginFailedException("Login failed!");
+        }
     }
 
     public void changePassword(String email, String oldPassword, String newPassword){

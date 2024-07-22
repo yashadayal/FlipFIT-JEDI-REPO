@@ -1,5 +1,6 @@
 package com.flipkart.business;
 import java.io.IOException;
+import java.nio.file.LinkOption;
 import java.sql.SQLException;
 import java.util.*;
 import java.io.FileInputStream;
@@ -39,26 +40,37 @@ public class AdminService {
 //    }
     public boolean adminLogin(String email, String password) throws LoginFailedException, WrongCredentialException {
 
-        if(Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)){
-            System.out.println("Admin with username " + email + " logged in successfully.");
-            return true;
+        try{
+            if (Objects.equals(email, adminEmail) && Objects.equals(password, adminPassword)) {
+                System.out.println("Admin with username " + email + " logged in successfully.");
+                return true;
+            }
         }
-
-        System.out.println("Incorrect email or password.");
+        catch(LoginFailedException exp) {
+            System.out.println("Incorrect email or password.");
+        }
         return false;
     }
 
     public void changePassword(String email, String oldPassword, String newPassword) throws SQLException, WrongCredentialException {
-        if(!Objects.equals(email, adminEmail)){
-            System.out.println("Incorrect email.");
-            return;
+        try{
+            if (!Objects.equals(email, adminEmail)) {
+                System.out.println("Incorrect email.");
+                return;
+            }
+            if (!Objects.equals(oldPassword, adminPassword)) {
+                System.out.println("Incorrect password.");
+                return;
+            }
+            adminDao.setPassword(newPassword);
+            System.out.println("Your password has been changed successfully" + newPassword);
         }
-        if(!Objects.equals(oldPassword, adminPassword)){
-            System.out.println("Incorrect password.");
-            return;
+        catch(WrongCredentialException exp){
+            throw new WrongCredentialException("Wrong Credentials");
         }
-        adminDao.setPassword(newPassword);
-        System.out.println("Your password has been changed successfully" + newPassword);
+        catch(SQLException exp){
+            System.out.println("Error Occurred!");
+        }
     }
 
     public ArrayList<GymOwner> viewListOfGymOwners() throws SQLException, GymOwnerNotFoundException {
