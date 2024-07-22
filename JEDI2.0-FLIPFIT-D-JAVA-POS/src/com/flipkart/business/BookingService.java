@@ -14,19 +14,7 @@ public class BookingService {
     private static final BookingDAO bookingDAO = new BookingDAO();
     private static SlotService slotService = new SlotService();
 
-<<<<<<< Updated upstream
     public void bookSlot(String customerEmail, int slotId) throws BookingFailedException, SQLException {
-=======
-    /**
-     * Method for booking slot
-     * @param customerId
-     * @param email
-     * @param slotId
-     * @throws BookingFailedException
-     * @throws SQLException
-     */
-    public void bookSlot(int customerId, String email, int slotId) throws BookingFailedException, SQLException {
->>>>>>> Stashed changes
         boolean isAvailableSlot = false;
         try {
             isAvailableSlot = slotService.isAvailableSlot(slotId);
@@ -40,12 +28,6 @@ public class BookingService {
         bookingDAO.bookSlot(customerEmail, slotId);
     }
 
-    /**
-     * Method for cancel booking
-     * @param customerId
-     * @throws BookingFailedException
-     * @throws SQLException
-     */
     public void cancelBooking() throws BookingFailedException, SQLException{
 
     }

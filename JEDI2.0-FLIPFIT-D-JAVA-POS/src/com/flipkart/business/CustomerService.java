@@ -75,37 +75,17 @@ public class CustomerService {
         }
     }
 
-<<<<<<< Updated upstream
-=======
-    /**
-     * Method for view gym center list
-     */
-    public List<GymCenter> viewGymCenter(){
-//        List<GymCenter> newGym = new ArrayList<GymCenter>();
-//        for (GymCenter gym : gyms) {
-//            newGym.add(gym);
-//        }
-        return gyms;
-    }
 
     /**
      * Method for booking slot
      * @param email
      * @param slotId
      */
->>>>>>> Stashed changes
+
     public boolean bookSlot(String email, int slotId){
 //        fetch customer id using email and pass the values to book slot
 //        bookingService.bookSlot();
         System.out.println("Slot has been booked successfully");
-        return true;
-    }
-
-    /**
-     * Method for deleting slot
-     */
-    public boolean deleteSlot(){
-        System.out.println("Slot has been cancelled successfully");
         return true;
     }
 
@@ -117,7 +97,7 @@ public class CustomerService {
     public boolean viewBooking(String email) throws SQLException {
         List<Booking> customerBookings = userDao.viewBooking(email);
         for (Booking booking : customerBookings) {
-            System.out.println("Booking ID: " + booking.getBookingID()+" startTime:"+booking.getStartTime()+" endTime:"+booking.getEndTime());
+            System.out.println("Booking ID: " + booking.getBookingID()+"\tstartTime:"+booking.getStartTime()+"\tendTime:"+booking.getEndTime());
         }
         return true;
     }
