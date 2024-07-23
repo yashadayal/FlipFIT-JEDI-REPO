@@ -48,17 +48,17 @@ public class BookingDAO {
         }
     }
     public void cancelBooking(String customerEmail, int bookingId) throws BookingNotFoundException, SQLException {
-        System.out.println("booking dao call");
+//        System.out.println("booking dao call");
         String deleteQuery = "DELETE FROM flipfit_booking WHERE bookingId = ? AND customerId = (SELECT customerId FROM flipfit_customer WHERE email = ?)";
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(deleteQuery);
-            stmt.setInt(1, bookingId);
-            stmt.setString(2, customerEmail);
+//            stmt.setInt(1, bookingId);
+//            stmt.setString(2, customerEmail);
 //            System.out.println("query run");
-            int rowsAffected = stmt.executeUpdate();
+//            int rowsAffected = stmt.executeUpdate();
 
-            if (rowsAffected > 0) {
+            if (bookingId > 0) {
 //                System.out.println("query run");
                 int slotId = getSlotIdByBookingId(bookingId);
                 if (slotId == -1) {
@@ -74,8 +74,8 @@ public class BookingDAO {
 //                System.out.println("gym center query run");
                 System.out.println("Booking with ID " + bookingId + " for customer with email " + customerEmail + " cancelled successfully.");
             } else {
-                System.out.println("gym center query run");
-                throw new BookingFailedException("Cancellation failed. No booking found with ID " + bookingId + " for customer with email " + customerEmail);
+//                System.out.println("gym center query run");
+                throw new BookingNotFoundException("Cancellation failed. No booking found with ID " + bookingId + " for customer with email " + customerEmail);
             }
         } finally {
             if (stmt != null) {

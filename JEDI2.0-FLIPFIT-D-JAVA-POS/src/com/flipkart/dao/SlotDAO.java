@@ -153,21 +153,12 @@ public class SlotDAO {
     }
 
     public int getGymCenterIdBySlotId(int slotId) throws SQLException {
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        int gymCenterId = -1;
         String query = Constants.FETCH_GYM_WITH_SLOT;
-
-        preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, slotId);
-        resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            gymCenterId = resultSet.getInt("gymCenterId");
-        } else {
-            System.out.println("No gym center found for slotId: " + slotId);
-        }
-
+        PreparedStatement stmt1 = connection.prepareStatement(query);
+        stmt1.setInt(1, slotId);
+        ResultSet rs1 = stmt1.executeQuery();
+        rs1.next();
+        int gymCenterId = rs1.getInt("gymCenterId");
         return gymCenterId;
     }
 
