@@ -14,6 +14,7 @@ public class Constants {
 
     // Booking DAO
     public static final String INSERT_BOOKING = "INSERT INTO flipfit_booking (email, scheduleId) VALUES (?, ?)";
+    public static final String FETCH_SLOT_WITH_BOOKING = "SELECT slotId FROM flipfit_booking WHERE bookingId = ?";
 
     // Customer DAO
     public static final String REGISTER_CUSTOMER = "INSERT INTO flipfit_customer (customerName, customerEmail, password) VALUES (?, ?, ?)";
