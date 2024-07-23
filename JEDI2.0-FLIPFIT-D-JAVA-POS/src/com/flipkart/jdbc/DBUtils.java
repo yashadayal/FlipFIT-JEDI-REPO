@@ -11,6 +11,9 @@ import java.util.Properties;
 public class DBUtils {
     private static Connection connection = null;
 
+    /**
+     * Method for establishing connection
+     */
     public static Connection getConnection() {
 
         if (connection != null)

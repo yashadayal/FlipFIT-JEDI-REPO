@@ -17,6 +17,16 @@ public class AdminFlipFitMenu {
 
     static AdminService adminService = new AdminService();
     Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Method for login
+     * @param username
+     * @param password
+     * @throws SQLException
+     * @throws LoginFailedException
+     * @throws GymOwnerNotFoundException
+     * @throws WrongCredentialException
+     */
     void login(String username, String password) throws SQLException, LoginFailedException, GymOwnerNotFoundException, WrongCredentialException {
         try{
             boolean adminLogin = adminService.adminLogin(username, password);
@@ -27,10 +37,24 @@ public class AdminFlipFitMenu {
             throw new LoginFailedException("Login Failed!");
         }
     }
+
+    /**
+     * Method for change password for admin
+     * @param email
+     * @param currentPassword
+     * @param newPassword
+     * @throws SQLException
+     * @throws WrongCredentialException
+     */
     void changeAdminPassword(String email, String currentPassword, String newPassword) throws SQLException, WrongCredentialException {
         adminService.changePassword(email, currentPassword, newPassword);
     }
 
+    /**
+     * Method for admin menu
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     */
     void adminMenu() throws SQLException, GymOwnerNotFoundException {
         try{
             System.out.println("\n\n--------------------WELCOME TO ADMIN MENU---------------------\n");
@@ -106,6 +130,12 @@ public class AdminFlipFitMenu {
             throw new SQLException("Gym owner not found");
         }
     }
+
+    /**
+     * Method for going back to previous menu for admin
+     * @throws SQLException
+     * @throws GymOwnerNotFoundException
+     */
     void prevMenuForAdmin() throws SQLException, GymOwnerNotFoundException {
         try{
             System.out.println("\n\n1. Previous Menu");
