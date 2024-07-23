@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.bean.GymOwner;
 import com.flipkart.constants.Constants;
 import com.flipkart.exceptions.GymOwnerNotFoundException;
 import com.flipkart.exceptions.LoginFailedException;
@@ -20,6 +21,29 @@ import java.sql.SQLException;
 public class GymOwnerDAO {
 
     Connection connection = DBUtils.getConnection();
+
+    private void printGymOwners(ResultSet rs) throws SQLException {
+
+        if(!rs.next()) {
+            System.out.println("No data available.\n");
+        }
+
+        System.out.printf("| %-20s | %-30s | %-15s | %-20s | %-20s |\n",
+                "Gym Owner Name", "Gym Owner Email", "Gym Owner Phone", "Gym Owner PAN Card", "Gym Owner Aadhar Card");
+        System.out.println("|----------------------|--------------------------------|-----------------|----------------------|-----------------------|");
+
+        do {
+            System.out.printf("| %-20s | %-30s | %-15s | %-20s | %-21s |\n",
+                    rs.getString("ownerName"),
+                    rs.getString("ownerEmail"),
+                    rs.getString("ownerPhone"),
+                    rs.getString("pancard"),
+                    rs.getString("aadharCard"));
+        }while (rs.next());
+
+    }
+
+
 
     public void registerGymOwner(String name, String email, String password ) throws SQLException, RegistrationFailedException {
 
@@ -116,16 +140,7 @@ public class GymOwnerDAO {
         String query = Constants.FETCH_GYM_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
-        int i=1;
-        while (rs.next()) {
-            System.out.println("Gym Owner " + i++);
-            System.out.println("Gym Owner Name: " + rs.getString("ownerName"));
-            System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
-            System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
-            System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
-            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard"));
-        }
-
+        printGymOwners(rs);
     }
     public void sendOwnerApprovalRequest(String gymOwnerId){
 
@@ -137,15 +152,7 @@ public class GymOwnerDAO {
         String query = Constants.UNAPPROVED_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
-        int i=1;
-        while (rs.next()) {
-            System.out.println("Gym Owner " + i++);
-            System.out.println("Gym Owner Name: " + rs.getString("ownerName"));
-            System.out.println("Gym Owner Email: " + rs.getString("ownerEmail"));
-            System.out.println("Gym Owner Phone: " + rs.getString("ownerPhone"));
-            System.out.println("Gym Owner PAN Card: " + rs.getString("pancard"));
-            System.out.println("Gym Owner Aadhar Card: " + rs.getString("aadharCard"));
-        }
+        printGymOwners(rs);
     }
 
     public void approveAllGymOwners() throws SQLException {

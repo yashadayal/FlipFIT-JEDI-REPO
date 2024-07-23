@@ -153,7 +153,7 @@ public class GymCenterDAO {
 
     public void printGymCentersInfo(ResultSet rs) throws SQLException {
         if (!rs.next()) {
-            System.out.println("There are no data available.");
+            System.out.println("There are no data available.\n");
             return;
         }
 
