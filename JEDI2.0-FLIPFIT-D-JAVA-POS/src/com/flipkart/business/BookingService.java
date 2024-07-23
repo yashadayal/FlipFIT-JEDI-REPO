@@ -30,7 +30,6 @@ public class BookingService {
     }
 
     public void cancelBooking(String customerEmail, int bookingId) throws BookingNotFoundException, SQLException{
-        System.out.println("booking service call");
         bookingDAO.cancelBooking(customerEmail, bookingId);
     }
 }
