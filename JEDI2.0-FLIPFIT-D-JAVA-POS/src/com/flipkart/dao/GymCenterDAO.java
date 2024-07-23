@@ -41,21 +41,12 @@ public class GymCenterDAO {
     }
 
     public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
-
         int ownerId = getOwnerIdByEmail(email);
         String query = Constants.FETCH_GYMCENTER_WITH_OWNER;
         PreparedStatement stmt = connection.prepareStatement(query);
         stmt.setInt(1, ownerId);
         ResultSet rs= stmt.executeQuery();
-
-        while (rs.next()) {
-            System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
-            System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
-            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
-            System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
-
-        }
+        printGymCentersInfo(rs);
     }
 
 
@@ -64,16 +55,7 @@ public class GymCenterDAO {
         String query = Constants.FETCH_GYMCENTER;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
-        int i=1;
-        while (rs.next()) {
-            System.out.println("Gym Center " + i++);
-            System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
-            System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
-            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
-            System.out.println("Gym Center OwnerId: " + rs.getString("ownerId"));
-            System.out.println("Gym Center Capacity: " + rs.getString("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getString("gymCenterPrice"));
-        }
+        printGymCentersInfo(rs);
     }
 
     public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws GymCentreNotFoundException, SQLException {
@@ -88,17 +70,10 @@ public class GymCenterDAO {
     }
 
     public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
-        String query = Constants.FETCH_VALID_GYM;
+        String query = Constants.FETCH_NOT_APPROVED_GYM;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
-        while (rs.next()) {
-            System.out.println("Gym Center Name: " + rs.getString("gymCenterName"));
-            System.out.println("Approval Status: " + rs.getString("isGymCenterApproved"));
-            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
-            System.out.println("Gym Center OwnerId: " + rs.getInt("ownerId"));
-            System.out.println("Gym Center Capacity: " + rs.getInt("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getInt("gymCenterPrice"));
-        }
+        printGymCentersInfo(rs);
     }
 
     public void incrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
@@ -160,14 +135,7 @@ public class GymCenterDAO {
         PreparedStatement stmt1 = connection.prepareStatement(Constants.FETCH_APPROVED_GYMCENTER_BY_EMAIL);
         stmt1.setInt(1, ownerID);
         ResultSet rs = stmt1.executeQuery();
-        while (rs.next()) {
-            System.out.println("Gym Center " + rs.getString("gymCenterName"));
-            System.out.println("Gym Center Id: " + rs.getInt("gymCenterId"));
-            System.out.println("Gym Center Location: " + rs.getString("gymCenterLocation"));
-            System.out.println("Gym Center OwnerId: " + rs.getInt("ownerId"));
-            System.out.println("Gym Center Capacity: " + rs.getInt("gymCenterCapacity"));
-            System.out.println("Gym Center Price: " + rs.getInt("gymCenterPrice"));
-        }
+        printGymCentersInfo(rs);
     }
 
     public void addSlot(int gymCenterId, Date startDateTime, Date endDateTime, int capacity) throws GymCentreNotFoundException, SQLException {
@@ -183,4 +151,29 @@ public class GymCenterDAO {
 
     }
 
+    public void printGymCentersInfo(ResultSet rs) throws SQLException {
+        if (!rs.next()) {
+            System.out.println("There are no data available.");
+            return;
+        }
+
+        System.out.printf("| %-20s | %-10s | %-30s | %-7s | %-17s | %-12s | %-25s |\n",
+                "gymCenterName", "gymCenterId", "gymCenterLocation", "ownerId", "gymCenterCapacity", "gymCenterPrice", "isGymCenterApproved");
+        System.out.println("|----------------------|-------------|--------------------------------|---------|-------------------|----------------|---------------------------|");
+
+        do {
+            System.out.printf("| %-20s | %-11d | %-30s | %-7d | %-17d | %-14d | %-25s |\n",
+                    rs.getString("gymCenterName"),
+                    rs.getInt("gymCenterId"),
+                    rs.getString("gymCenterLocation"),
+                    rs.getInt("ownerId"),
+                    rs.getInt("gymCenterCapacity"),
+                    rs.getInt("gymCenterPrice"),
+                    rs.getInt("isGymCenterApproved")
+            );
+        } while (rs.next());
+
+    }
 }
+
+

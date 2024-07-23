@@ -53,7 +53,6 @@ public class GymOwnerFlipFitMenu {
                 else{
                     System.out.println("Your gym owner application is still pending for approval");
                 }
-                gymOwnerMenu(email);
                 break;
 
             case 2:
@@ -63,23 +62,20 @@ public class GymOwnerFlipFitMenu {
                 else{
                     System.out.println("Your can not add Gym Center before you're approved by the Admin");
                 }
-                gymOwnerMenu(email);
                 break;
             case 3:
                 gymCenterService.veiwAllGymCenters();
-                gymOwnerMenu(email);
                 break;
             case 4:
                 addSlot(email);
                 break;
             case 5:
                 gymCenterService.viewGymCenterByEmail(email);
-                gymOwnerMenu(email);
                 break;
             case 6:
                 return;
         }
-
+        gymOwnerMenu(email);
     }
 
     /**

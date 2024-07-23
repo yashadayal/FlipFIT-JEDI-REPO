@@ -100,6 +100,7 @@ public class AdminFlipFitMenu {
                     }
                     break;
                 case 4:
+                    adminService.viewPendingListOfGymCenters();
                     System.out.println("1. Approve all Gym Centers");
                     System.out.println("2. Approve Gym Centers by Id");
                     System.out.println("3. Previous Menu");
