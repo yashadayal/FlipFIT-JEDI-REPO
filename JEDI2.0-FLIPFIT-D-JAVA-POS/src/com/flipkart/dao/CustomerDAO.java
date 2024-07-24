@@ -22,10 +22,21 @@ public class CustomerDAO {
 
     private static final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
 
+    /**
+     * Method to retrieve customer information by ID.
+     *
+     * @param id The ID of the customer to retrieve
+     */
     public void getCustomerById(Integer id) {
 
     }
 
+    /**
+     * Method to register a new customer.
+     *
+     * @param customer The customer object containing registration details
+     * @return true if registration is successful, false otherwise
+     */
     public static boolean registerCustomer(Customer customer) {
         Connection connection = null;
         boolean registerSuccess = false;
@@ -48,6 +59,12 @@ public class CustomerDAO {
         return registerSuccess;
     }
 
+    /**
+     * Method to view customer profile details.
+     *
+     * @param email The email of the customer whose profile to view
+     * @return A Customer object containing profile details, or null if not found
+     */
     public static Customer viewProfile(String email) {
         Connection connection = null;
         Customer customer = null;
@@ -76,6 +93,13 @@ public class CustomerDAO {
         return customer;
     }
 
+    /**
+     * Method to change customer password.
+     *
+     * @param email The email of the customer whose password to change
+     * @param oldPassword The current password of the customer
+     * @param newPassword The new password to set
+     */
     public static void changePassword(String email, String oldPassword, String newPassword) {
         Connection connection = null;
 
@@ -117,6 +141,13 @@ public class CustomerDAO {
        }
     }
 
+    /**
+     * Method to view bookings made by a customer.
+     *
+     * @param email The email of the customer whose bookings to retrieve
+     * @return A list of Booking objects representing the customer's bookings
+     * @throws SQLException If a database access error occurs
+     */
     public List<Booking> viewBooking(String email) throws SQLException {
         List<Booking> customerBookings = new ArrayList<>();
         Connection connection = null;
@@ -159,6 +190,13 @@ public class CustomerDAO {
         return customerBookings;
     }
 
+    /**
+     * Method to authenticate a customer login.
+     *
+     * @param email The email of the customer attempting to login
+     * @param password The password provided by the customer
+     * @return true if login is successful, false otherwise
+     */
     public static boolean loginCustomer(String email, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

@@ -22,6 +22,12 @@ public class GymOwnerDAO {
 
     Connection connection = DBUtils.getConnection();
 
+    /**
+     * Prints gym owner information from the given ResultSet.
+     *
+     * @param rs The ResultSet containing gym owner information
+     * @throws SQLException If a database access error occurs
+     */
     private void printGymOwners(ResultSet rs) throws SQLException {
 
         if(!rs.next()) {
@@ -43,8 +49,15 @@ public class GymOwnerDAO {
 
     }
 
-
-
+    /**
+     * Registers a new gym owner.
+     *
+     * @param name     The name of the gym owner
+     * @param email    The email of the gym owner
+     * @param password The password of the gym owner
+     * @throws SQLException              If a database access error occurs
+     * @throws RegistrationFailedException If gym owner registration fails
+     */
     public void registerGymOwner(String name, String email, String password ) throws SQLException, RegistrationFailedException {
 
         try{
@@ -69,6 +82,17 @@ public class GymOwnerDAO {
         }
     }
 
+    /**
+     * Authenticates gym owner login.
+     *
+     * @param email    The email of the gym owner
+     * @param password The password of the gym owner
+     * @return true if login successful, false otherwise
+     * @throws SQLException              If a database access error occurs
+     * @throws LoginFailedException      If gym owner login fails
+     * @throws WrongCredentialException  If incorrect credentials are provided
+     * @throws GymOwnerNotFoundException If the gym owner is not found
+     */
     public boolean gymOwnerLogin(String email, String password) throws SQLException, LoginFailedException, WrongCredentialException, GymOwnerNotFoundException {
 
         try{
@@ -93,6 +117,16 @@ public class GymOwnerDAO {
         return false;
     }
 
+    /**
+     * Changes gym owner password.
+     *
+     * @param email        The email of the gym owner
+     * @param currPassword The current password of the gym owner
+     * @param newPassword  The new password to be set
+     * @return true if password changed successfully, false otherwise
+     * @throws SQLException             If a database access error occurs
+     * @throws WrongCredentialException If incorrect credentials are provided
+     */
     public boolean changeGymOwnerPassword(String email, String currPassword, String newPassword) throws SQLException, WrongCredentialException {
 
         try{
@@ -122,6 +156,14 @@ public class GymOwnerDAO {
         return false;
     }
 
+    /**
+     * Checks approval status of gym owner by email.
+     *
+     * @param email The email of the gym owner
+     * @return true if gym owner is approved, false otherwise
+     * @throws SQLException              If a database access error occurs
+     * @throws GymOwnerNotFoundException If the gym owner is not found
+     */
     public boolean checkOwnerStatusByEmail(String email) throws SQLException,GymOwnerNotFoundException {
         String query = Constants.APPROVED_OWNERS;
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -136,18 +178,41 @@ public class GymOwnerDAO {
         }
     }
 
+    /**
+     * Views all gym owners.
+     *
+     * @throws SQLException              If a database access error occurs
+     * @throws GymOwnerNotFoundException If no gym owners are found
+     */
     public void viewAllGymOwners() throws SQLException, GymOwnerNotFoundException{
         String query = Constants.FETCH_GYM_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
         ResultSet rs = stmt1.executeQuery();
         printGymOwners(rs);
     }
+
+    /**
+     * Sends approval request for gym owner.
+     *
+     * @param gymOwnerId The ID of the gym owner
+     */
     public void sendOwnerApprovalRequest(String gymOwnerId){
 
     }
+
+    /**
+     * Sets pending gym owner list.
+     */
     public void setPendingGymOwnerList(){
 
     }
+
+    /**
+     * Views pending gym owner list.
+     *
+     * @throws GymOwnerNotFoundException If no pending gym owners are found
+     * @throws SQLException             If a database access error occurs
+     */
     public void viewPendingGymOwnerList() throws GymOwnerNotFoundException, SQLException {
         String query = Constants.UNAPPROVED_OWNERS;
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -155,6 +220,11 @@ public class GymOwnerDAO {
         printGymOwners(rs);
     }
 
+    /**
+     * Approves all gym owners.
+     *
+     * @throws SQLException If a database access error occurs
+     */
     public void approveAllGymOwners() throws SQLException {
         String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE isApproved = 0";
         PreparedStatement stmt = null;
@@ -168,6 +238,13 @@ public class GymOwnerDAO {
             }
         }
     }
+
+    /**
+     * Approves gym owner by email.
+     *
+     * @param gymOwnerEmail The email of the gym owner
+     * @throws SQLException If a database access error occurs
+     */
     public void approveGymOwnerByEmail(String gymOwnerEmail) throws SQLException {
         String updateQuery = "UPDATE flipfit_gymowner SET isApproved = 1 WHERE ownerEmail = ?";
         PreparedStatement stmt = null;

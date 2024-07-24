@@ -21,6 +21,14 @@ public class BookingDAO {
     private final SlotDAO slotDao = new SlotDAO();
     private final GymCenterDAO gymCenterDao = new GymCenterDAO();
 
+    /**
+     * Method to book a slot for a customer.
+     *
+     * @param email The email of the customer booking the slot
+     * @param slotId The ID of the slot to be booked
+     * @throws BookingFailedException If booking the slot fails
+     * @throws SQLException If a database access error occurs
+     */
     public void bookSlot( String email, int slotId) throws BookingFailedException,SQLException {
         try {
             String insertQuery = Constants.INSERT_BOOKING;
@@ -47,6 +55,15 @@ public class BookingDAO {
             sqlExceptionHandler.printSQLException(e);
         }
     }
+
+    /**
+     * Method to cancel a booking for a customer.
+     *
+     * @param customerEmail The email of the customer cancelling the booking
+     * @param bookingId The ID of the booking to be cancelled
+     * @throws BookingNotFoundException If the booking to be cancelled is not found
+     * @throws SQLException If a database access error occurs
+     */
     public void cancelBooking(String customerEmail, int bookingId) throws BookingNotFoundException, SQLException {
         String deleteQuery = "DELETE FROM flipfit_booking WHERE bookingId = ? AND customerId = (SELECT customerId FROM flipfit_customer WHERE email = ?)";
         PreparedStatement stmt = null;
@@ -73,7 +90,13 @@ public class BookingDAO {
         }
     }
 
-
+    /**
+     * Method to retrieve slot ID from booking ID.
+     *
+     * @param bookingId The ID of the booking for which slot ID is to be retrieved
+     * @return The slot ID associated with the given booking ID, or -1 if not found
+     * @throws SQLException If a database access error occurs
+     */
     public int getSlotIdByBookingId(int bookingId) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

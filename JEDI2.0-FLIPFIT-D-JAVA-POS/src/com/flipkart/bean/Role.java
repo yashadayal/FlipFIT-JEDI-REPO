@@ -6,7 +6,7 @@ package com.flipkart.bean;
  */
 
 public enum Role {
-    ADMIN,
-    GYM_OWNER,
-    GYM_CUSTOMER
+    ADMIN,         // Role for administrators
+    GYM_OWNER,     // Role for gym owners
+    GYM_CUSTOMER   // Role for gym customers
 }

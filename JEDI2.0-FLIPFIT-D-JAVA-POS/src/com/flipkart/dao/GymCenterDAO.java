@@ -16,6 +16,14 @@ import java.util.Date;
 public class GymCenterDAO {
     private Connection connection = DBUtils.getConnection();
 
+    /**
+     * Retrieves the owner ID associated with the given email.
+     *
+     * @param email The email of the gym center owner
+     * @return The owner ID
+     * @throws GymCentreNotFoundException If the owner ID is not found
+     * @throws SQLException              If a database access error occurs
+     */
     private int getOwnerIdByEmail(String email) throws GymCentreNotFoundException, SQLException {
         String query = Constants.FETCH_OWNER;
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -26,6 +34,18 @@ public class GymCenterDAO {
         return ownerId;
     }
 
+    /**
+     * Registers a new gym center.
+     *
+     * @param email            The email of the gym center owner
+     * @param gymCenterName    The name of the gym center
+     * @param gymCenterGSTin   The GSTIN of the gym center
+     * @param gymCenterCapacity The capacity of the gym center
+     * @param gymCenterPrice   The price of the gym center
+     * @throws GymCentreNotFoundException If the owner ID is not found
+     * @throws SQLException              If a database access error occurs
+     * @throws RegistrationFailedException If gym center registration fails
+     */
     public void registerGymCenter(String email, String gymCenterName, String gymCenterGSTin, int gymCenterCapacity, int gymCenterPrice) throws GymCentreNotFoundException, SQLException, RegistrationFailedException {
 
         int ownerId = getOwnerIdByEmail(email);
@@ -40,6 +60,13 @@ public class GymCenterDAO {
         System.out.println("Gym center registered successfully. Pending for approval");
     }
 
+    /**
+     * View gym centers associated with a specific owner email.
+     *
+     * @param email The email of the gym center owner
+     * @throws GymCentreNotFoundException If the owner ID is not found
+     * @throws SQLException              If a database access error occurs
+     */
     public void viewGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
         int ownerId = getOwnerIdByEmail(email);
         String query = Constants.FETCH_GYMCENTER_WITH_OWNER;
@@ -50,6 +77,12 @@ public class GymCenterDAO {
     }
 
 
+    /**
+     * View all registered gym centers.
+     *
+     * @throws GymCentreNotFoundException If no gym centers are found
+     * @throws SQLException              If a database access error occurs
+     */
     public void viewAllGymCenters() throws GymCentreNotFoundException, SQLException {
 
         String query = Constants.FETCH_GYMCENTER;
@@ -58,6 +91,14 @@ public class GymCenterDAO {
         printGymCentersInfo(rs);
     }
 
+    /**
+     * View approval status of a gym center by its ID.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @return true if the gym center is approved, false otherwise
+     * @throws GymCentreNotFoundException If the gym center ID is incorrect
+     * @throws SQLException              If a database access error occurs
+     */
     public boolean viewGymCenterApprovalStatusByGymCenterId(String gymCenterId) throws GymCentreNotFoundException, SQLException {
         String query = Constants.FETCH_GYMCENTER_WITH_ID;
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -69,6 +110,12 @@ public class GymCenterDAO {
         return rs.getBoolean("isGymCenterApproved");
     }
 
+    /**
+     * View pending gym centers awaiting approval.
+     *
+     * @throws GymCentreNotFoundException If no pending gym centers are found
+     * @throws SQLException              If a database access error occurs
+     */
     public void viewPendingGymCentersList() throws GymCentreNotFoundException, SQLException {
         String query = Constants.FETCH_NOT_APPROVED_GYM;
         PreparedStatement stmt1 = connection.prepareStatement(query);
@@ -76,6 +123,13 @@ public class GymCenterDAO {
         printGymCentersInfo(rs);
     }
 
+    /**
+     * Increment capacity of a gym center by its ID.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @throws GymCentreNotFoundException If the gym center ID is incorrect
+     * @throws SQLException              If a database access error occurs
+     */
     public void incrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
         String query = Constants.INCREMENT_CAPACITY;
@@ -85,6 +139,13 @@ public class GymCenterDAO {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * Decrement capacity of a gym center by its ID.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @throws GymCentreNotFoundException If the gym center ID is incorrect
+     * @throws SQLException              If a database access error occurs
+     */
     public void decrementCapacity(int gymCenterId)  throws GymCentreNotFoundException, SQLException {
         PreparedStatement preparedStatement = null;
         String query = Constants.DECREMENT_CAPACITY;
@@ -94,6 +155,11 @@ public class GymCenterDAO {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * Approve all pending gym centers.
+     *
+     * @throws SQLException If a database access error occurs
+     */
     public void approveAllPendingGymCenters() throws SQLException {
         String updateQuery = "UPDATE flipfit_gymcenter SET isGymCenterApproved = 1 WHERE isGymCenterApproved = 0";
         PreparedStatement stmt = null;
@@ -108,6 +174,14 @@ public class GymCenterDAO {
             }
         }
     }
+
+    /**
+     * Approve a gym center by its ID.
+     *
+     * @param gymCenterId The ID of the gym center to approve
+     * @throws SQLException              If a database access error occurs
+     * @throws GymCentreNotFoundException If the gym center ID is incorrect
+     */
     public void approveGymCenterById(int gymCenterId) throws SQLException, GymCentreNotFoundException {
         String updateQuery = "UPDATE flipfit_gymcenter SET isGymCenterApproved = 1 WHERE gymcenterId = ?";
         PreparedStatement stmt = null;
@@ -129,6 +203,13 @@ public class GymCenterDAO {
         }
     }
 
+    /**
+     * View approved gym centers associated with a specific owner email.
+     *
+     * @param email The email of the gym center owner
+     * @throws GymCentreNotFoundException If the owner ID is not found
+     * @throws SQLException              If a database access error occurs
+     */
     public void viewApprovedGymCenterByEmail(String email) throws GymCentreNotFoundException, SQLException {
 
         int ownerID = getOwnerIdByEmail(email);
@@ -138,6 +219,16 @@ public class GymCenterDAO {
         printGymCentersInfo(rs);
     }
 
+    /**
+     * Adds a slot for a gym center.
+     *
+     * @param gymCenterId   The ID of the gym center
+     * @param startDateTime The start date and time of the slot
+     * @param endDateTime   The end date and time of the slot
+     * @param capacity      The capacity of the slot
+     * @throws GymCentreNotFoundException If the gym center ID is incorrect
+     * @throws SQLException              If a database access error occurs
+     */
     public void addSlot(int gymCenterId, Date startDateTime, Date endDateTime, int capacity) throws GymCentreNotFoundException, SQLException {
         String query = "INSERT INTO flipfit_slots (gymCenterId, startTime, endTime, capacity, date) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(query);
@@ -151,6 +242,12 @@ public class GymCenterDAO {
 
     }
 
+    /**
+     * Prints the gym center information from the given result set.
+     *
+     * @param rs The result set containing gym center information
+     * @throws SQLException If a database access error occurs
+     */
     public void printGymCentersInfo(ResultSet rs) throws SQLException {
         if (!rs.next()) {
             System.out.println("There are no data available.\n");

@@ -19,6 +19,12 @@ public class SlotDAO {
     private final SQLExceptionHandler sqlExceptionHandler = new SQLExceptionHandler();
     Connection connection = DBUtils.getConnection();
 
+    /**
+     * Retrieves all slots associated with a specific gym center ID.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @return ArrayList of Slots associated with the gym center
+     */
     public ArrayList<Slots> getSlotByCenterId(int gymCenterId) {
         ArrayList<Slots> slots = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -32,8 +38,6 @@ public class SlotDAO {
             preparedStatement.setInt(1, gymCenterId);
 
             resultSet = preparedStatement.executeQuery();
-            System.out.println("|   Slot Id   |  Gym Center Id  |  Capacity  |    Date    |  Start Time          |  End Time            |");
-            System.out.println("|-------------|-----------------|------------|------------|--------------------- |----------------------|");
 
             while (resultSet.next()) {
                 Slots slot = new Slots();
@@ -44,17 +48,12 @@ public class SlotDAO {
                 slot.setStartTime(String.valueOf(resultSet.getTimestamp("startTime")));
                 slot.setEndTime(String.valueOf(resultSet.getTimestamp("endTime")));
 
-
-                System.out.printf("| %-12s| %-16s| %-11s| %-11s| %-14s  | %-12s  |%n",
-                        resultSet.getString("slotId"),
-                            resultSet.getString("gymCenterId"),
-                            resultSet.getString("capacity"),
-                            resultSet.getString("date"),
-                            resultSet.getString("startTime"),
-                            resultSet.getString("endTime"));
-
-//                System.out.println("---------------------------------------------------------");
-
+                    System.out.println("Slot Id " + resultSet.getString("slotId"));
+                    System.out.println("Gym Center Id: " + resultSet.getString("gymCenterId"));
+                    System.out.println("Capacity: " + resultSet.getString("capacity"));
+                    System.out.println("Date: " + resultSet.getString("date"));
+                    System.out.println("Start Time: " + resultSet.getString("startTime"));
+                    System.out.println("End time: " + resultSet.getString("endTime"));
                 slots.add(slot);
             }
         } catch (SQLException e) {
@@ -63,6 +62,12 @@ public class SlotDAO {
         return slots;
     }
 
+    /**
+     * Removes a specific slot from a gym center.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @param slotId      The ID of the slot to be removed
+     */
     public void removeSlot(int gymCenterId, int slotId){
         Connection connection = null;
         PreparedStatement slotStatement = null;
@@ -104,6 +109,16 @@ public class SlotDAO {
         }
     }
 
+    /**
+     * Adds a new slot to a gym center.
+     *
+     * @param gymCenterId The ID of the gym center
+     * @param capacity    The capacity of the slot
+     * @param date        The date of the slot
+     * @param startTime   The start time of the slot
+     * @param endTime     The end time of the slot
+     * @throws SQLException If a database access error occurs
+     */
     public void addSlot(int gymCenterId, int capacity, String date, LocalDateTime startTime, LocalDateTime endTime) throws SQLException{
         PreparedStatement slotStatement = null;
         String insertQuery = Constants.INSERT_SLOT;
@@ -123,6 +138,13 @@ public class SlotDAO {
         gymCenterDao.incrementCapacity(gymCenterId);
     }
 
+    /**
+     * Checks if a slot with the given slot ID is available.
+     *
+     * @param slotId The ID of the slot
+     * @return true if slot is available (capacity > 0), false otherwise
+     * @throws SQLException If a database access error occurs
+     */
     public boolean isAvailableSlot(int slotId) throws SQLException{
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -141,6 +163,12 @@ public class SlotDAO {
         return false;
     }
 
+    /**
+     * Decrements the capacity of a slot.
+     *
+     * @param slotId The ID of the slot
+     * @throws SQLException If a database access error occurs
+     */
     public void decrementCapacity(int slotId)  throws SQLException {
         PreparedStatement preparedStatement = null;
         String query = Constants.DECREMENT_SLOT_CAPACITY;
@@ -150,6 +178,12 @@ public class SlotDAO {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * Increments the capacity of a slot.
+     *
+     * @param slotId The ID of the slot
+     * @throws SQLException If a database access error occurs
+     */
     public void incrementCapacity(int slotId)  throws SQLException {
         PreparedStatement preparedStatement = null;
         String query = Constants.INCREMENT_SLOT_CAPACITY;
@@ -159,6 +193,13 @@ public class SlotDAO {
         preparedStatement.executeUpdate();
     }
 
+    /**
+     * Retrieves the gym center ID associated with a slot ID.
+     *
+     * @param slotId The ID of the slot
+     * @return The ID of the gym center associated with the slot
+     * @throws SQLException If a database access error occurs
+     */
     public int getGymCenterIdBySlotId(int slotId) throws SQLException {
         String query = Constants.FETCH_GYM_WITH_SLOT;
         PreparedStatement stmt1 = connection.prepareStatement(query);
