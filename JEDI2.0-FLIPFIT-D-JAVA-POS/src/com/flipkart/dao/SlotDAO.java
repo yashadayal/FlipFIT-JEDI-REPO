@@ -32,6 +32,8 @@ public class SlotDAO {
             preparedStatement.setInt(1, gymCenterId);
 
             resultSet = preparedStatement.executeQuery();
+            System.out.println("|   Slot Id   |  Gym Center Id  |  Capacity  |    Date    |  Start Time          |  End Time            |");
+            System.out.println("|-------------|-----------------|------------|------------|--------------------- |----------------------|");
 
             while (resultSet.next()) {
                 Slots slot = new Slots();
@@ -42,12 +44,17 @@ public class SlotDAO {
                 slot.setStartTime(String.valueOf(resultSet.getTimestamp("startTime")));
                 slot.setEndTime(String.valueOf(resultSet.getTimestamp("endTime")));
 
-                    System.out.println("Slot Id " + resultSet.getString("slotId"));
-                    System.out.println("Gym Center Id: " + resultSet.getString("gymCenterId"));
-                    System.out.println("Capacity: " + resultSet.getString("capacity"));
-                    System.out.println("Date: " + resultSet.getString("date"));
-                    System.out.println("Start Time: " + resultSet.getString("startTime"));
-                    System.out.println("End time: " + resultSet.getString("endTime"));
+
+                System.out.printf("| %-12s| %-16s| %-11s| %-11s| %-14s  | %-12s  |%n",
+                        resultSet.getString("slotId"),
+                            resultSet.getString("gymCenterId"),
+                            resultSet.getString("capacity"),
+                            resultSet.getString("date"),
+                            resultSet.getString("startTime"),
+                            resultSet.getString("endTime"));
+
+//                System.out.println("---------------------------------------------------------");
+
                 slots.add(slot);
             }
         } catch (SQLException e) {
